@@ -25,6 +25,21 @@
             "style": {
                 "navigationBarTitleText": "我的"
             }
+        }, {
+            "path": "pages/task/task",
+            "style": {
+                "navigationBarTitleText": "题库"
+            }
+        }, {
+            "path": "pages/find/find",
+            "style": {
+                "navigationBarTitleText": "发现"
+            }
+        }, {
+            "path": "pages/read/read",
+            "style": {
+                "navigationBarTitleText": "每日阅读"
+            }
         }
     ],
     "tabBar": {
@@ -33,9 +48,19 @@
         "backgroundColor": "#ffffff",
         "list": [{
             "pagePath": "pages/main/main",
-            "text": "首页",
+            "text": "课堂",
             "iconPath": "static/img/home.png",
             "selectedIconPath": "static/img/homeHL.png"
+        },{
+            "pagePath": "pages/task/task",
+            "text": "做题",
+            "iconPath": "static/img/task.png",
+            "selectedIconPath": "static/img/taskHL.png"
+        },{
+            "pagePath": "pages/find/find",
+            "text": "发现",
+            "iconPath": "static/img/find.png",
+            "selectedIconPath": "static/img/findHL.png"
         }, {
             "pagePath": "pages/user/user",
             "text": "我的",
@@ -44,8 +69,8 @@
         }]
     },
     "globalStyle": {
-        "navigationBarTextStyle": "white",
-        "navigationBarBackgroundColor": "#0faeff",
+        "navigationBarTextStyle": "black",
+        "navigationBarBackgroundColor": "white",
         "backgroundColor": "#fbf9fe"
     }
 }
