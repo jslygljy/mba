@@ -1280,7 +1280,6 @@ button.cuIcon.lg {
 .cu-list.menu>.cu-item {
 	position: relative;
 	display: flex;
-	padding: 0 30upx;
 	min-height: 100upx;
 	background-color: #ffffff;
 	justify-content: space-between;
@@ -1293,7 +1292,7 @@ button.cuIcon.lg {
 
 .cu-list.menu-avatar>.cu-item:after,
 .cu-list.menu>.cu-item:after {
-	position: absolute;
+	/* position: absolute;
 	top: 0;
 	left: 0;
 	box-sizing: border-box;
@@ -1304,7 +1303,7 @@ button.cuIcon.lg {
 	content: " ";
 	transform: scale(.5);
 	transform-origin: 0 0;
-	pointer-events: none
+	pointer-events: none */
 }
 
 .cu-list.menu>.cu-item.grayscale {
@@ -1470,8 +1469,8 @@ button.cuIcon.lg {
 
 .cu-list.card-menu {
 	overflow: hidden;
-	margin-right: 30upx;
-	margin-left: 30upx;
+	margin-right: 20upx;
+	margin-left: 20upx;
 	border-radius: 20upx
 }
 

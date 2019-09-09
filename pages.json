@@ -40,7 +40,17 @@
             "style": {
                 "navigationBarTitleText": "每日阅读"
             }
-        }
+        },{
+			"path": "pages/readDetail/readDetail",
+			"style": {
+			    "navigationBarTitleText": "阅读详细"
+			}
+		},{
+			"path": "pages/inviteFriend/inviteFriend",
+			"style": {
+			    "navigationBarTitleText": "邀请好友一起学习"
+			}
+		}
     ],
     "tabBar": {
         "color": "#7a7e83",

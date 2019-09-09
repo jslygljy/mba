@@ -12,7 +12,7 @@
 	}
 </script>
 
-<style>
+<style scoped lang="scss">
 	/*每个页面公共css */
 	page {
 		min-height: 100%;

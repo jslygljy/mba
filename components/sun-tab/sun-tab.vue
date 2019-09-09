@@ -106,6 +106,7 @@
 		text-align: center;
 		box-sizing: border-box;
 		overflow: hidden;
+		margin-left: 10rpx;
 	}
 	.uni-tab-scroll-item{
 		flex: none;

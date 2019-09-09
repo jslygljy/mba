@@ -2037,11 +2037,6 @@ button.cuIcon.lg {
 	line-height: 1.6;
 }
 
-.cu-timeline>.cu-item>.content:not([class*="bg-"]) {
-	background-color: #f1f1f1;
-	color: #333333;
-}
-
 .cu-timeline>.cu-item>.content+.content {
 	margin-top: 20upx;
 }

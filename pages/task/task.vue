@@ -59,7 +59,7 @@
     }
 </script>
 
-<style>
+<style scoped lang="scss">
     .hello {
         display: flex;
         flex: 1;
