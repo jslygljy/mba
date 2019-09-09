@@ -7,23 +7,29 @@
 					<view class="content flex-sub">
 						<view class="text-grey">
 							U52832832 
-							<text class="cuIcon-crownfill"></text>
+							<text class="cuIcon-crownfill margin-left-sm"></text>
 						</view>
-						<view class="text-gray text-sm flex justify-between">
-							<text class="cuIcon-moneybag"></text>
-							<text>0</text>
+						<view class="text-gray text-sm flex cu-capsule">
+							<text class="cuIcon-moneybag text-xl text-gold "></text>
+							<text class="margin-left-xs">0</text>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		<view class="padding">
-			<view class="bg-gradual-blue padding radius text-center shadow-blur">
-				<view class="text-lg">我的课程</view>
-				<view class="">查看全部 ></view>
-				<button class="cu-btn block line-white">
-					<text class="cuIcon-playfill"></text> 图标</button>
-				<view class="margin-top-sm text-Abc">助力20备考</view>
+			<view class="bg-gradual-blue padding radius shadow-blur radius-round">
+				<view class="flex justify-between">
+					<view class="text-lg">我的课程</view>
+					<view class="text-sm">查看全部 ></view>
+				</view>
+				<view class="flex justify-start margin-top-sm">
+					<button class="cu-btn line-white text-sm margin-right-sm margin-top-sm">
+						<text class="cuIcon-playfill"></text>
+						<text style="margin-left: 5upx;">继续观看</text>
+					</button>
+					<view class="margin-top text-Abc text-sm">助力20备考</view>
+				</view>
 			</view>
 		</view>
         <view class="card-menu margin-top cu-list menu">
@@ -117,5 +123,12 @@
 		margin-top: 20px;
 		margin-bottom: 20px;
 		height: 2upx;
+	}
+	.cu-btn{
+		padding:0px 15upx;
+		height: 52rpx;
+	}
+	.cu-btn[class*="line"]::after{
+		border-radius: 200upx;
 	}
 </style>

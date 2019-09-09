@@ -10,9 +10,9 @@
 				</view>
 			</swiper-item>
 		</swiper>
-		<view class="">
-			<text>好友注册你将获得40元学习礼包</text>
-			<text>好友也将领取同等价值学习礼包</text>
+		<view class="text-center text-sm margin-top">
+			<text class="block">好友注册你将获得40元学习礼包</text>
+			<text class="block">好友也将领取同等价值学习礼包</text>
 		</view>
 		<view class="cu-list grid no-border">
 			<view class="cu-item flex-sub" v-for="(item,index) in cuIconList" :key="index">
@@ -97,7 +97,12 @@
 <style scoped lang="scss">
 	@import "../../static/icon.css";
 	@import "../../static/main.css";
-    .card-swiper{
-		height: 910upx !important
+	.inviteContent{
+		.card-swiper{
+			height: 910upx !important
+		}
+		.info{
+		}
 	}
+    
 </style>

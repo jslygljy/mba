@@ -37,6 +37,10 @@ image {
 	border-radius: 6upx;
 }
 
+.radius-round {
+	border-radius: 20upx;
+}
+
 /* ==================
           图片
  ==================== */
@@ -3400,6 +3404,7 @@ scroll-view.cu-steps .cu-item {
 .line-white::after,
 .lines-white::after {
 	border-color: #ffffff;
+	border-radius: 50rpx;
 }
 
 .bg-red {
@@ -3824,6 +3829,10 @@ scroll-view.cu-steps .cu-item {
 .line-red,
 .lines-red {
 	color: #e54d42;
+}
+
+.text-gold{
+	color: gold;
 }
 
 .text-orange,
