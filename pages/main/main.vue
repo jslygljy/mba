@@ -22,7 +22,7 @@
 		<view class="ad">
 			<image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg" mode=""></image>
 		</view>
-		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" bgColor="#efeff4" rangeKey="name" :scroll="true"></sun-tab>
+		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name" :scroll="true"></sun-tab>
 		<view class="list-item">
 			<h3>真题课程包</h3>
 			<view class="list-item-content">
@@ -151,10 +151,8 @@
 </script>
 
 <style scoped lang="scss">
-	*{
-		margin:0px;
-		padding:0px;
-	}
+	@import "../../static/icon.css";
+	@import "../../static/main.css";
 	.content{
 		padding: 10upx;
 	}

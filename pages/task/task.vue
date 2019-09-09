@@ -1,83 +1,158 @@
 <template>
-    <view class="content">
-        <view v-if="hasLogin" class="hello">
-            <view class="title">
-                您好 {{userName}}，您已成功登录。
-            </view>
-            <view class="ul">
-                <view>这是 uni-app 带登录模板的示例App首页。</view>
-                <view>在 “我的” 中点击 “退出” 可以 “注销当前账户”</view>
-            </view>
-        </view>
-        <view v-if="!hasLogin" class="hello">
-            <view class="title">
-                您好 游客。
-            </view>
-            <view class="ul">
-                <view>这是 uni-app 带登录模板的示例App首页。</view>
-                <view>在 “我的” 中点击 “登录” 可以 “登录您的账户”</view>
-            </view>
-        </view>
-    </view>
+	<view>
+		<view v-for="(item, index) in list" :key="index">
+			<uni-collapse ref="add" class="warp" @change="change">
+				<uni-collapse-item v-for="(sub, key) in item" :key="key" :open="sub.open" :show-animation="sub.showAnimation" :disabled="sub.disabled" :title="sub.subName">
+					<template v-if="!sub.type">
+						<view class="content">{{ sub.content }}</view>
+					</template>
+					<template v-else>
+						<uni-list>
+							<uni-list-item v-for="(list, listIndex) in sub.subList" :key="listIndex" :title="list.title" :note="list.note" :thumb="list.thumb" :show-extra-icon="list.showExtraIcon" :extra-icon="list.extraIcon" :show-switch="list.showSwitch" @switchChange="change" />
+						</uni-list>
+					</template>
+				</uni-collapse-item>
+			</uni-collapse>
+		</view>
+	</view>
 </template>
 
 <script>
-    import {
-        mapState
-    } from 'vuex'
+	import uniCollapse from '@/components/uni-collapse/uni-collapse.vue'
+	import uniCollapseItem from '@/components/uni-collapse-item/uni-collapse-item.vue'
+	import uniList from '@/components/uni-list/uni-list.vue'
+	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
 
-    export default {
-        computed: mapState(['forcedLogin', 'hasLogin', 'userName']),
-        onLoad() {
-            if (!this.hasLogin) {
-                uni.showModal({
-                    title: '未登录',
-                    content: '您未登录，需要登录后才能继续',
-                    /**
-                     * 如果需要强制登录，不显示取消按钮
-                     */
-                    showCancel: !this.forcedLogin,
-                    success: (res) => {
-                        if (res.confirm) {
-							/**
-							 * 如果需要强制登录，使用reLaunch方式
-							 */
-                            if (this.forcedLogin) {
-                                uni.reLaunch({
-                                    url: '../login/login'
-                                });
-                            } else {
-                                uni.navigateTo({
-                                    url: '../login/login'
-                                });
-                            }
-                        }
-                    }
-                });
-            }
-        }
-    }
+	export default {
+		components: {
+			uniCollapse,
+			uniCollapseItem,
+			uniList,
+			uniListItem
+		},
+		data() {
+			
+			return {
+				list: [
+						{
+							type: true,
+							subName: '折叠列表',
+							showAnimation: true,
+							subList: [{
+									title: '标题文字',
+									thumb: 'https://img-cdn-qiniu.dcloud.net.cn/new-page/uni.png'
+								},
+								{
+									title: '标题文字',
+									note: '描述信息',
+									thumb: 'https://img-cdn-qiniu.dcloud.net.cn/new-page/uni.png'
+								},
+								{
+									title: '标题文字',
+									showExtraIcon: true,
+									extraIcon: {
+										color: '#4cd964',
+										size: '26',
+										type: 'image'
+									},
+									showSwitch: true
+								}
+							]
+						}
+					]
+			}
+		},
+		methods: {
+			onClick() {
+				this.list[1].data[1].subList.push({
+					title: '新增',
+					thumb: 'https://img-cdn-qiniu.dcloud.net.cn/new-page/uni.png'
+				})
+				this.$nextTick(() => {
+					this.$refs.add[1].resize()
+				})
+			},
+			change(e) {
+				console.log(e)
+			}
+		}
+	}
 </script>
 
 <style scoped lang="scss">
-    .hello {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-    }
+	@import "../../static/icon.css";
+	@import "../../static/main.css";
+	page {
+		display: flex;
+		flex-direction: column;
+		box-sizing: border-box;
+		background-color: #efeff4
+	}
 
-    .title {
-        color: #8f8f94;
-        margin-top: 50upx;
-    }
+	view {
+		font-size: 28upx;
+		line-height: inherit
+	}
 
-    .ul {
-        font-size: 30upx;
-        color: #8f8f94;
-        margin-top: 50upx;
-    }
+	.example {
+		padding: 0 30upx 30upx
+	}
 
-    .ul>view {
-        line-height: 50upx;
-    }
+	.example-title {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-size: 32upx;
+		color: #464e52;
+		padding: 30upx;
+		margin-top: 20upx;
+		position: relative;
+		background-color: #fdfdfd
+	}
+
+	.example-title__after {
+		position: relative;
+		color: #031e3c
+	}
+
+	.example-title:after {
+		content: '';
+		position: absolute;
+		left: 0;
+		margin: auto;
+		top: 0;
+		bottom: 0;
+		width: 10upx;
+		height: 40upx;
+		border-top-right-radius: 10upx;
+		border-bottom-right-radius: 10upx;
+		background-color: #031e3c
+	}
+
+	.example .example-title {
+		margin: 40upx 0
+	}
+
+	.example-body {
+		border-top: 1px #f5f5f5 solid;
+		padding: 30upx;
+		background: #fff
+	}
+
+	.example-info {
+		padding: 30upx;
+		color: #3b4144;
+		background: #fff
+	}
+
+	.content {
+		padding: 30upx;
+		background: #f9f9f9;
+		color: #666;
+	}
+
+	.button {
+		font-size: 26upx;
+		line-height: 90upx;
+	}
 </style>
