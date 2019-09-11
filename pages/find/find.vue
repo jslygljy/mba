@@ -12,17 +12,28 @@
 		
 		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name" :scroll="true" style="margin-top: 40upx;"></sun-tab>
 		<view class="list-item">
-			
 			<view class="list-item-content">
 				<view class="item-right">
 					<view style="flex:4">
-						<h4 class="h4">真题课程包</h4>
-						<text class="grey">提分神奇 商家看过</text>
+						<h4 class="h4">真题课程包防腐剂的萨克垃圾分类受打击了飞洒</h4>
 					</view>
 					<view class="item-bottom">
-						<text class="price">$777</text>
-						<text class="sale">$7774</text>
-						<text class="buy">33万人已购</text>
+						<text class="price">活动</text>
+						<text class="sale">昨天</text>
+					</view>
+				</view>
+				<image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg" mode=""></image>
+			</view>
+		</view>
+		<view class="list-item">
+			<view class="list-item-content">
+				<view class="item-right">
+					<view style="flex:4">
+						<h4 class="h4">真题课程包防腐剂的萨克垃圾分类受打击了飞洒</h4>
+					</view>
+					<view class="item-bottom">
+						<text class="price">活动</text>
+						<text class="sale">昨天</text>
 					</view>
 				</view>
 				<image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg" mode=""></image>
@@ -103,19 +114,25 @@
 		padding: 10upx;
 	}
 	.list-item{
-		margin-top: 50rpx;
-		margin-left: 15rpx;
+		margin-top: 40rpx;
 		font-size: 40rpx;
+		border-bottom: 2rpx #8f8f94 solid;
+		padding-bottom: 40rpx;
+		&:last-child{
+			border: none;
+		}
 		.list-item-content{
 			display: flex;
 			margin-top: 30rpx;
 			image{
 				width: 320rpx;
-				height: 200rpx;
+				height: 180rpx;
+				margin-left: 30rpx;
+				margin-right: 10rpx;
 			}
 			.item-right{
 				font-size: 24rpx;
-				margin-left: 40rpx;
+				margin-left: 10rpx;
 				display: flex;
 				flex-direction: column;
 				.h4{
@@ -129,13 +146,11 @@
 					flex:1
 				}
 				.price{
-					color: #dc143c;
-					font-size: 30rpx;
+					color: #8f8f94;
 				}
 				.sale{
 					margin-left: 20rpx;
 					color: #8f8f94;
-					text-decoration:line-through;
 				}
 				.buy{
 					color: #8f8f94;
