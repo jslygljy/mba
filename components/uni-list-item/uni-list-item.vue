@@ -4,47 +4,25 @@
     :hover-class="disabled || showSwitch ? '' : 'uni-list-item--hover'"
     class="uni-list-item"
     @click="onClick">
-    <view class="uni-list-item__container">
-      <view
-        v-if="thumb"
-        class="uni-list-item__icon"><image
-          :src="thumb"
-          class="uni-list-item__icon-img" /></view>
-      <view
-        v-else-if="showExtraIcon"
-        class="uni-list-item__icon">
-        <uni-icon
-          :color="extraIcon.color"
-          :size="extraIcon.size"
-          :type="extraIcon.type"
-          class="uni-icon-wrapper" />
-      </view>
-      <view class="uni-list-item__content">
-        <view class="uni-list-item__content-title">{{ title }}</view>
-        <view
-          v-if="note"
-          class="uni-list-item__content-note">{{ note }}</view>
-      </view>
-      <view
-        v-if="showBadge || showArrow || showSwitch"
-        class="uni-list-item__extra">
-        <uni-badge
-          v-if="showBadge"
-          :type="badgeType"
-          :text="badgeText" />
-        <switch
-          v-if="showSwitch"
-          :disabled="disabled"
-          :checked="switchChecked"
-          @change="onSwitchChange" />
-        <uni-icon
-          v-if="showArrow"
-          :size="20"
-          class="uni-icon-wrapper"
-          color="#bbb"
-          type="arrowright" />
-      </view>
-    </view>
+	<view class="flex">
+		<view class="flex-four">
+			<view class="uni-list-item__container">
+			  <view class="uni-list-item__content">
+				  <view class="blueRound"></view>
+				  <view class="uni-list-item__content-title">{{ title }}</view>
+			  </view>
+			</view>
+			<view class="flex margin-top-sm progress">
+				<view class="cu-progress sm round">
+					<view class="bg-blue" :style="[{ width:(curryNum/allNum)}]"></view>
+				</view>
+				<text class="margin-left text-sm text-grey">{{curryNum}}/{{allNum}}</text>
+			</view>
+		</view>
+		<view class="flex-sub margin-top">
+			<text class="cuIcon-edit text-grey edit-button"></text>
+		</view>
+	</view>
   </view>
 </template>
 
@@ -58,6 +36,16 @@ export default {
     uniBadge
   },
   props: {
+	  curryNum: {
+	    // 当前阅读数
+	    type: [Number, String],
+	    default: 0
+	  },
+	  allNum: {
+	    // 阅读总数
+	    type: [Number, String],
+	    default: 100
+	  },
     title: {
       type: String,
       default: ''
@@ -137,30 +125,45 @@ export default {
 </script>
 
 <style lang="scss">
-@mixin list-hover {
-	background-color: $uni-bg-color-hover;
-}
+@import "../../static/icon.css";
+	@import "../../static/main.css";
+
 
 @mixin list-disabled {
 	opacity: 0.3;
 }
 
 $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
-
+.progress{
+	width: 410rpx;
+	margin-left: 60rpx;
+}
+.blueRound{
+	display: inline-block;
+	width: 15rpx;
+	height: 15rpx;
+	background-color: dodgerblue;
+	vertical-align: top;
+	border-radius: 50%;
+	margin-top: 14rpx;
+	margin-right: 20rpx;
+}
+.edit-button{
+	position: absolute;
+	right: 60rpx;
+    top: 44rpx;
+	font-size: 50rpx;
+}
 .uni-list-item {
 	font-size: $uni-font-size-lg;
 	position: relative;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	align-items: center;
-
+	margin-top: 10rpx;
+	height: 150rpx;
 	&--disabled {
 		@include list-disabled;
-	}
-
-	&--hover {
-		@include list-hover;
 	}
 
 	&__container {
@@ -173,26 +176,11 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: center;
-
-		&:after {
-			position: absolute;
-			z-index: 3;
-			right: 0;
-			bottom: 0;
-			left: 30upx;
-			height: 1px;
-			content: '';
-			-webkit-transform: scaleY(0.5);
-			transform: scaleY(0.5);
-			background-color: $uni-border-color;
-		}
 	}
 
 	&__content {
 		flex: 1;
-		overflow: hidden;
 		display: flex;
-		flex-direction: column;
 		color: #3b4144;
 		&-title {
 			font-size: $uni-font-size-lg;
@@ -201,6 +189,7 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 			color: inherit;
 			line-height: 1.5;
 			overflow: hidden;
+			display: inline-block;
 		}
 
 		&-note {

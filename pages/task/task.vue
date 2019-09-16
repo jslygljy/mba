@@ -1,19 +1,35 @@
 <template>
-	<view>
-		<view v-for="(item, index) in list" :key="index">
-			<uni-collapse ref="add" class="warp" @change="change">
-				<uni-collapse-item v-for="(sub, key) in item" :key="key" :open="sub.open" :show-animation="sub.showAnimation" :disabled="sub.disabled" :title="sub.subName">
-					<template v-if="!sub.type">
-						<view class="content">{{ sub.content }}</view>
-					</template>
-					<template v-else>
-						<uni-list>
-							<uni-list-item v-for="(list, listIndex) in sub.subList" :key="listIndex" :title="list.title" :note="list.note" :thumb="list.thumb" :show-extra-icon="list.showExtraIcon" :extra-icon="list.extraIcon" :show-switch="list.showSwitch" @switchChange="change" />
-						</uni-list>
-					</template>
+	<view class="task-content">
+		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name"></sun-tab>
+		<view class="list">
+			<view class="item">
+				<text class="cuIcon-punch text-yellow i"></text>
+				<text>打印试题</text>
+			</view>
+			<view class="item" @click="goToRead">
+				<text class="cuIcon-newshotfill text-blue i"></text>
+				<text>套卷练习</text>
+			</view>
+			<view class="item">
+				<text class="cuIcon-babyfill text-purple i"></text>
+				<text>做题历史</text>
+			</view>
+		</view>
+		<text class="practice-title">
+			专项练习
+		</text>
+		<view v-for="(item, index) in list" :key="index" class="collapse-info">
+			<uni-collapse @change="change">
+				<uni-collapse-item :title="item.title" :show-animation="true">
+					<uni-list class="list-info">
+						<uni-list-item  v-for="(subitem, subindex) in item.sublist" :key="subindex" :title="subitem.title" :curryNum="subitem.curryNum" :allNum="subitem.allNum">
+							
+						</uni-list-item>
+					</uni-list>
 				</uni-collapse-item>
 			</uni-collapse>
 		</view>
+		
 	</view>
 </template>
 
@@ -22,44 +38,87 @@
 	import uniCollapseItem from '@/components/uni-collapse-item/uni-collapse-item.vue'
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
-
+	import sunTab from '@/components/sun-tab/sun-tab.vue';
 	export default {
 		components: {
 			uniCollapse,
 			uniCollapseItem,
 			uniList,
-			uniListItem
+			uniListItem,
+			sunTab
 		},
 		data() {
 			
 			return {
-				list: [
-						{
-							type: true,
-							subName: '折叠列表',
-							showAnimation: true,
-							subList: [{
-									title: '标题文字',
-									thumb: 'https://img-cdn-qiniu.dcloud.net.cn/new-page/uni.png'
-								},
-								{
-									title: '标题文字',
-									note: '描述信息',
-									thumb: 'https://img-cdn-qiniu.dcloud.net.cn/new-page/uni.png'
-								},
-								{
-									title: '标题文字',
-									showExtraIcon: true,
-									extraIcon: {
-										color: '#4cd964',
-										size: '26',
-										type: 'image'
-									},
-									showSwitch: true
-								}
-							]
-						}
-					]
+				list:[{
+					title:'形式逻辑',
+					sublist:[{
+						id:1,
+						title:'前真后假',
+						curryNum:10,
+						allNum:599
+					},{
+						id:2,
+						title:'逻辑关系or',
+						curryNum:1,
+						allNum:26
+					},{
+						id:3,
+						title:'充分必要条件',
+						curryNum:1,
+						allNum:23
+					},{
+						id:4,
+						title:'带入逻辑推命题真假',
+						curryNum:2,
+						allNum:69
+					}]
+				},{
+					title:'形式逻辑',
+					sublist:[{
+						id:1,
+						title:'前真后假',
+						curryNum:10,
+						allNum:599
+					},{
+						id:2,
+						title:'逻辑关系or',
+						curryNum:1,
+						allNum:26
+					},{
+						id:3,
+						title:'充分必要条件',
+						curryNum:1,
+						allNum:23
+					},{
+						id:4,
+						title:'带入逻辑推命题真假',
+						curryNum:2,
+						allNum:69
+					}]
+				}
+						
+				],
+				index: 0,
+				tabList: ['逻辑','数学','英语','写作'], //普通数据赋值
+				tabObjectList: [ //对象数组赋值
+				    {
+				        name: '逻辑',
+				        value: 1
+				    },
+				    {
+				        name: '数学',
+				        value: 2
+				    },
+				    {
+				        name: '英语',
+				        value: 3
+				    },
+				    {
+				        name: '写作',
+				        value: 4
+				    }
+				],
 			}
 		},
 		methods: {
@@ -74,6 +133,9 @@
 			},
 			change(e) {
 				console.log(e)
+			},
+			objectChange(){
+				
 			}
 		}
 	}
@@ -82,16 +144,33 @@
 <style scoped lang="scss">
 	@import "../../static/icon.css";
 	@import "../../static/main.css";
-	page {
-		display: flex;
-		flex-direction: column;
-		box-sizing: border-box;
-		background-color: #efeff4
-	}
-
-	view {
-		font-size: 28upx;
-		line-height: inherit
+	.task-content{
+		height:100%;
+		padding-bottom: 100rpx;
+		.list{
+			display: flex;
+			margin-bottom: 20rpx;
+			margin-top: 30rpx;
+			.item{
+				flex:1;
+				text-align: center;
+				font-size: 24rpx;
+				.i{
+					display: block;
+					font-size: 80rpx;
+				}
+			}
+		}
+		.practice-title{
+			margin: 40rpx 0px 0rpx 30rpx;
+			display: inline-block;
+		}
+		.list-info{
+			margin: 20rpx 0px 0rpx 20rpx;
+		}
+		.collapse-info{
+			margin-top: 25rpx;
+		}
 	}
 
 	.example {
@@ -134,7 +213,6 @@
 	}
 
 	.example-body {
-		border-top: 1px #f5f5f5 solid;
 		padding: 30upx;
 		background: #fff
 	}
@@ -149,10 +227,5 @@
 		padding: 30upx;
 		background: #f9f9f9;
 		color: #666;
-	}
-
-	.button {
-		font-size: 26upx;
-		line-height: 90upx;
 	}
 </style>

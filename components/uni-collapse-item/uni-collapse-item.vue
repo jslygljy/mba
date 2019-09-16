@@ -5,23 +5,24 @@
     <view
       class="uni-collapse-cell__title header"
       @click="onClick">
-      <view
-        v-if="thumb"
-        class="uni-collapse-cell__title-extra"><image
-          :src="thumb"
-          class="uni-collapse-cell__title-img" /></view>
+	  <view
+	    :class="{ 'uni-active': isOpen, 'uni-collapse-cell--animation': showAnimation === true }"
+	    class="uni-collapse-cell__title-arrow">
+	    <uni-icon color="#fff" type="arrowdown" class="icon-info"/>
+	  </view>
+     
       <view class="uni-collapse-cell__title-inner">
         <view class="uni-collapse-cell__title-text">{{ title }}</view>
       </view>
-      <view
-        :class="{ 'uni-active': isOpen, 'uni-collapse-cell--animation': showAnimation === true }"
-        class="uni-collapse-cell__title-arrow">
-        <uni-icon
-          color="#bbb"
-          size="20"
-          type="arrowdown" />
-      </view>
+      <text class="cuIcon-edit text-grey edit-button"></text>
+	  
     </view>
+	<view class="flex margin-top progress">
+		<view class="cu-progress sm round">
+			<view class="bg-blue" :style="[{ width:(curryNum/allNum)}]"></view>
+		</view>
+		<text class="margin-left text-sm text-grey">{{curryNum}}/{{allNum}}</text>
+	</view>
     <view
       :class="{ 'uni-collapse-cell--animation': showAnimation === true }"
       :style="{ height: isOpen ? height : '0px' }"
@@ -46,6 +47,16 @@ export default {
       type: String,
       default: ''
     },
+	curryNum: {
+	  // 当前阅读数
+	  type: [Number, String],
+	  default: 0
+	},
+	allNum: {
+	  // 阅读总数
+	  type: [Number, String],
+	  default: 100
+	},
     name: {
       // 唯一标识符
       type: [Number, String],
@@ -118,7 +129,6 @@ export default {
           .boundingClientRect()
           .exec(ret => {
             this.height = ret[0].height + 'px'
-            console.log(this.height)
           })
       }
     },
@@ -142,9 +152,9 @@ export default {
 </script>
 
 <style lang="scss">
-@mixin collapse-hover {
-	background-color: #f5f5f5;
-}
+	@import "../../static/icon.css";
+	@import "../../static/main.css";
+
 
 @mixin collapse-disabled {
 	opacity: 0.3;
@@ -154,14 +164,26 @@ $collapse-title-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 
 .uni-collapse-cell {
 	position: relative;
-	&--hover {
-		@include collapse-hover;
+	.progress{
+		width: 50%;
+		margin-left: 84rpx;
 	}
-
-	&--open {
-		@include collapse-hover;
+	.icon-info{
+		color: rgb(255, 255, 255);
+		font-size: 15rpx;
+		background-color: rgb(0, 129, 255);
+		border-radius: 50%;
+		text-align: center;
+		width: 40rpx;
+		height: 40rpx;
+		text-indent: 4rpx;
 	}
-
+	.edit-button{
+		position: absolute;
+		right: 40rpx;
+		top: 32rpx;
+		font-size: 50rpx;
+	}
 	&--disabled {
 		@include collapse-disabled;
 	}
@@ -170,21 +192,8 @@ $collapse-title-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 		transition: all 0.3s;
 	}
 
-	&:after {
-		position: absolute;
-		z-index: 3;
-		right: 0;
-		bottom: 0;
-		left: 0px;
-		height: 1px;
-		content: '';
-		-webkit-transform: scaleY(0.5);
-		transform: scaleY(0.5);
-		background-color: $uni-border-color;
-	}
-
 	&__title {
-		padding: $collapse-title-pd;
+		padding: 20rpx 28rpx;
 		width: 100%;
 		box-sizing: border-box;
 		flex: 1;
@@ -212,7 +221,7 @@ $collapse-title-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 			height: 20px;
 			transform: rotate(0deg);
 			transform-origin: center center;
-
+			margin-right: 20rpx;
 			&.uni-active {
 				transform: rotate(-180deg);
 			}
@@ -238,9 +247,8 @@ $collapse-title-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 	&__content {
 		position: relative;
 		width: 100%;
-		overflow: hidden;
 		background: $uni-bg-color;
-
+		overflow: hidden;
 		.view {
 			font-size: $uni-font-size-base;
 		}
