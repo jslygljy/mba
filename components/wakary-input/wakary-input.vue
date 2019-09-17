@@ -11,7 +11,7 @@
 			<block v-for="(item, index) in ranges" :key="index">
 				<view :class="['item', { active: codeIndex === item, middle: type === 'middle', bottom: type === 'bottom', box: type === 'box' }]">
 					<view class="line" v-if="type !== 'middle'"></view>
-					<view v-if="type === 'middle' && codeIndex <= item" class="iconfont icon-line"></view>
+					<view v-if="type === 'middle' && codeIndex <= item" class="bottom-line"></view>
 					<block v-if="isPwd && codeArr.length >= item">
 						<text class="dot">.</text>
 					</block>
@@ -65,7 +65,7 @@ export default {
 			let { value } = e.detail
 			let arr = value.split('')
 			this.codeIndex = arr.length + 1
-			this.codeArr = arr
+			this.codeArr = arr;
 			if (this.codeIndex > Number(this.maxlength)) {
 				this.$emit('finish',this.codeArr.join(''))
 			}
@@ -88,10 +88,11 @@ export default {
 	}
 	.code-box {
 		text-align: center;
+		margin-top: 20rpx;
 	}
 	.flex-box {
 		display: flex;
-		justify-content: center;
+		justify-content: flex-start;
 		flex-wrap: wrap;
 		position: relative;
 	}
@@ -150,5 +151,15 @@ export default {
 	.flex-box .dot{
 		font-size: 80upx;
 		line-height: 40upx;
+	}
+	.flex-box .bottom-line {
+		height: 4px;
+		background: #000000;
+		width: 80%;
+		position: absolute;
+		border-radius: 2px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 	}
 </style>

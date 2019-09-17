@@ -22,8 +22,7 @@
 			<uni-collapse @change="change">
 				<uni-collapse-item :title="item.title" :show-animation="true">
 					<uni-list class="list-info">
-						<uni-list-item  v-for="(subitem, subindex) in item.sublist" :key="subindex" :title="subitem.title" :curryNum="subitem.curryNum" :allNum="subitem.allNum">
-							
+						<uni-list-item @click="goToDetail(subitem.id)" v-for="(subitem, subindex) in item.sublist" :key="subindex" :title="subitem.title" :curryNum="subitem.curryNum" :allNum="subitem.allNum">
 						</uni-list-item>
 					</uni-list>
 				</uni-collapse-item>
@@ -136,6 +135,11 @@
 			},
 			objectChange(){
 				
+			},
+			goToDetail(id){
+				uni.reLaunch({
+				    url: '../taskDetail/taskDetail?id='+id
+				});
 			}
 		}
 	}

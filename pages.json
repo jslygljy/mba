@@ -8,7 +8,7 @@
         }, {
             "path": "pages/login/login",
             "style": {
-                "navigationBarTitleText": "登录"
+                "navigationBarTitleText": "手机号登录"
             }
         }, {
             "path": "pages/reg/reg",
@@ -49,6 +49,16 @@
 			"path": "pages/inviteFriend/inviteFriend",
 			"style": {
 			    "navigationBarTitleText": "邀请好友一起学习"
+			}
+		},{
+			"path": "pages/taskDetail/taskDetail",
+			"style": {
+			    "navigationBarTitleText": "做题"
+			}
+		},{
+			"path": "pages/loginCode/loginCode",
+			"style": {
+			    "navigationBarTitleText": "输入验证码"
 			}
 		}
     ],
