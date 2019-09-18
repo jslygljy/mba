@@ -128,22 +128,18 @@
 		display: inline-flex;
 		flex-wrap: nowrap;
 		justify-content: center;
-
+		font-size: 30rpx;
 		&__splitor {
 			justify-content: center;
 			line-height: $countdown-height;
 			padding: 0 5upx;
-            font-size: $uni-font-size-base;
 		}
-
 		&__number {
 			line-height: $countdown-height;
 			justify-content: center;
 			height: $countdown-height;
 			border-radius: $uni-border-radius-base;
 			margin: 0 5upx;
-			font-size: $uni-font-size-base;
-			font-size: $uni-font-size-sm;
 		}
 	}
 </style>
