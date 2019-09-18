@@ -60,7 +60,13 @@
 			"style": {
 			    "navigationBarTitleText": "输入验证码"
 			}
+		},{
+			"path": "pages/currlum/currlum",
+			"style": {
+			    "navigationBarTitleText": "我的课程"
+			}
 		}
+		
     ],
     "tabBar": {
         "color": "#7a7e83",
