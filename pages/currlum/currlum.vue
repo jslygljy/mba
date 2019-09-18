@@ -1,8 +1,8 @@
 <template>
-    <view class="content">
+    <view class="currlum-content">
 		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name" :scroll="true"></sun-tab>
 		<view class="list-item">
-			<view class="list-item-content" v-for="(item,index) in list" :key="index">
+			<view class="list-item-content" v-for="(item,index) in list" :key="index" @click="goToDetail(item.id)">
 				<view class="flex-sub">
 					<image :src="item.coverimg" mode=""></image>
 				</view>
@@ -83,7 +83,11 @@
                 console.log('对象数据返回格式');
                 console.log(e);
             },
-			
+			goToDetail(id){
+				uni.reLaunch({
+				    url: '../curlumDetail/curlumDetail?id='+id
+				});
+			}
 		}
 		
     }

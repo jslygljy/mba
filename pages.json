@@ -65,6 +65,11 @@
 			"style": {
 			    "navigationBarTitleText": "我的课程"
 			}
+		},{
+			"path": "pages/curlumDetail/curlumDetail",
+			"style": {
+			    "navigationBarTitleText": "课程详细"
+			}
 		}
 		
     ],
