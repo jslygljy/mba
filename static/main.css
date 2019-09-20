@@ -3777,6 +3777,10 @@ scroll-view.cu-steps .cu-item {
 	font-size: 44upx;
 }
 
+.text-xxxl {
+	font-size: 60upx;
+}
+
 .text-sl {
 	font-size: 80upx;
 }
@@ -3921,4 +3925,8 @@ scroll-view.cu-steps .cu-item {
 .line-white,
 .lines-white {
 	color: #ffffff;
+}
+
+.text-darkGrey{
+	color: #bbb;
 }
