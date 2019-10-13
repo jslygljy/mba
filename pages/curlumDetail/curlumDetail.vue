@@ -41,14 +41,14 @@
 		</view>
 		<!-- 评论 -->
 		<view class="comment" v-if="index==2">
-			<text class="title">精彩评论({{goodNum}})</text>
-			<comment :list="goodlist"></comment>
-			<text class="title">最新评论({{newNum}})</text>
-			<comment :list="newlist"></comment>
-			<view class="comment-post">
-				<input type="text" :value="commentInfo" placeholder="请输入你的评论"/>
-				<text class="post-button">发布</text>
-			</view>
+			<text class="title">精彩评论({{goodlist.length}})</text>
+			<comment :list="goodlist" @thumbsGoodUp="thumbsGoodUp"></comment>
+			<text class="title">最新评论({{newlist.length}})</text>
+			<comment :list="newlist" @thumbsListUp="thumbsListUp"></comment>
+		</view>
+		<view class="comment-post">
+			<input type="text" :value="commentInfo" placeholder="请输入你的评论"/>
+			<text class="post-button">发布</text>
 		</view>
     </view>
 </template>
@@ -72,9 +72,7 @@
 				price:'免费',
 				curlumType:'点播',
 				curlumNum:'1',
-				goodNum:1,
 				commentInfo:'',
-				newNum:2,
 				index: 0,
 				PlayNum:0,
 				directoryList:[{
@@ -100,7 +98,26 @@
 					'info':'好牛逼的感觉，是不是小程序、App、移动端都互通了？',
 					'time':'08/10 07:55',
 					'likeNum':2,
-					'isLike':false
+					'isLike':true,
+					'newType':'hot'
+				},{
+					'headImg':'https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png',
+					'nickName':'今生缘',
+					'info':'好牛逼的感觉，是不是小程序、App、移动端都互通了？',
+					'time':'08/10 07:55',
+					'likeNum':2,
+					'isLike':true,
+					'newType':'hot',
+					'reply':'是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的是的，是的'
+				},{
+					'headImg':'https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png',
+					'nickName':'今生缘',
+					'info':'好牛逼的感觉，是不是小程序、App、移动端都互通了？',
+					'time':'08/10 07:55',
+					'likeNum':2,
+					'isLike':false,
+					'newType':'hot',
+					'reply':'是的，是的'
 				}],
 				newlist:[{
 					'headImg':'https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png',
@@ -108,7 +125,27 @@
 					'info':'好牛逼的感觉，是不是小程序、App、移动端都互通了？',
 					'time':'08/10 07:55',
 					'likeNum':2,
-					'isLike':false
+					'isLike':false,
+					'newType':'new',
+					'reply':'是的，是的'
+				},{
+					'headImg':'https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png',
+					'nickName':'今生缘',
+					'info':'好牛逼的感觉，是不是小程序、App、移动端都互通了？',
+					'time':'08/10 07:55',
+					'likeNum':2,
+					'isLike':false,
+					'newType':'new',
+					'reply':'是的，是的'
+				},{
+					'headImg':'https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png',
+					'nickName':'今生缘',
+					'info':'好牛逼的感觉，是不是小程序、App、移动端都互通了？2222',
+					'time':'08/10 07:55',
+					'likeNum':2,
+					'isLike':false,
+					'newType':'new',
+					'reply':'是的，是的'
 				}],
                 tabObjectList: [ //对象数组赋值
                     {
@@ -149,6 +186,20 @@
 				});
 				c[index].isPlaying = true;
 				this.directoryList = c;
+			},
+			thumbsListUp(index){
+				this.newlist[index]['isLike'] = true;
+				this.newlist[index]['likeNum'] = ++this.newlist[index]['likeNum'];
+				uni.showToast({
+					title: '点赞成功'
+				});
+			},
+			thumbsGoodUp(index){
+				this.goodlist[index]['isLike'] = true
+				this.goodlist[index]['likeNum'] = ++this.goodlist[index]['likeNum'];
+				uni.showToast({
+					title: '点赞成功'
+				});
 			}
         }
     }
@@ -207,39 +258,44 @@
 		}
 	}
 	.comment{
+		height: 100%;
+		display: inline-block;
+		padding-bottom: 110rpx;
 		.title{
-			font-size: 28rpx;
-			margin: 30rpx;
+			font-size: 32rpx;
+			margin: 16rpx 0px 10rpx 26rpx;
+			display: inline-block;
 		}
-		.comment-post{
-			position: fixed;
-			bottom: 0px;
-			height: 100rpx;
-			display: flex;
-			width: 100%;
-			background: #fff;
-			z-index: 1;
-			input{
-				flex:3;
-				margin: 20rpx 30rpx 0px 30rpx;
-				background-color: #ddd;
-				text-indent: 20rpx;
-				font-size: 30rpx;
-				height: 60rpx;
-				color: gray;
-				border-radius: 10rpx;
-			}
-			.post-button{
-				flex:1;
-				margin: 20rpx 30rpx 0px 30rpx;
-				border-radius: 40rpx;
-				font-size: 28rpx;
-				text-align: center;
-				color: #fff;
-				height: 60rpx;
-				line-height: 60rpx;
-				background-color: blue;
-			}
+		
+	}
+	.comment-post{
+		position: fixed;
+		bottom: 0px;
+		height: 100rpx;
+		display: flex;
+		width: 100%;
+		background: #fff;
+		z-index: 1;
+		input{
+			flex:3;
+			margin: 20rpx 0rpx 0px 30rpx;
+			background-color: #eee;
+			text-indent: 20rpx;
+			font-size: 30rpx;
+			height: 60rpx;
+			color: #eef;
+			border-radius: 10rpx;
+		}
+		.post-button{
+			flex:1;
+			margin: 20rpx 30rpx 0px 30rpx;
+			border-radius: 40rpx;
+			font-size: 28rpx;
+			text-align: center;
+			color: #fff;
+			height: 60rpx;
+			line-height: 60rpx;
+			background-color: blue;
 		}
 	}
 }

@@ -11,12 +11,16 @@
                             <text>{{item.nickName}}</text>
                         </view>
                         <view class="uni-comment-content">{{item.info}}</view>
+						<view class="uni-comment-reply" v-if="item.reply">
+							<text class="text-blue">教学助教回复</text>:
+							<text class="reply-content">{{item.reply}}</text>
+						</view>
                         <view class="uni-comment-date">
                             <text>{{item.time}}</text>
 							<view class="uni-comment-replay-btn">
-								{{item.likeNum}}
+								<text class="margin-right-xs">{{item.likeNum}}</text>
 								<text v-if="item.isLike" class="cuIcon-appreciatefill text-blue"></text>
-								<text v-else class="cuIcon-appreciatefill text-grey"></text>
+								<text v-else class="cuIcon-appreciatefill text-grey" @click="onClick(item,index)"></text>
 							</view>
                         </view>
                     </view>
@@ -34,14 +38,28 @@
                 title: "评论界面"
             }
         },
+		mounted(){
+		},
 		props: {
-		  list: {
-		    type: Array,
-		    default () {
-		    	return [];
-		    }
+		    list: {
+				type: Array,
+				default () {
+					return [];
+				}
 			}
 		},
+		methods: {
+			onClick (item,index) {
+				console.log(item.newType);
+				if(item.newType=="hot"){
+					this.$emit('thumbsGoodUp',index)
+				}else{
+					console.log(this.list)
+					this.$emit('thumbsListUp',index)
+				}
+			  
+			}
+		}
     }
 </script>
 
@@ -50,21 +68,23 @@
 	@import "../../static/main.css";
     /* comment */
     .uni-padding-wrap {
-        padding: 30upx;
+        padding:0rpx 30upx;
+		
     }
     .uni-comment {
         padding: 5rpx 0;
         display: flex;
         flex-grow: 1;
         flex-direction: column;
+		height: 100%
     }
 
     .uni-comment-list {
         flex-wrap: nowrap;
-        padding: 10rpx 0;
-        margin: 10rpx 0;
+        padding: 20rpx 0 20rpx;
         width: 100%;
         display: flex;
+		border-bottom: 1rpx #ddd solid;
     }
 
     .uni-comment-face {
@@ -74,6 +94,7 @@
         margin-right: 20upx;
         flex-shrink: 0;
         overflow: hidden;
+		margin-top: 20rpx;
     }
 
     .uni-comment-face image {
@@ -88,6 +109,7 @@
     .uni-comment-top {
         line-height: 1.5em;
         justify-content: space-between;
+		margin-top: 2rpx;
     }
 
     .uni-comment-top text {
@@ -101,6 +123,7 @@
         display: flex !important;
         flex-grow: 1;
 		font-size: 24rpx;
+		padding-bottom: 15rpx;
     }
 
     .uni-comment-date view {
@@ -112,6 +135,16 @@
     .uni-comment-content {
         line-height: 1.6em;
         font-size: 28upx;
-        padding: 8rpx 0;
+        padding: 8rpx 0 25rpx;
     }
+	.uni-comment-reply{
+		background-color: #ddd;
+		font-size: 24rpx;
+		border-radius: 10rpx;
+		padding: 5rpx 10rpx;
+		margin-bottom: 24rpx;
+		.reply-content{
+			font-size: 24rpx;
+		}
+	}
 </style>
