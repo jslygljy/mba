@@ -2,18 +2,18 @@
     <view class="currlum-content">
 		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name" :scroll="true"></sun-tab>
 		<view class="list-item">
-			<view class="list-item-content" v-for="(item,index) in list" :key="index" @click="goToDetail(item.id)">
+			<view class="list-item-content" v-for="(item,index) in list" :key="item.innerid" @click="goToDetail(item.innerid)">
 				<view class="flex-sub">
-					<image :src="item.coverimg" mode=""></image>
+					<image :src="item.speaker_heading" mode=""></image>
 				</view>
 				
 				<view class="item-right flex-treble">
 					<view style="flex:4">
 						<text class="h4">{{item.title}}</text>
-						<text class="grey">主讲:{{item.teacher}}</text>
+						<text class="grey">主讲:{{item.speaker_name}}</text>
 					</view>
 					<view class="item-bottom">
-						<text class="grey">{{item.status}}</text>
+						<text class="grey">已学{{ item.status==item.status? '完' :item.status+'/'+item.status+'课时' }}</text>
 					</view>
 				</view>
 			</view>
@@ -24,7 +24,7 @@
 <script>
  
 	import sunTab from '@/components/sun-tab/sun-tab.vue';
-	
+	import config from '../../config.js';
     export default {
 		components:{
 			sunTab
@@ -36,56 +36,72 @@
 				list:[{
 					'title':'真题课程包',
 					'teacher':'123',
-					'status':'未学习',
+					'status':'30',
 					'id':1,
 					'coverimg':'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
-				},{
-					'title':'真题课程包真题课程包真题课程包真题课程包',
-					'teacher':'123',
-					'status':'已学习',
-					'id':2,
-					'coverimg':'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
-				},],
+				}],
                 tabObjectList: [ //对象数组赋值
                     {
                         name: '全部',
-                        value: 1
+                        value: ''
                     },
                     {
                         name: '逻辑',
-                        value: 2
+                        value: 1
                     },
                     {
                         name: '数学',
-                        value: 3
+                        value: 2
                     },
                     {
                         name: '英语',
-                        value: 4
+                        value: 3
                     },
                     {
                         name: '写作',
-                        value: 5
+                        value: 4
                     },
                     {
                         name: '面试',
-                        value: 6
+                        value: 5
                     },
                     {
                         name: '助力',
-                        value: 7
+                        value: 6
                     }
                 ],
 			}
 		},
+		onShow(){
+			this.getList('');
+		},
 		methods:{
             objectChange(e){
-                console.log('对象数据返回格式');
-                console.log(e);
+                this.getList(e.tab.value)
             },
 			goToDetail(id){
 				uni.reLaunch({
-				    url: '../curlumDetail/curlumDetail?id='+id
+				    url: '../curlumDetail/curlumDetail?course_id='+id
+				});
+			},
+			getList(type){
+				let userid =uni.getStorageSync('customer_id');
+				// 全部
+				uni.request({
+					url: config.url+'/app/course/list/'+userid, //仅为示例，并非真实接口地址。
+				    data: {
+				        type: type
+				    },
+				    success: (res) => {
+						if(res.data.errcode==0){
+							this.list = res.data.data
+						}else{
+							uni.showToast({
+								title: res.data.errmsg
+							})
+						}
+				        
+				    }
 				});
 			}
 		}

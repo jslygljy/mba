@@ -58,6 +58,7 @@
 	import comment from '@/components/commoent/uni-comment.vue';
 	import uniCollapse from '@/components/uni-collapse/uni-collapse.vue'
 	import uniCollapseItem from '@/components/uni-collapse-item-curlum/uni-collapse-item-curlum.vue'
+	import config from '../../config.js';
     export default {
 		components:{
 			sunTab,
@@ -161,8 +162,15 @@
                         value: 2
                     }
                 ],
+				course_id:''
             }
         },
+		onShow(){
+			this.getDetail('');
+		},
+		onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
+		   this.course_id = option.course_id;
+		},
         methods: {
             videoErrorCallback: function(e) {
 				uni.showModal({
@@ -200,7 +208,29 @@
 				uni.showToast({
 					title: '点赞成功'
 				});
+			},
+			
+			getDetail(){
+				let userid =uni.getStorageSync('customer_id');
+				// 全部
+				uni.request({
+					url: config.url+'/app/course/book/list/'+this.course_id+'/'+userid, //仅为示例，并非真实接口地址。
+				    data: {
+				    },
+				    success: (res) => {
+						if(res.data.errcode==0){
+							console.log(res)
+						}else{
+							uni.showToast({
+								title: res.data.errmsg
+							})
+						}
+				        
+				    }
+				});
+				
 			}
+			
         }
     }
 </script>

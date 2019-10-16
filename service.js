@@ -1,5 +1,5 @@
 // 管理账号信息
-const USERS_KEY = 'USERS_KEY';
+const USERS_KEY = 'customer_id';
 const STATE_KEY = 'STATE_KEY';
 
 const getUsers = function () {

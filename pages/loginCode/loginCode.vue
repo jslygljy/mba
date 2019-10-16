@@ -3,7 +3,7 @@
         <view class="input-group">
             <view class="input-row border">
                 <text class="title">已发送4位验证码至{{tel}}</text>
-                <wakary-input type="bottom" @finish="finish"></wakary-input>
+                <wakary-input type="bottom" @finish="finish" style="width: 100%;"></wakary-input>
             </view>
         </view>
         <view class="btn-row">
@@ -28,7 +28,7 @@
     import service from '../../service.js';
 	import wakaryInput from '@/components/wakary-input/wakary-input.vue'
     import mInput from '../../components/m-input.vue'
-
+	import config from '../../config.js';
     export default {
         components: {
             mInput,
@@ -48,20 +48,48 @@
 				this.code = code;
 			},
             bindLogin() {
-                /**
-                 * 客户端对账号信息进行一些必要的校验。
-                 * 实际开发中，根据业务需要进行处理，这里仅做示例。
-                 */
-                if (this.code.length < 4) {
-                    uni.showToast({
-                        icon: 'none',
-                        title: '请输入验证码'
-                    });
-                    return;
-                }
-               uni.reLaunch({
-                   url: '../main/main',
-               });
+				/**
+				 * 客户端对账号信息进行一些必要的校验。
+				 * 实际开发中，根据业务需要进行处理，这里仅做示例。
+				 */
+				if (this.code.length < 4) {
+					uni.showToast({
+						icon: 'none',
+						title: '请输入验证码'
+					});
+					return;
+				}
+				 
+			   uni.request({
+			       url: config.url+'/app/login', //仅为示例，并非真实接口地址。
+				   method:"POST",
+			       data: {
+			           "mobile":this.tel,
+					   "pwd":this.code
+			   	},
+			       success: (res) => {
+			           console.log(res);
+					   if(res.errcode==0){
+						   uni.reLaunch({
+						       url: '../main/main',
+						   });
+						   uni.setStorageSync('customer_id', JSON.stringify(res.data.innerid));
+						   uni.showToast({
+						   	icon: 'none',
+						   	title: '登录成功'
+						   });
+							
+					   }else{
+						   uni.showToast({
+						   	icon: 'none',
+						   	title: res.errmsg
+						   });
+						   
+					   }
+					   
+			   		}
+			   });
+               
             }
 			
         },

@@ -25,26 +25,26 @@
 		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name" :scroll="true"></sun-tab>
 		
 		<!--  推荐课程  -->
-		<h3 class="list-title">{{tuijianlist.title}}</h3>
-		<view class="list-item" v-for="(item,index) in tuijianlist.list" :key="index.id">
+		<h3 class="list-title">推荐课程</h3>
+		<view class="list-item" v-for="(item,index) in tuijianlist.list" :key="index.innerid">
 			<view class="list-item-content">
-				<image :src="item.coverimg" mode=""></image>
+				<image :src="item.speaker_heading" mode=""></image>
 				<view class="item-right">
 					<view style="flex:4">
-						<h4 class="h4">{{item.name}}</h4>
+						<h4 class="h4">{{item.title}}</h4>
 						<text class="grey">{{item.subinfo}}</text>
 					</view>
 					<view class="item-bottom">
 						<text class="price">{{item.price}}</text>
-						<text class="sale">{{item.sale}}</text>
-						<text class="buy">{{item.buy}}人已购</text>
+						<text class="sale">{{item.old_price}}</text>
+						<text class="buy">{{item.buy_count}}人已购</text>
 					</view>
 				</view>
 			</view>
 		</view>
 		
 		<!--  热门课程  -->
-		<h3 class="list-title">{{hotlist.title}}</h3>
+		<h3 class="list-title">热门课程</h3>
 		<view class="list-item" v-for="(item,index) in hotlist.list" :key="index.id">
 			<view class="list-item-content">
 				<image :src="item.coverimg" mode="" class="people"></image>
@@ -101,7 +101,7 @@
 		</view>
 		
 		<!--  免费系统课程  -->
-		<h3 class="list-title">{{mianfeilist.title}}</h3>
+		<h3 class="list-title">免费系统课程</h3>
 		<view class="list-item" v-for="(item,index) in mianfeilist.list" :key="index.id">
 			<view class="list-item-content">
 				<image :src="item.coverimg" mode="" class="people"></image>
@@ -122,20 +122,18 @@
 </template>
 
 <script>
-    import {
-        mapState
-    } from 'vuex'
+   
 	import bwSwiper from '@/wxcomponents/bw-swiper/bw-swiper.vue'
 	import sunTab from '@/components/sun-tab/sun-tab.vue';
-	
+	import config from '../../config.js';
     export default {
-        computed: mapState(['forcedLogin', 'hasLogin', 'userName']),
 		components:{
 			bwSwiper,
 			sunTab
 		},
 		data() {
 		    return {
+				hasLogin:false,
 				swiperList:[{img: '../../static/main/banner1.png'},{img: '../../static/main/banner2.png'},{img: '../../static/main/banner3.png'}],
 				index: 0,
 				tuijianlist:{
@@ -308,41 +306,40 @@
 		},
         onLoad() {
 			// 登录逻辑
-       //      if (!this.hasLogin) {
-       //          uni.showModal({
-       //              title: '未登录',
-       //              content: '您未登录，需要登录后才能继续',
-       //              /**
-       //               * 如果需要强制登录，不显示取消按钮
-       //               */
-       //              showCancel: !this.forcedLogin,
-       //              success: (res) => {
-       //                  if (res.confirm) {
-							// /**
-							//  * 如果需要强制登录，使用reLaunch方式
-							//  */
-       //                      if (this.forcedLogin) {
-       //                          uni.reLaunch({
-       //                              url: '../login/login'
-       //                          });
-       //                      } else {
-       //                          uni.navigateTo({
-       //                              url: '../login/login'
-       //                          });
-       //                      }
-       //                  }
-       //              }
-       //          });
-       //      }
+            if (!this.hasLogin) {
+                uni.showModal({
+                    title: '未登录',
+                    content: '您未登录，需要登录后才能继续',
+                    /**
+                     * 如果需要强制登录，不显示取消按钮
+                     */
+                    showCancel: !this.forcedLogin,
+                    success: (res) => {
+                        if (res.confirm) {
+							/**
+							 * 如果需要强制登录，使用reLaunch方式
+							 */
+                            if (this.forcedLogin) {
+                                uni.reLaunch({
+                                    url: '../login/login'
+                                });
+                            } else {
+                                uni.navigateTo({
+                                    url: '../login/login'
+                                });
+                            }
+                        }
+                    }
+                });
+            }
         },
+		onShow(){
+			this.getList();
+		},
 		methods:{
-			arrayChange(e){
-                console.log('数组数据返回格式');
-                console.log(e);
-            },
             objectChange(e){
                 console.log('对象数据返回格式');
-                console.log(e);
+                console.log(e.tab.value);
             },
 			goToRead(){
 				 uni.reLaunch({
@@ -352,6 +349,30 @@
 			goToCurriculum(){
 				uni.reLaunch({
 				    url: '../currlum/currlum',
+				});
+			},
+			getList(){
+				let id =uni.getStorageSync('customer_id');
+				
+				// 热门推荐
+				uni.request({
+					url: config.url+'/app/course/list/'+id, //仅为示例，并非真实接口地址。
+				    data: {
+				        type: 0
+				    },
+				    success: (res) => {
+				        console.log(res.data);
+				    }
+				});
+				// 免费
+				uni.request({
+					url: config.url+'/app/course/list/'+id, //仅为示例，并非真实接口地址。
+				    data: {
+				        type: ''
+				    },
+				    success: (res) => {
+				        console.log(res.data);
+				    }
 				});
 			}
 		}

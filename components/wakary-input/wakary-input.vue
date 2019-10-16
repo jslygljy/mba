@@ -95,6 +95,7 @@ export default {
 		justify-content: flex-start;
 		flex-wrap: wrap;
 		position: relative;
+		margin-right: 40rpx;
 	}
 	.flex-box .hide-input {
 		position: absolute;
@@ -107,6 +108,7 @@ export default {
 		opacity: 1;
 	}
 	.flex-box .item {
+		flex:1;
 		position: relative;
 		width: 100upx;
 		height: 100upx;
