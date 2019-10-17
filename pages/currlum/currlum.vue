@@ -13,7 +13,8 @@
 						<text class="grey">主讲:{{item.speaker_name}}</text>
 					</view>
 					<view class="item-bottom">
-						<text class="grey">已学{{ item.status==item.status? '完' :item.status+'/'+item.status+'课时' }}</text>
+						<!-- <text class="grey">已学{{ item.status==item.status? '完' :item.status+'/'+item.status+'课时' }}</text> -->
+						<text class="grey">已学{{item.speed}}</text>
 					</view>
 				</view>
 			</view>
@@ -88,7 +89,8 @@
 				let userid =uni.getStorageSync('customer_id');
 				// 全部
 				uni.request({
-					url: config.url+'/app/course/list/'+userid, //仅为示例，并非真实接口地址。
+					url: config.url+'/app/course/list/'+userid,
+					// url: config.url+'/app/sgincourse/list/'+userid,
 				    data: {
 				        type: type
 				    },

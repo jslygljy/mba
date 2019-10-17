@@ -25,99 +25,46 @@
 		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name" :scroll="true"></sun-tab>
 		
 		<!--  推荐课程  -->
-		<h3 class="list-title">推荐课程</h3>
-		<view class="list-item" v-for="(item,index) in tuijianlist.list" :key="index.innerid">
-			<view class="list-item-content">
-				<image :src="item.speaker_heading" mode=""></image>
-				<view class="item-right">
-					<view style="flex:4">
-						<h4 class="h4">{{item.title}}</h4>
-						<text class="grey">{{item.subinfo}}</text>
-					</view>
-					<view class="item-bottom">
-						<text class="price">{{item.price}}</text>
-						<text class="sale">{{item.old_price}}</text>
-						<text class="buy">{{item.buy_count}}人已购</text>
-					</view>
-				</view>
-			</view>
-		</view>
-		
-		<!--  热门课程  -->
-		<h3 class="list-title">热门课程</h3>
-		<view class="list-item" v-for="(item,index) in hotlist.list" :key="index.id">
-			<view class="list-item-content">
-				<image :src="item.coverimg" mode="" class="people"></image>
-				<view class="item-right">
-					<view style="flex:5">
-						<h4 class="h4">{{item.name}}</h4>
-						<text class="grey">{{item.subinfo}}</text>
-					</view>
-					<view class="item-bottom">
-						<text class="price">{{item.price}}</text>
-						<text class="sale">{{item.sale}}</text>
-						<text class="buy">{{item.buy}}人已购</text>
+		<view v-if="index==0">
+			<h3 class="list-title">推荐课程</h3>
+			<view class="list-item" v-for="(item,index) in tuijianlist" :key="index.innerid">
+				<view class="list-item-content">
+					<image :src="item.speaker_heading" mode=""></image>
+					<view class="item-right">
+						<view style="flex:4">
+							<h4 class="h4">{{item.title}}</h4>
+							<text class="grey">{{item.subinfo}}</text>
+						</view>
+						<view class="item-bottom">
+							<text class="price">{{item.price}}</text>
+							<text class="sale">{{item.old_price}}</text>
+							<text class="buy">{{item.buy_count}}人已购</text>
+						</view>
 					</view>
 				</view>
 			</view>
 		</view>
 		
-		<!--  真题课程包  -->
-		<h3 class="list-title">{{zhentilist.title}}</h3>
-		<view class="list-item" v-for="(item,index) in zhentilist.list" :key="index.id">
-			<view class="list-item-content">
-				<image :src="item.coverimg" mode=""></image>
-				<view class="item-right">
-					<view style="flex:4">
-						<h4 class="h4">{{item.name}}</h4>
-						<text class="grey">{{item.subinfo}}</text>
-					</view>
-					<view class="item-bottom">
-						<text class="price">{{item.price}}</text>
-						<text class="sale">{{item.sale}}</text>
-						<text class="buy">{{item.buy}}人已购</text>
-					</view>
-				</view>
-			</view>
-		</view>
-		
-		<!--  每日一练  -->
-		<h3 class="list-title">{{meirilist.title}}</h3>
-		<view class="list-item" v-for="(item,index) in meirilist.list" :key="index.id">
-			<view class="list-item-content">
-				<image :src="item.coverimg" mode=""></image>
-				<view class="item-right">
-					<view style="flex:4">
-						<h4 class="h4">{{item.name}}</h4>
-						<text class="grey">{{item.subinfo}}</text>
-					</view>
-					<!-- <view class="item-bottom">
-						<text class="price">{{item.price}}</text>
-						<text class="sale">{{item.sale}}</text>
-						<text class="buy">{{item.buy}}人已购</text>
-					</view> -->
-				</view>
-			</view>
-		</view>
 		
 		<!--  免费系统课程  -->
-		<h3 class="list-title">免费系统课程</h3>
-		<view class="list-item" v-for="(item,index) in mianfeilist.list" :key="index.id">
-			<view class="list-item-content">
-				<image :src="item.coverimg" mode="" class="people"></image>
-				<view class="item-right">
-					<view style="flex:5">
-						<h4 class="h4">{{item.name}}</h4>
-						<text class="grey">{{item.subinfo}}</text>
-					</view>
-					<view class="item-bottom">
-						<text class="price">免费</text>
-						<text class="buy">{{item.buy}}人已报名</text>
+		<view>
+			<h3 class="list-title">{{subName}}</h3>
+			<view class="list-item" v-for="(item,index) in mianfeilist" :key="index.id">
+				<view class="list-item-content">
+					<image :src="item.speaker_heading" mode="" class="people"></image>
+					<view class="item-right">
+						<view style="flex:5">
+							<h4 class="h4">{{item.title}}</h4>
+							<text class="grey">{{item.subinfo}}</text>
+						</view>
+						<view class="item-bottom">
+							<text class="price">免费</text>
+							<text class="buy">{{item.buy_count}}人已报名</text>
+						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		
     </view>
 </template>
 
@@ -136,210 +83,105 @@
 				hasLogin:false,
 				swiperList:[{img: '../../static/main/banner1.png'},{img: '../../static/main/banner2.png'},{img: '../../static/main/banner3.png'}],
 				index: 0,
-				tuijianlist:{
-					'title':'推荐课堂',
-					list:[{
-						'name':'0基础抱佛脚课     直播精选+真题视频',
-						'subinfo':'0基础带你过线，实现逆袭',
-						'price':'$12999',
-						'sale':'$2998',
-						'buy':'4772',
-						'id':1,
-						'coverimg':'../../static/main/activity1.jpg'
-					},{
-						'name':'0基础上岸包增加写作/押题/冲刺等',
-						'subinfo':'打包购买省1100',
-						'price':'$15998',
-						'sale':'$3298',
-						'buy':'4598',
-						'id':2,
-						'coverimg':'../../static/main/activity2.png'
-					},{
-						'name':'绝密押题课',
-						'subinfo':'押题业界NO.1,考前神助攻',
-						'price':'$2199',
-						'sale':'$299',
-						'buy':'3830',
-						'id':3,
-						'coverimg':'../../static/main/activity3.png'
-					}]
-				},
-				zhentilist:{
-					'title':'真题课程包',
-					list:[{
-						'name':'真题课程包',
-						'subinfo':'提分神器 上岸必刷',
-						'price':'$3180',
-						'sale':'$798',
-						'buy':'2.4万',
-						'id':9,
-						'coverimg':'../../static/main/zhenti.png'
-					}]
-				},
-				mianfeilist:{
-					'title':'免费系统课程',
-					list:[{
-						'name':'全新逻辑系统课-形式逻辑',
-						'subinfo':'告别晦涩 一听即懂',
-						'buy':'35.3万',
-						'id':10,
-						'coverimg':'../../static/main/people1.png'
-					},{
-						'name':'全新逻辑系统课-论证推理',
-						'subinfo':'提炼本质 精准解题',
-						'buy':'35万',
-						'id':11,
-						'coverimg':'../../static/main/people2.png'
-					},{
-						'name':'2020年数学系统课MBA、MPA、MEM、MTA',
-						'subinfo':'从零学起 稳固基础',
-						'buy':'35.5万',
-						'id':12,
-						'coverimg':'../../static/main/people3.png'
-					},{
-						'name':'2020年数学系统课MPACC、MAUD、MLIS',
-						'subinfo':'掌握秒杀 精准得分',
-						'buy':'7.9万',
-						'id':13,
-						'coverimg':'../../static/main/people4.png'
-					},{
-						'name':' 2020年语法与长难句精选',
-						'subinfo':'剖析句型 易学易懂',
-						'buy':'12.2万',
-						'id':14,
-						'coverimg':'../../static/main/people5.png'
-					}]
-				},
-				meirilist:{
-					'title':'每日一练',
-					list:[{
-						'name':'每日阅读【每天一篇外文期刊文章】',
-						'subinfo':'更新至2019-10-15期',
-						'id':10,
-						'coverimg':'../../static/main/ri1.png'
-					},{
-						'name':'英语一恋【每周二/四/六与公众号同步更新】',
-						'subinfo':'更新至2019-10-15期',
-						'id':11,
-						'coverimg':'../../static/main/ri2.png'
-					}]
-				},
-				hotlist:{
-					'title':'热门课堂',
-					list:[{
-						'name':'0基础抱佛脚课-逻辑&写作',
-						'subinfo':'直击考点 快速提分',
-						'price':'$4333',
-						'sale':'$1298',
-						'buy':'4784',
-						'id':4,
-						'coverimg':'../../static/main/people1.png'
-					},{
-						'name':'0基础抱佛脚课-数学',
-						'subinfo':'告别题海 秒杀拿分',
-						'price':'$4333',
-						'sale':'$1298',
-						'buy':'4784',
-						'id':5,
-						'coverimg':'../../static/main/people2.png'
-					},{
-						'name':'0基础抱佛脚课-英语',
-						'subinfo':'技巧浓缩 高效得分',
-						'price':'$4333',
-						'sale':'$1298',
-						'buy':'4785',
-						'id':6,
-						'coverimg':'../../static/main/people3.png'
-					},{
-						'name':'写作代写团',
-						'subinfo':'八小时掌握写作高分技巧',
-						'price':'$1198',
-						'sale':'$398',
-						'buy':'5664',
-						'id':7,
-						'coverimg':'../../static/main/people4.png'
-					},{
-						'name':'21天搞定800+核心词',
-						'subinfo':'高频学习 立足得分',
-						'price':'$698',
-						'sale':'$198',
-						'buy':'6184',
-						'id':8,
-						'coverimg':'../../static/main/people5.png'
-					}]
-				},
+				mianfeilist:[],
+				tuijianlist:[],
+				subName:'免费推荐',
                 tabObjectList: [ //对象数组赋值
                     {
                         name: '精品推荐',
-                        value: 1
+                        value: 0,
+						id:0,
+						subName:'免费推荐'
                     },
                     {
                         name: '真题课程',
-                        value: 2
+                        value: 1,
+						id:7,
+						subName:'真题课程'
                     },
                     {
                         name: '逻辑课程',
-                        value: 3
+                        value: 2,
+						id:1,
+						subName:'逻辑课程'
                     },
                     {
                         name: '数学课程',
-                        value: 4
+                        value: 3,
+						id:2,
+						subName:'数学课程'
                     },
                     {
                         name: '英语课程',
-                        value: 5
+                        value: 4,
+						id:3,
+						subName:'英语课程'
                     },
                     {
                         name: '写作课程',
-                        value: 6
+                        value: 5,
+						id:4,
+						subName:'写作课程'
                     },
                     {
                         name: '提面及复试',
-                        value: 7
+                        value: 6,
+						id:5,
+						subName:'提面及复试'
                     },
                     {
                         name: '新手必看',
-                        value: 8
+                        value: 7,
+						id:8,
+						subName:'新手必看'
                     }
                 ],
 			}
 		},
         onLoad() {
 			// 登录逻辑
-            if (!this.hasLogin) {
-                uni.showModal({
-                    title: '未登录',
-                    content: '您未登录，需要登录后才能继续',
-                    /**
-                     * 如果需要强制登录，不显示取消按钮
-                     */
-                    showCancel: !this.forcedLogin,
-                    success: (res) => {
-                        if (res.confirm) {
-							/**
-							 * 如果需要强制登录，使用reLaunch方式
-							 */
-                            if (this.forcedLogin) {
-                                uni.reLaunch({
-                                    url: '../login/login'
-                                });
-                            } else {
-                                uni.navigateTo({
-                                    url: '../login/login'
-                                });
-                            }
-                        }
-                    }
-                });
-            }
+       //      if (!this.hasLogin) {
+       //          uni.showModal({
+       //              title: '未登录',
+       //              content: '您未登录，需要登录后才能继续',
+       //              /**
+       //               * 如果需要强制登录，不显示取消按钮
+       //               */
+       //              showCancel: !this.forcedLogin,
+       //              success: (res) => {
+       //                  if (res.confirm) {
+							// /**
+							//  * 如果需要强制登录，使用reLaunch方式
+							//  */
+       //                      if (this.forcedLogin) {
+       //                          uni.reLaunch({
+       //                              url: '../login/login'
+       //                          });
+       //                      } else {
+       //                          uni.navigateTo({
+       //                              url: '../login/login'
+       //                          });
+       //                      }
+       //                  }
+       //              }
+       //          });
+       //      }
         },
 		onShow(){
-			this.getList();
+			if(this.index==0){
+				this.getList();
+			}
+			
 		},
 		methods:{
             objectChange(e){
-                console.log('对象数据返回格式');
-                console.log(e.tab.value);
+				if(e.tab.value==0){
+					this.getList();
+				}else{
+					this.changList(e.tab.id,e.tab.curreylist)
+				}
+				this.subName = e.tab.subName;
+				this.index = e.tab.value;
             },
 			goToRead(){
 				 uni.reLaunch({
@@ -354,13 +196,14 @@
 			getList(){
 				let id =uni.getStorageSync('customer_id');
 				
-				// 热门推荐
+				// 推荐课程
 				uni.request({
 					url: config.url+'/app/course/list/'+id, //仅为示例，并非真实接口地址。
 				    data: {
-				        type: 0
+				        type: 30
 				    },
 				    success: (res) => {
+						this.tuijianlist = res.data.data;
 				        console.log(res.data);
 				    }
 				});
@@ -368,10 +211,31 @@
 				uni.request({
 					url: config.url+'/app/course/list/'+id, //仅为示例，并非真实接口地址。
 				    data: {
-				        type: ''
+				        type: 20
 				    },
 				    success: (res) => {
+						this.mianfeilist = res.data.data;
 				        console.log(res.data);
+				    }
+				});
+			},
+			changList(type){
+				let userid =uni.getStorageSync('customer_id');
+				// 全部
+				uni.request({
+					url: config.url+'/app/course/list/'+userid, //仅为示例，并非真实接口地址。
+				    data: {
+				        type: type
+				    },
+				    success: (res) => {
+						if(res.data.errcode==0){
+							this.mianfeilist = res.data.data
+						}else{
+							uni.showToast({
+								title: res.data.errmsg
+							})
+						}
+				        
 				    }
 				});
 			}

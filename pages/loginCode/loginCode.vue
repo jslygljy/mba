@@ -68,21 +68,21 @@
 					   "pwd":this.code
 			   	},
 			       success: (res) => {
-			           console.log(res);
-					   if(res.errcode==0){
-						   uni.reLaunch({
-						       url: '../main/main',
-						   });
-						   uni.setStorageSync('customer_id', JSON.stringify(res.data.innerid));
+					   if(res.data.errcode==0){
+						   uni.setStorageSync('customer_id', JSON.stringify(res.data.data.innerid));
 						   uni.showToast({
 						   	icon: 'none',
 						   	title: '登录成功'
 						   });
+						   uni.reLaunch({
+						       url: '../main/main',
+						   });
+						   
 							
 					   }else{
 						   uni.showToast({
 						   	icon: 'none',
-						   	title: res.errmsg
+						   	title: res.data.errmsg
 						   });
 						   
 					   }
