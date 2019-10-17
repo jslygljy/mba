@@ -28,7 +28,7 @@
 		<view v-if="index==0">
 			<h3 class="list-title">推荐课程</h3>
 			<view class="list-item" v-for="(item,index) in tuijianlist" :key="index.innerid">
-				<view class="list-item-content">
+				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin)">
 					<image :src="item.speaker_heading" mode=""></image>
 					<view class="item-right">
 						<view style="flex:4">
@@ -50,7 +50,7 @@
 		<view>
 			<h3 class="list-title">{{subName}}</h3>
 			<view class="list-item" v-for="(item,index) in mianfeilist" :key="index.id">
-				<view class="list-item-content">
+				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin)">
 					<image :src="item.speaker_heading" mode="" class="people"></image>
 					<view class="item-right">
 						<view style="flex:5">
@@ -174,6 +174,11 @@
 			
 		},
 		methods:{
+			goToDetail(id,is_sgin){
+				uni.reLaunch({
+				    url: '../curlumDetail/curlumDetail?course_id='+id+'&is_sgin='+is_sgin
+				});
+			},
             objectChange(e){
 				if(e.tab.value==0){
 					this.getList();

@@ -17,6 +17,11 @@
                 "navigationBarTitleText": "手机号登录"
             }
         }, {
+            "path": "pages/reportSuc/reportSuc",
+            "style": {
+                "navigationBarTitleText": "报名成功页面"
+            }
+        }, {
             "path": "pages/reg/reg",
             "style": {
                 "navigationBarTitleText": "注册"
@@ -78,6 +83,10 @@
 			}
 		}
 		
+        ,{
+            "path" : "pages/reportSuc/reportSuc",
+            "style" : {}
+        }
     ],
     "tabBar": {
         "color": "#7a7e83",

@@ -1,8 +1,8 @@
 <template>
     <view class="currlum-content">
 		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name" :scroll="true"></sun-tab>
-		<view class="list-item">
-			<view class="list-item-content" v-for="(item,index) in list" :key="item.innerid" @click="goToDetail(item.innerid)">
+		<view class="list-item" v-if="list.length>0">
+			<view class="list-item-content" v-for="(item,index) in list" :key="item.innerid" @click="goToDetail(item.innerid,item.is_sgin)">
 				<view class="flex-sub">
 					<image :src="item.speaker_heading" mode=""></image>
 				</view>
@@ -17,6 +17,12 @@
 						<text class="grey">已学{{item.speed}}</text>
 					</view>
 				</view>
+			</view>
+		</view>
+		<view class="text-center margin-top-xl" v-else>
+			<image src="../../static/no_page.png" class="margin-top-xl"></image>
+			<view class="margin-top-xl">
+				暂无课程
 			</view>
 		</view>
     </view>
@@ -80,17 +86,17 @@
             objectChange(e){
                 this.getList(e.tab.value)
             },
-			goToDetail(id){
+			goToDetail(id,is_sgin){
 				uni.reLaunch({
-				    url: '../curlumDetail/curlumDetail?course_id='+id
+				    url: '../curlumDetail/curlumDetail?course_id='+id+'&is_sgin='+is_sgin
 				});
 			},
 			getList(type){
 				let userid =uni.getStorageSync('customer_id');
 				// 全部
 				uni.request({
-					url: config.url+'/app/course/list/'+userid,
-					// url: config.url+'/app/sgincourse/list/'+userid,
+					// url: config.url+'/app/course/list/'+userid,
+					url: config.url+'/app/sgincourse/list/'+userid,
 				    data: {
 				        type: type
 				    },

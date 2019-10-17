@@ -1,7 +1,7 @@
 <template>
     <view class="curlum-detail">
-        <video id="myVideo" src="https://dcloud-img.oss-cn-hangzhou.aliyuncs.com/guide/uniapp/%E7%AC%AC1%E8%AE%B2%EF%BC%88uni-app%E4%BA%A7%E5%93%81%E4%BB%8B%E7%BB%8D%EF%BC%89-%20DCloud%E5%AE%98%E6%96%B9%E8%A7%86%E9%A2%91%E6%95%99%E7%A8%8B@20181126.mp4"
-                    @error="videoErrorCallback" controls></video>
+        <video id="myVideo" :src="vedio_url"
+                    @error="videoErrorCallback" controls @timeupdate="videoTimeupdate"></video>
 		
 		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name"></sun-tab>
 		<!-- 简介 -->
@@ -24,7 +24,7 @@
 		<view class="directory" v-if="index==1">
 			<uni-collapse @change="change">
 				<uni-collapse-item title="助力20备考" :show-animation="true">
-					<view class="item flex" v-for="(item,subindex) in directoryList" :key="item.id" @click="setPlay(subindex)">
+					<view class="item flex" v-for="(item,subindex) in directoryList" :key="item.innerid" @click="setPlay(subindex,item.vedio_url,item.innerid)">
 						<view class="item-left">
 							<text :class="[ item.isPlaying?'text-blue':'text-darkGrey','cuIcon-videofill','text-xxxl']"></text>
 						</view>
@@ -32,7 +32,7 @@
 							<text class="text-df margin-top-xs block">{{item.title}}</text>
 							<view class="item-time">
 								<text>{{item.allTime}}</text>
-								<text :class="[item.status ==0?'':'text-blue','margin-left-lg']">{{item.status ==0?'已学完':'上次观看至'+item.lastLearnTime}}</text>
+								<text class="text-blue margin-left-lg">上次观看至{{item.study_speed}}</text>
 							</view>
 						</view>
 					</view>
@@ -46,9 +46,12 @@
 			<text class="title">最新评论({{newlist.length}})</text>
 			<comment :list="newlist" @thumbsListUp="thumbsListUp"></comment>
 		</view>
-		<view class="comment-post">
+		<view class="comment-post" v-if="is_sgin==1">
 			<input type="text" :value="commentInfo" placeholder="请输入你的评论"/>
 			<text class="post-button">发布</text>
+		</view>
+		<view class="comment-post" v-if="is_sgin==0">
+			<text class="post-button2" @click="reportInfo">立即报名</text>
 		</view>
     </view>
 </template>
@@ -76,23 +79,8 @@
 				commentInfo:'',
 				index: 0,
 				PlayNum:0,
-				directoryList:[{
-					id:1,
-					videoSrc:'',
-					title:'助力20备考逻辑上',
-					allTime:'32:55',
-					status:'0',  //0是已学完 1未学完
-					lastLearnTime:'18：29',
-					isPlaying:false
-				},{
-					id:2,
-					videoSrc:'',
-					title:'助力20备考逻辑下',
-					allTime:'32:55',
-					status:'1',
-					lastLearnTime:'18：29',
-					isPlaying:true
-				}],
+				vedio_url:'',
+				directoryList:[],
 				goodlist:[{
 					'headImg':'https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png',
 					'nickName':'今生缘',
@@ -162,31 +150,93 @@
                         value: 2
                     }
                 ],
-				course_id:''
+				course_id:'',
+				is_sgin:'',
+				book_id:'',
+				videoContext:'',
+				currentTime:''
             }
         },
 		onShow(){
-			this.getDetail('');
+			this.getDetail();
+		},
+		onReady: function(res) {
+			// #ifndef MP-ALIPAY
+			this.videoContext = uni.createVideoContext('myVideo');
+			// #endif
 		},
 		onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
 		   this.course_id = option.course_id;
+		   this.is_sgin = option.is_sgin;
+		},
+		onUnload:function(){
+			let userid =uni.getStorageSync('customer_id');
+			uni.request({
+				url: config.url+'/app/course/book/play/speed',
+				method:"POST",
+			    data: {
+					'course_id':this.course_id,
+					'customer_id':userid,
+					'book_id':this.book_id,
+					'speed_time':this.currentTime,
+			    },
+			    success: (res) => {
+					if(res.data.errcode==0){
+						
+					}else{
+						
+					}
+			        
+			    }
+			});
 		},
         methods: {
+			videoTimeupdate(e){
+				this.currentTime = e.detail.currentTime;
+			},
             videoErrorCallback: function(e) {
 				uni.showModal({
 					content: e.target.errMsg,
 					showCancel: false
 				})
 			},
+			reportInfo(){
+				let userid =uni.getStorageSync('customer_id');
+				// 全部
+				uni.request({
+					url: config.url+'/app/sgincourse/sgin',
+					method:"POST",
+					data: {
+					       "course_id":this.course_id,
+						   "customer_id":userid
+					},
+				    success: (res) => {
+						console.log(res)
+						if(res.data.errcode==0){
+							uni.showToast({
+								title: '报名成功'
+							});
+							uni.reLaunch({
+							    url: '../curlumDetail/curlumDetail?course_id='+this.course_id+'&is_sgin=1'
+							});
+						}else{
+							uni.showToast({
+								title: res.data.errmsg
+							})
+						}
+				        
+				    }
+				});
+				
+			},
 			objectChange(e){
-			    console.log('对象数据返回格式');
-			    console.log(e);
+			    
 				this.index = e.tab.value;
 			},
 			change(e) {
 				console.log(e)
 			},
-			setPlay(index){
+			setPlay(index,vedio_url,innerid){
 				let c = [];
 				this.directoryList.forEach((data)=>{
 					data.isPlaying = false;
@@ -194,6 +244,15 @@
 				});
 				c[index].isPlaying = true;
 				this.directoryList = c;
+				if(vedio_url==''){
+					uni.showToast({
+						title: '暂无视频'
+					});
+					
+				}else{
+					this.vedio_url = vedio_url;
+				}
+				this.book_id = innerid;
 			},
 			thumbsListUp(index){
 				this.newlist[index]['isLike'] = true;
@@ -219,7 +278,16 @@
 				    },
 				    success: (res) => {
 						if(res.data.errcode==0){
-							console.log(res)
+							if(res.data.data.length>0){
+								this.directoryList = res.data.data;
+								this.vedio_url = res.data.data[0].vedio_url;
+								this.book_id = res.data.data[0].innerid;
+							}else{
+								uni.showToast({
+									title: '暂无课程'
+								})
+							}
+							
 						}else{
 							uni.showToast({
 								title: res.data.errmsg
@@ -269,6 +337,7 @@
 	}
 	.directory{
 		height: 100%;
+		padding-bottom: 100rpx;
 		.item{
 			width: 100%;
 			.item-left{
@@ -325,6 +394,17 @@
 			color: #fff;
 			height: 60rpx;
 			line-height: 60rpx;
+			background-color: blue;
+		}
+		.post-button2{
+			flex:1;
+			margin: 20rpx 100rpx 0px 100rpx;
+			border-radius: 40rpx;
+			font-size: 28rpx;
+			text-align: center;
+			color: #fff;
+			height: 70rpx;
+			line-height: 70rpx;
 			background-color: blue;
 		}
 	}
