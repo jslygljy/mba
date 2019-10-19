@@ -32,7 +32,7 @@
 							<text class="text-df margin-top-xs block">{{item.title}}</text>
 							<view class="item-time">
 								<text>{{item.allTime}}</text>
-								<text class="text-blue margin-left-lg">上次观看至{{item.study_speed}}</text>
+								<text class="text-blue margin-left-lg" v-if="item.study_speed!==''">上次观看至{{item.study_speed}}</text>
 							</view>
 						</view>
 					</view>
@@ -159,6 +159,8 @@
         },
 		onShow(){
 			this.getDetail();
+			//缺少详情接口
+			// this.getMathDetail();
 		},
 		onReady: function(res) {
 			// #ifndef MP-ALIPAY
@@ -195,10 +197,11 @@
 				this.currentTime = e.detail.currentTime;
 			},
             videoErrorCallback: function(e) {
-				uni.showModal({
-					content: e.target.errMsg,
-					showCancel: false
-				})
+				// console.log(e);
+				// uni.showModal({
+				// 	content: e.target.errMsg,
+				// 	showCancel: false
+				// })
 			},
 			reportInfo(){
 				let userid =uni.getStorageSync('customer_id');
@@ -268,7 +271,34 @@
 					title: '点赞成功'
 				});
 			},
-			
+			// 获取课程详情
+			getMathDetail(){
+				let userid =uni.getStorageSync('customer_id');
+				// 全部
+				uni.request({
+					url: config.url+'/app/course/book/detail/'+this.course_id+'/'+userid, //仅为示例，并非真实接口地址。
+				    data: {
+				    },
+				    success: (res) => {
+						if(res.data.errcode==0){
+							if(res.data.data.length>0){
+								
+							}else{
+								uni.showToast({
+									title: '暂无课程'
+								})
+							}
+							
+						}else{
+							uni.showToast({
+								title: res.data.errmsg
+							})
+						}
+				        
+				    }
+				});
+			},
+			// 获取目录
 			getDetail(){
 				let userid =uni.getStorageSync('customer_id');
 				// 全部
@@ -280,6 +310,7 @@
 						if(res.data.errcode==0){
 							if(res.data.data.length>0){
 								this.directoryList = res.data.data;
+								
 								this.vedio_url = res.data.data[0].vedio_url;
 								this.book_id = res.data.data[0].innerid;
 							}else{
@@ -341,7 +372,7 @@
 		.item{
 			width: 100%;
 			.item-left{
-				margin: 60rpx 30rpx 0rpx;
+				margin: 34rpx 30rpx 0rpx;
 				width: 56rpx;
 				height: 56rpx;
 				max-width: 56rpx;

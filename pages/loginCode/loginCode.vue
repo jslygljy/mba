@@ -69,7 +69,7 @@
 			   	},
 			       success: (res) => {
 					   if(res.data.errcode==0){
-						   uni.setStorageSync('customer_id', JSON.stringify(res.data.data.innerid));
+						   uni.setStorageSync('customer_id', res.data.data.innerid);
 						   uni.showToast({
 						   	icon: 'none',
 						   	title: '登录成功'

@@ -3,7 +3,7 @@
 		{
 			"path": "pages/guide/index",
 			"style": {
-				"navigationBarTitleText": "启动页"
+				"navigationBarTitleText": ""
 			}
 		},
         {
@@ -15,11 +15,6 @@
             "path": "pages/login/login",
             "style": {
                 "navigationBarTitleText": "手机号登录"
-            }
-        }, {
-            "path": "pages/reportSuc/reportSuc",
-            "style": {
-                "navigationBarTitleText": "报名成功页面"
             }
         }, {
             "path": "pages/reg/reg",
@@ -82,11 +77,6 @@
 			    "navigationBarTitleText": "课程详细"
 			}
 		}
-		
-        ,{
-            "path" : "pages/reportSuc/reportSuc",
-            "style" : {}
-        }
     ],
     "tabBar": {
         "color": "#7a7e83",

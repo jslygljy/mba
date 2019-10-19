@@ -2,7 +2,7 @@
     <view class="guide">
         <swiper class="flex1" interval="3000" :show-indicators="false" :auto-play="autoPlay" @change="sliderChange" :infinite="false" :forbid-slide-animation="false">
             <swiper-item class="flex1" v-for="(img, index) in imageList" :key="index">
-                <view class="flex1" @click="launchAppIndex">
+                <view class="flex1">
                     <!-- #ifndef APP-PLUS -->
                     <image class="flex1" mode="aspectFill" :style="{ width: screenWidth+ 'px' }" :src="img.src" />
 
@@ -14,9 +14,11 @@
                 </view>
             </swiper-item>
         </swiper>
-		<min-countdown :targetTime="time1" @callback="launchApp" :format="format"></min-countdown>
+		
         <view class="swiper-to-home" @click="launchApp">
-			<text class="swiper-to-home-text">跳过</text>
+			<text class="swiper-to-home-text">
+				<min-countdown :targetTime="time1" @callback="launchApp" :format="format"></min-countdown>
+			</text>
 		</view>
     </view>
 </template>
@@ -36,10 +38,9 @@ export default {
                     src: '../../static/guide/guide_3.9.png'
                 }
             ],
-			time1: new Date().getTime() + 300,
+			time1: new Date().getTime() + 55000,
 			format: `<div>
-			        <span style="background: #dedede; color: #fff; width: 20px; text-align: center; display: inline-block;">{%s0}</span>
-			        <span style="background: #dedede; color: #fff; width: 20px; text-align: center; display: inline-block;">{%s1}</span>
+			        <span>{%s1}s跳过</span>
 			        </div>`,
             autoPlay: false,
             currIndex: 0,
@@ -51,21 +52,11 @@ export default {
             console.log(e);
             this.currIndex = e.detail.current;
         },
-        launchAppIndex() {
-            console.log('launchAppIndex');
-            if (this.imageList.length == this.currIndex + 1) {
-                this.launchApp();
-            } else {
-                return;
-            }
-        },
 		callback(){
 			
 		},
         launchApp() {
-           
             let id =uni.getStorageSync('customer_id');
-			
             if (id=="") {
                 uni.reLaunch({
                     url: '/pages/login/login'
@@ -107,12 +98,7 @@ export default {
     position: absolute;
     z-index: 999;
     right: 40rpx;
-    /* #ifndef MP */
-    top: 80rpx;
-    /* #endif */
-    /* #ifdef MP */
-    top: 150rpx;
-    /* #endif */
+    top: 0rpx;
 }
 
 .swiper-to-home-text {
