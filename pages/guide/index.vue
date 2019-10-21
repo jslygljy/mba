@@ -38,7 +38,7 @@ export default {
                     src: '../../static/guide/guide_3.9.png'
                 }
             ],
-			time1: new Date().getTime() + 55000,
+			time1: new Date().getTime() + 5000,
 			format: `<div>
 			        <span>{%s1}s跳过</span>
 			        </div>`,

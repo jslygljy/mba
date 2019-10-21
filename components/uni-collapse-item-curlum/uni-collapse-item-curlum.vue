@@ -8,7 +8,9 @@
 				<view class="uni-collapse-cell__title-text">{{ title }}</view>
 			</view>
 			<view :class="{ 'uni-active': isOpen, 'uni-collapse-cell--animation': showAnimation === true }" class="uni-collapse-cell__title-arrow">
-				<uni-icon color="#bbb" size="20" type="arrowdown" />
+				<text class="cuIcon-unfold" style="    margin-top: 0px;
+    display: inline-block;
+    vertical-align: top;"></text>
 			</view>
 		</view>
 		<view :class="{ 'uni-collapse-cell--animation': showAnimation === true }" :style="{ height: isOpen ? height : '0px' }" class="uni-collapse-cell__content">
@@ -50,7 +52,7 @@
 			open: {
 				// 是否展开
 				type: [Boolean, String],
-				default: false
+				default: true
 			},
 			thumb: {
 				// 缩略图
@@ -126,7 +128,9 @@
 	}
 </script>
 
-<style>
+<style scoped lang="scss">
+	@import "../../static/icon.css";
+	@import "../../static/main.css";
 	@charset "UTF-8";
 
 	.uni-collapse-cell {

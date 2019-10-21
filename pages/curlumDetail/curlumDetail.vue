@@ -18,12 +18,15 @@
 			<text class="price">
 				{{old_price==0?'免费':old_price+'元'}}
 			</text>
+			<view class="content-img">
+				<image :src="content" mode=""></image>
+			</view>
 		</view>
 		<!-- 目录 -->
 		<view class="directory" v-if="index==1">
-			<uni-collapse @change="change">
-				<uni-collapse-item :title="curlumName" :show-animation="true">
-					<view class="item flex" v-for="(item,subindex) in directoryList" :key="item.innerid" @click="setPlay(subindex,item.vedio_url,item.innerid)">
+			<uni-collapse @change="change" v-for="firitem in parintList" :key="firitem.innerid">
+				<uni-collapse-item :title="firitem.title" :show-animation="true">
+					<view class="item flex" v-for="(item,subindex) in firitem.subList" :key="item.innerid" @click="setPlay(firitem,item,subindex)">
 						<view class="item-left">
 							<text :class="[ item.isPlaying?'text-blue':'text-darkGrey','cuIcon-videofill','text-xxxl']"></text>
 						</view>
@@ -79,7 +82,9 @@
 				PlayNum:0,
 				vedio_url:'',
 				buy_count:'',
-				directoryList:[],
+				summary:'',
+				content:'',
+				parintList:[],
 				goodlist:[{
 					'headImg':'https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png',
 					'nickName':'今生缘',
@@ -237,23 +242,23 @@
 			change(e) {
 				console.log(e)
 			},
-			setPlay(index,vedio_url,innerid){
+			setPlay(firitem,item,index){
 				let c = [];
-				this.directoryList.forEach((data)=>{
-					data.isPlaying = false;
-					c.push(data)
+				this.parintList.forEach((data)=>{
+					data.subList.forEach((subdata)=>{
+						subdata.isPlaying = false;
+					})
 				});
-				c[index].isPlaying = true;
-				this.directoryList = c;
-				if(vedio_url==''){
+				item.isPlaying = true;
+				if(item.vedio_url==''){
 					uni.showToast({
 						title: '暂无视频'
 					});
 					
 				}else{
-					this.vedio_url = vedio_url;
+					this.vedio_url = item.vedio_url;
 				}
-				this.book_id = innerid;
+				this.book_id = item.innerid;
 			},
 			thumbsListUp(index){
 				this.newlist[index]['isLike'] = true;
@@ -286,6 +291,10 @@
 							this.old_price = res.data.data.price
 							this.buy_count = res.data.data.buy_count;
 							this.curlumSubInfo = res.data.data.sub_tilte;
+							this.content = res.data.data.content;
+							uni.setNavigationBarTitle({
+							    title: res.data.data.title
+							});
 						}else{
 							uni.showToast({
 								title: res.data.errmsg
@@ -306,8 +315,22 @@
 				    success: (res) => {
 						if(res.data.errcode==0){
 							if(res.data.data.length>0){
-								this.directoryList = res.data.data;
-								
+								let newList = [];
+								res.data.data.map(data=>{
+									if(data.parent_id ==this.course_id){
+										data['subList'] = [];
+										newList.push(data)
+									}	
+								})
+								res.data.data.map((data,index)=>{
+									newList.map((subdata,subindex)=>{
+										if(subdata.innerid == data.parent_id){
+											data.isPlaying = false;
+											newList[subindex]['subList'].push(data);
+										}	
+									})
+								})
+								this.parintList = newList;
 								this.vedio_url = res.data.data[0].vedio_url;
 								this.book_id = res.data.data[0].innerid;
 							}else{
@@ -361,6 +384,10 @@
 			font-size: 34rpx;
 			display: block;
 			margin: 20rpx 30rpx;
+		}
+		.content-img{
+			padding: 40rpx;
+			
 		}
 	}
 	.directory{

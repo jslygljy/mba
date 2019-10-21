@@ -31,6 +31,7 @@
         <slot />
       </view>
     </view>
+	
   </view>
 </template>
 
