@@ -9,21 +9,20 @@
 			<text class="title">{{curlumName}}</text>
 			<text class="subtitle text-darkGrey">{{curlumSubInfo}}</text>
 			<view class="text-darkGrey info-type flex justify-between">
-				<text class="">授课方式：{{curlumType}} | {{curlumNum}}课时</text>
+				<text class="">{{summary}}</text>
 				<view class="">
 					<text class="cuIcon-attentionfavorfill text-darkGrey text-lg"></text>
-					<text class="margin-left-sm">312</text>
+					<text class="margin-left-sm">{{buy_count}}</text>
 				</view>
-				
 			</view>
 			<text class="price">
-				{{price}}
+				{{old_price==0?'免费':old_price+'元'}}
 			</text>
 		</view>
 		<!-- 目录 -->
 		<view class="directory" v-if="index==1">
 			<uni-collapse @change="change">
-				<uni-collapse-item title="助力20备考" :show-animation="true">
+				<uni-collapse-item :title="curlumName" :show-animation="true">
 					<view class="item flex" v-for="(item,subindex) in directoryList" :key="item.innerid" @click="setPlay(subindex,item.vedio_url,item.innerid)">
 						<view class="item-left">
 							<text :class="[ item.isPlaying?'text-blue':'text-darkGrey','cuIcon-videofill','text-xxxl']"></text>
@@ -71,15 +70,15 @@
 		},
         data() {
             return {
-				curlumName:'助力20备考',
-				curlumSubInfo:'导学指南 制胜攻略',
-				price:'免费',
-				curlumType:'点播',
-				curlumNum:'1',
+				curlumName:'',
+				curlumSubInfo:'',
+				old_price:'',
+				curlumType:'',
 				commentInfo:'',
 				index: 0,
 				PlayNum:0,
 				vedio_url:'',
+				buy_count:'',
 				directoryList:[],
 				goodlist:[{
 					'headImg':'https://img-cdn-qiniu.dcloud.net.cn/uniapp/images/uni@2x.png',
@@ -159,8 +158,7 @@
         },
 		onShow(){
 			this.getDetail();
-			//缺少详情接口
-			// this.getMathDetail();
+			this.getMathDetail();
 		},
 		onReady: function(res) {
 			// #ifndef MP-ALIPAY
@@ -276,19 +274,18 @@
 				let userid =uni.getStorageSync('customer_id');
 				// 全部
 				uni.request({
-					url: config.url+'/app/course/book/detail/'+this.course_id+'/'+userid, //仅为示例，并非真实接口地址。
+					url: config.url+'/app/course/detail/'+this.course_id+'/'+userid, //仅为示例，并非真实接口地址。
 				    data: {
 				    },
 				    success: (res) => {
+						console.log(res);
 						if(res.data.errcode==0){
-							if(res.data.data.length>0){
-								
-							}else{
-								uni.showToast({
-									title: '暂无课程'
-								})
-							}
+							this.curlumName = res.data.data.title;
+							this.summary = res.data.data.summary.split('&&').join('');
 							
+							this.old_price = res.data.data.price
+							this.buy_count = res.data.data.buy_count;
+							this.curlumSubInfo = res.data.data.sub_tilte;
 						}else{
 							uni.showToast({
 								title: res.data.errmsg
