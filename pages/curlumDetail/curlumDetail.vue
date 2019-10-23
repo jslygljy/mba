@@ -28,7 +28,7 @@
 				<uni-collapse-item :title="firitem.title" :show-animation="true">
 					<view class="item flex" v-for="(item,subindex) in firitem.subList" :key="item.innerid" @click="setPlay(firitem,item,subindex)">
 						<view class="item-left">
-							<text :class="[ item.isPlaying?'text-blue':'text-darkGrey','cuIcon-videofill','text-xxxl']"></text>
+							<text :class="[item.isPlaying?'text-blue':'text-darkGrey','cuIcon-videofill','text-xxxl']"></text>
 						</view>
 						<view :class="[ item.isPlaying?'text-blue':'', 'item-right','text-sm']" style="flex:8">
 							<text class="text-df margin-top-xs block">{{item.title}}</text>
@@ -286,6 +286,7 @@
 				    success: (res) => {
 						console.log(res);
 						if(res.data.errcode==0){
+							// console.log(res.data.data)
 							this.summary = res.data.data.summary.split('&&').join('');
 							
 							this.old_price = res.data.data.price
