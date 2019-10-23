@@ -18,7 +18,7 @@
             </view>
         </view> -->
 		<view class="bottom-row">
-			登录即代码同意<navigator url="../reg/reg" class="goToHref">《MBA大师用户协议》</navigator>
+			<!-- 登录即代码同意<navigator url="../reg/reg" class="goToHref">《MBA大师用户协议》</navigator> -->
 		</view>
     </view>
 </template>

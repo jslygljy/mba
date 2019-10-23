@@ -19,7 +19,7 @@
 				{{old_price==0?'免费':old_price+'元'}}
 			</text>
 			<view class="content-img">
-				<image :src="content" mode=""></image>
+				<image :src="content" mode="widthFix"></image>
 			</view>
 		</view>
 		<!-- 目录 -->

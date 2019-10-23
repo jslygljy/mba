@@ -17,6 +17,7 @@
 					<view class="bg-blue" :style="[{ width:(curryNum/allNum)}]"></view>
 				</view>
 				<text class="margin-left text-sm text-grey">{{curryNum}}/{{allNum}}</text>
+				<text class="margin-left text-sm text-grey" style="    vertical-align: top;margin-top: -5rpx;min-width: 100px;">正确率:{{(haveSure/allNum * 100).toFixed(2)}}%</text>
 			</view>
 		</view>
 		<view class="flex-sub margin-top">
@@ -37,14 +38,19 @@ export default {
   },
   props: {
 	  curryNum: {
-	    // 当前阅读数
-	    type: [Number, String],
-	    default: 0
+		// 当前阅读数
+		type: [Number, String],
+		default: 0
 	  },
 	  allNum: {
-	    // 阅读总数
-	    type: [Number, String],
-	    default: 100
+		// 阅读总数
+		type: [Number, String],
+		default: 100
+	  },
+	  haveSure:{
+		// 正确数
+		type: [Number, String],
+		default: 0  
 	  },
     title: {
       type: String,
@@ -135,7 +141,7 @@ export default {
 
 $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 .progress{
-	width: 410rpx;
+	width: 70%;
 	margin-left: 60rpx;
 }
 .blueRound{

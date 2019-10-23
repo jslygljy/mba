@@ -2,10 +2,6 @@
 	<view class="task-content">
 		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name"></sun-tab>
 		<view class="list">
-			<view class="item">
-				<text class="cuIcon-punch text-yellow i"></text>
-				<text>打印试题</text>
-			</view>
 			<view class="item" @click="goToRead">
 				<text class="cuIcon-newshotfill text-blue i"></text>
 				<text>套卷练习</text>
@@ -18,15 +14,18 @@
 		<text class="practice-title">
 			专项练习
 		</text>
-		<view v-for="(item, index) in list" :key="index" class="collapse-info">
-			<uni-collapse @change="change">
-				<uni-collapse-item :title="item.title" :show-animation="true">
+		<view class="collapse-info">
+			<uni-collapse @change="change" v-for="(item, index) in list" :key="item.topicid" v-if="list.length!==0">
+				<uni-collapse-item :title="item.title" :show-animation="true" :curryNum="item.have_sure" :allNum="item.arate" :haveSure="item.have_sure">
 					<uni-list class="list-info">
-						<uni-list-item @click="goToDetail(subitem.id)" v-for="(subitem, subindex) in item.sublist" :key="subindex" :title="subitem.title" :curryNum="subitem.curryNum" :allNum="subitem.allNum">
+						<uni-list-item @click="goToDetail(subitem.topicid,item.title,subitem.title)" v-for="(subitem, subindex) in item.item_list" :key="subindex" :title="subitem.title" :curryNum="subitem.have_sure" :allNum="subitem.arate" :haveSure="subitem.have_sure">
 						</uni-list-item>
 					</uni-list>
 				</uni-collapse-item>
 			</uni-collapse>
+			<view class="text-center" v-if="list.length==0">
+				<text>暂无数据</text>
+			</view>
 		</view>
 		
 	</view>
@@ -38,6 +37,7 @@
 	import uniList from '@/components/uni-list/uni-list.vue'
 	import uniListItem from '@/components/uni-list-item/uni-list-item.vue'
 	import sunTab from '@/components/sun-tab/sun-tab.vue';
+	import config from '../../config.js';
 	export default {
 		components: {
 			uniCollapse,
@@ -49,57 +49,8 @@
 		data() {
 			
 			return {
-				list:[{
-					title:'形式逻辑',
-					sublist:[{
-						id:1,
-						title:'前真后假',
-						curryNum:10,
-						allNum:599
-					},{
-						id:2,
-						title:'逻辑关系or',
-						curryNum:1,
-						allNum:26
-					},{
-						id:3,
-						title:'充分必要条件',
-						curryNum:1,
-						allNum:23
-					},{
-						id:4,
-						title:'带入逻辑推命题真假',
-						curryNum:2,
-						allNum:69
-					}]
-				},{
-					title:'形式逻辑',
-					sublist:[{
-						id:1,
-						title:'前真后假',
-						curryNum:10,
-						allNum:599
-					},{
-						id:2,
-						title:'逻辑关系or',
-						curryNum:1,
-						allNum:26
-					},{
-						id:3,
-						title:'充分必要条件',
-						curryNum:1,
-						allNum:23
-					},{
-						id:4,
-						title:'带入逻辑推命题真假',
-						curryNum:2,
-						allNum:69
-					}]
-				}
-						
-				],
+				list:[],
 				index: 0,
-				tabList: ['逻辑','数学','英语','写作'], //普通数据赋值
 				tabObjectList: [ //对象数组赋值
 				    {
 				        name: '逻辑',
@@ -116,9 +67,20 @@
 				    {
 				        name: '写作',
 				        value: 4
+				    },
+				    {
+				        name: '面试',
+				        value: 5
+				    },
+				    {
+				        name: '助力',
+				        value: 6
 				    }
 				],
 			}
+		},
+		onShow(){
+			this.getList();
 		},
 		methods: {
 			onClick() {
@@ -133,14 +95,28 @@
 			change(e) {
 				console.log(e)
 			},
-			objectChange(){
+			objectChange(e){
+				this.index = e.tab.value-1;
+				this.getList();
 				
 			},
-			goToDetail(id){
+			goToDetail(topicid,title,subTitle){
 				uni.reLaunch({
-				    url: '../taskDetail/taskDetail?id='+id
+				    url: '../taskDetail/taskDetail?id='+topicid+'&title='+title+'&subTitle='+subTitle+'&pages=0'
 				});
-			}
+			},
+			getList(){
+				let id =uni.getStorageSync('customer_id');
+				// 获取做题列表
+				uni.request({
+					url: config.url+'/app/qa/special/list?courseid='+this.index, //仅为示例，并非真实接口地址。
+				    data: {
+				    },
+				    success: (res) => {
+						this.list = res.data.data;
+				    }
+				});
+			},
 		}
 	}
 </script>

@@ -57,7 +57,7 @@ export default {
 		},
         launchApp() {
             let id =uni.getStorageSync('customer_id');
-            if (id=="") {
+            if (!id) {
                 uni.reLaunch({
                     url: '/pages/login/login'
                 });

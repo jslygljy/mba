@@ -8,7 +8,7 @@
 	  <view
 	    :class="{ 'uni-active': isOpen, 'uni-collapse-cell--animation': showAnimation === true }"
 	    class="uni-collapse-cell__title-arrow">
-	    <uni-icon color="#fff" type="arrowdown" class="icon-info"/>
+	    <text class="cuIcon-unfold bg-blue" style="margin-top:0rpx;display: inline-block;padding: 8rpx; vertical-align: top;border-radius: 50%;text-align: center;"></text>
 	  </view>
      
       <view class="uni-collapse-cell__title-inner">
@@ -22,6 +22,7 @@
 			<view class="bg-blue" :style="[{ width:(curryNum/allNum)}]"></view>
 		</view>
 		<text class="margin-left text-sm text-grey">{{curryNum}}/{{allNum}}</text>
+		<text class="margin-left text-sm text-grey" style="    vertical-align: top;margin-top: -5rpx;min-width: 100px;">正确率:{{(haveSure/allNum * 100).toFixed(2)}}%</text>
 	</view>
     <view
       :class="{ 'uni-collapse-cell--animation': showAnimation === true }"
@@ -52,6 +53,11 @@ export default {
 	  // 当前阅读数
 	  type: [Number, String],
 	  default: 0
+	},
+	haveSure:{
+		// 正确数
+		type: [Number, String],
+		default: 0  
 	},
 	allNum: {
 	  // 阅读总数
@@ -122,16 +128,16 @@ export default {
   },
   // #endif
   methods: {
-    _getSize () {
-      if (this.showAnimation) {
-        uni.createSelectorQuery()
-          .in(this)
-          .select(`#${this.elId}`)
-          .boundingClientRect()
-          .exec(ret => {
-            this.height = ret[0].height + 'px'
-          })
-      }
+    _getSize() {
+    	if (this.showAnimation) {
+    		uni.createSelectorQuery()
+    			.in(this)
+    			.select(`#${this.elId}`)
+    			.boundingClientRect()
+    			.exec(ret => {
+    				this.height = ret[0].height+20 + 'px'
+    			})
+    	}
     },
     onClick () {
       if (this.disabled) {
@@ -152,7 +158,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	@import "../../static/icon.css";
 	@import "../../static/main.css";
 
@@ -166,7 +172,7 @@ $collapse-title-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 .uni-collapse-cell {
 	position: relative;
 	.progress{
-		width: 50%;
+		width: 70%;
 		margin-left: 84rpx;
 	}
 	.icon-info{
@@ -218,11 +224,12 @@ $collapse-title-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 		}
 
 		&-arrow {
-			width: 20px;
-			height: 20px;
+			width: 45rpx;
+			height: 45rpx;
 			transform: rotate(0deg);
-			transform-origin: center center;
+			transform-origin: 50% 45%;
 			margin-right: 20rpx;
+			font-size: 24rpx;
 			&.uni-active {
 				transform: rotate(-180deg);
 			}
@@ -250,6 +257,7 @@ $collapse-title-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 		width: 100%;
 		background: $uni-bg-color;
 		overflow: hidden;
+		padding-bottom: 40rpx;
 		.view {
 			font-size: $uni-font-size-base;
 		}

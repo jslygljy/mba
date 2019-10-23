@@ -31,6 +31,7 @@
 
 <script>
 	import uniCountdown from "@/components/uni-countdown/uni-countdown.vue"
+	import config from '../../config.js';
     export default {
 		 components: {uniCountdown},
         data() {
@@ -53,11 +54,31 @@
 				}]
 			}   
          },
+		 onShow(){
+		 	this.getDetail();
+		 },
+		 onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
+		    this.topicid = option.topicid;
+		    this.title = option.title;
+			this.subTitle = option.subTitle;
+			this.pages =option.pages;
+		 },
         methods: {
 			objectChange(e){
 				this.curryIndex = e.tab.value
-			    console.log();
 			},
+			getDetail(){
+				let id =uni.getStorageSync('customer_id');
+				// 获取做题列表
+				uni.request({
+					url: config.url+'/app/qa/list?topicid=0bc80cb9-8528-4678-bf0e-31c8448451d3&special_work='+this.title+'&epoint='+this.subTitle+'&pageindex='+this.pages, //仅为示例，并非真实接口地址。
+				    data: {
+				    },
+				    success: (res) => {
+						console.log(res.data.data);
+				    }
+				});
+			}
         }
     }
 </script>
