@@ -19,7 +19,7 @@
 				{{old_price==0?'免费':old_price+'元'}}
 			</text>
 			<view class="content-img">
-				<image :src="content" mode="widthFix"></image>
+				<image :src="content" mode="widthFix" style="width: 100%;"></image>
 			</view>
 		</view>
 		<!-- 目录 -->
@@ -219,12 +219,13 @@
 				    success: (res) => {
 						console.log(res)
 						if(res.data.errcode==0){
+							this.is_sgin=1;
 							uni.showToast({
 								title: '报名成功'
 							});
-							uni.redirectTo({
-							    url: '../curlumDetail/curlumDetail?course_id='+this.course_id+'&is_sgin=1'
-							});
+							// uni.redirectTo({
+							//     url: '../curlumDetail/curlumDetail?course_id='+this.course_id+'&is_sgin=1'
+							// });
 						}else{
 							uni.showToast({
 								title: res.data.errmsg
@@ -333,9 +334,9 @@
 								this.vedio_url = res.data.data[0].vedio_url;
 								this.book_id = res.data.data[0].innerid;
 							}else{
-								uni.showToast({
-									title: '暂无课程'
-								})
+								// uni.showToast({
+								// 	title: '暂无课程'
+								// })
 							}
 							
 						}else{
@@ -385,7 +386,7 @@
 			margin: 20rpx 30rpx;
 		}
 		.content-img{
-			padding: 40rpx;
+			// padding: 40rpx;
 			
 		}
 	}
