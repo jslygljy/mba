@@ -30,7 +30,7 @@
 		<!--  推荐课程  -->
 		<view v-if="index==0">
 			<h3 class="list-title">推荐课程</h3>
-			<view class="list-item" v-for="(item,index) in tuijianlist" :key="index.innerid">
+			<view class="list-item" v-for="(item,index) in tuijianlist" :key="item.innerid">
 				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin)">
 					<image :src="item.speaker_heading" mode=""></image>
 					<view class="item-right">
@@ -52,7 +52,7 @@
 		<!--  免费系统课程  -->
 		<view style="margin-bottom: 40upx;">
 			<h3 class="list-title">{{subName}}</h3>
-			<view class="list-item" v-for="(item,index) in mianfeilist" :key="index.id">
+			<view class="list-item" v-for="(item,index) in mianfeilist" :key="item.innerid">
 				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin)">
 					<image :src="item.speaker_heading" mode="" class="people"></image>
 					<view class="item-right">
@@ -187,7 +187,7 @@
 				uni.request({
 					url: config.url + '/app/course/list/' + id, //仅为示例，并非真实接口地址。
 					data: {
-						type: 30
+						type: 30 
 					},
 					success: (res) => {
 						this.tuijianlist = res.data.data;

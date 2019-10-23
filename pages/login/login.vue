@@ -3,7 +3,7 @@
         <view class="input-group">
             <view class="input-row border">
                 <text class="title">手机号码</text>
-                <input class="m-input" type="text" clearable focus v-model="account" placeholder="请输入手机号码" style="font-size: 26px;"></input>
+                <input class="m-input" type="number" clearable focus v-model="account" placeholder="请输入手机号码" style="font-size: 26px;"></input>
             </view>
         </view>
         <view class="btn-row">
