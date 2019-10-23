@@ -16,9 +16,9 @@
         </swiper>
 		
         <view class="swiper-to-home" @click="launchApp">
-			<text class="swiper-to-home-text">
+			<view class="swiper-to-home-text">
 				<min-countdown :targetTime="time1" @callback="launchApp" :format="format"></min-countdown>
-			</text>
+			</view>
 		</view>
     </view>
 </template>
