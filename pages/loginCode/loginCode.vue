@@ -74,7 +74,7 @@
 						   	icon: 'none',
 						   	title: '登录成功'
 						   });
-						   uni.reLaunch({
+						   uni.switchTab({
 						       url: '../main/main',
 						   });
 						   

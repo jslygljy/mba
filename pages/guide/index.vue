@@ -58,12 +58,12 @@ export default {
         launchApp() {
             let id =uni.getStorageSync('customer_id');
             if (!id) {
-                uni.reLaunch({
-                    url: '/pages/login/login'
+                uni.navigateTo({
+                    url: '../login/login'
                 });
             } else {
-                uni.reLaunch({
-                    url: '/pages/main/main'
+                uni.switchTab({
+                    url: '../main/main'
                 });
             }
         }

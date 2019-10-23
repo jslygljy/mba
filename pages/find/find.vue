@@ -98,7 +98,7 @@
                 console.log(e);
             },
 			goToRead(){
-				 uni.reLaunch({
+				 uni.navigateTo({
 				    url: '../read/read',
 				});
 			}

@@ -87,7 +87,7 @@
                 this.getList(e.tab.value)
             },
 			goToDetail(id,is_sgin){
-				uni.reLaunch({
+				uni.navigateTo({
 				    url: '../curlumDetail/curlumDetail?course_id='+id+'&is_sgin='+is_sgin
 				});
 			},

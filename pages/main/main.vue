@@ -20,7 +20,7 @@
 			</view>
 		</view>
 		<view class="ad">
-			<image src="../../static/main/activity1.jpg" mode=""></image>
+			<!-- <image src="../../static/main/activity1.jpg" mode=""></image> -->
 		</view>
 		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name" :scroll="true"></sun-tab>
 		
@@ -149,7 +149,7 @@
 		},
 		methods:{
 			goToDetail(id,is_sgin){
-				uni.reLaunch({
+				uni.navigateTo({
 				    url: '../curlumDetail/curlumDetail?course_id='+id+'&is_sgin='+is_sgin
 				});
 			},
@@ -163,12 +163,12 @@
 				this.index = e.tab.value;
             },
 			goToRead(){
-				 uni.reLaunch({
+				 uni.navigateTo({
 				    url: '../read/read',
 				});
 			},
 			goToCurriculum(){
-				uni.reLaunch({
+				uni.navigateTo({
 				    url: '../currlum/currlum',
 				});
 			},

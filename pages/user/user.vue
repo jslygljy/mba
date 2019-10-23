@@ -102,7 +102,7 @@
         
         methods: {
             toFriend(){
-				uni.reLaunch({
+				uni.navigateTo({
 				    url: '../inviteFriend/inviteFriend',
 				});
 			}

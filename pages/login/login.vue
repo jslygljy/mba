@@ -7,10 +7,10 @@
             </view>
         </view>
         <view class="btn-row">
-            <button type="primary" :class="account.length!==11? 'grey':'primary'" @tap="bindLogin">获取验证码</button>
+            <button type="primary" :class="account.length!==11? 'grey':'primary'" @click="bindLogin">获取验证码</button>
         </view>
         <view class="action-row">
-            <navigator url="../main/main">试用一下</navigator>
+            <navigator url="../main/main" open-type="switchTab" >试用一下</navigator>
         </view>
         <!-- <view class="oauth-row" v-if="hasProvider" v-bind:style="{top: positionTop + 'px'}">
             <view class="oauth-image" v-for="provider in providerList" :key="provider.value">
@@ -50,7 +50,6 @@
             ...mapMutations(['login']),
             
             bindLogin() {
-                
                 if (this.account.length !== 11) {
                     uni.showToast({
                         icon: 'none',
@@ -71,7 +70,7 @@
 						}
 				    }
 				});
-				uni.reLaunch({
+				uni.navigateTo({
 				    url: '../loginCode/loginCode?tel='+this.account,
 				});
                
@@ -83,7 +82,7 @@
                  * 返回首页也使用reLaunch方式
                  */
                 if (this.forcedLogin) {
-                    uni.reLaunch({
+                    uni.switchTab({
                         url: '../main/main',
                     });
                 } else {

@@ -222,7 +222,7 @@
 							uni.showToast({
 								title: '报名成功'
 							});
-							uni.reLaunch({
+							uni.redirectTo({
 							    url: '../curlumDetail/curlumDetail?course_id='+this.course_id+'&is_sgin=1'
 							});
 						}else{
@@ -285,7 +285,6 @@
 				    success: (res) => {
 						console.log(res);
 						if(res.data.errcode==0){
-							this.curlumName = res.data.data.title;
 							this.summary = res.data.data.summary.split('&&').join('');
 							
 							this.old_price = res.data.data.price

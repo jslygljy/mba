@@ -101,7 +101,7 @@
 				
 			},
 			goToDetail(topicid,title,subTitle){
-				uni.reLaunch({
+				uni.navigateTo({
 				    url: '../taskDetail/taskDetail?id='+topicid+'&title='+title+'&subTitle='+subTitle+'&pages=0'
 				});
 			},

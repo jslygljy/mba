@@ -101,7 +101,7 @@
                 console.log(e.$el.scrollTop)
             },
 			goToDetail(){
-				uni.reLaunch({
+				uni.navigateTo({
 				    url: '/pages/readDetail/readDetail',
 				});
 			},

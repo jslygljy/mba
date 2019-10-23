@@ -9,7 +9,7 @@
         {
             "path": "pages/main/main",
             "style": {
-                "navigationBarTitleText": "首页"
+                "navigationStyle": "custom"
             }
         }, {
             "path": "pages/login/login",
@@ -74,7 +74,7 @@
 		},{
 			"path": "pages/curlumDetail/curlumDetail",
 			"style": {
-			    "navigationBarTitleText": "课程详细"
+			    "navigationStyle": "custom"
 			}
 		}
     ],
