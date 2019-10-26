@@ -72,11 +72,32 @@
 			    "navigationBarTitleText": "我的课程"
 			}
 		},{
+			"path": "pages/topic/topic",
+			"style": {
+			    "navigationBarTitleText": "套卷练习"
+			}
+		},{
+			"path": "pages/history/history",
+			"style": {
+			    "navigationBarTitleText": "做题历史"
+			}
+		},{
+			"path": "pages/ucList/ucList",
+			"style": {
+			    "navigationBarTitleText": "院校指南"
+			}
+		},{
 			"path": "pages/curlumDetail/curlumDetail",
 			"style": {
 			    "navigationStyle": "custom"
 			}
 		}
+        ,{
+            "path" : "pages/ucDetail/ucDetail",
+            "style" : {
+				"navigationStyle": "custom"
+			}
+        }
     ],
     "tabBar": {
         "color": "#7a7e83",

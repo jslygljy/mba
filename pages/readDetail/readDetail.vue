@@ -27,16 +27,18 @@
 				富家大室考虑考虑剧看了极乐空间从V领抗锯齿昆仑雪菊快乐才相聚离开从小就离开不见了恐惧富家大室考虑考虑剧看了极乐空间从V领抗锯齿昆仑雪菊快乐才相聚离开从小就离开不见了恐惧富家大室考虑考虑剧看了极乐空间从V领抗锯齿昆仑雪菊快乐才相聚离开从小就离开不见了恐惧富家大室考虑考虑剧看了极乐空间从V领抗锯齿昆仑雪菊快乐才相聚离开从小就离开不见了恐惧
 			</text>
 		</view>
+		
 		<button class="cu-btn round lg bg-grey bg-bule">完成学习</button>
     </view>
 </template>
 
 <script>
 	import sunTab from '@/components/sun-tab/sun-tab.vue';
-	
+	import neilModal from '@/components/neil-modal/neil-modal.vue';
     export default {
 		components:{
-			sunTab
+			sunTab,
+			neilModal
 		},
         data() {
 			return {

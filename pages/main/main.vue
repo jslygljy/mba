@@ -93,7 +93,7 @@
 				index: 0,
 				mianfeilist: [],
 				tuijianlist: [],
-				subName: '免费推荐',
+				subName: '',
 				tabObjectList: [ //对象数组赋值
 					{
 						name: '精品推荐',

@@ -6,7 +6,7 @@
 				<text class="cuIcon-newshotfill text-blue i"></text>
 				<text>套卷练习</text>
 			</view>
-			<view class="item">
+			<view class="item" @click="goToHistory">
 				<text class="cuIcon-babyfill text-purple i"></text>
 				<text>做题历史</text>
 			</view>
@@ -117,6 +117,16 @@
 				    }
 				});
 			},
+			goToRead(){
+				uni.navigateTo({
+				    url: '../topic/topic'
+				});
+			},
+			goToHistory(){
+				uni.navigateTo({
+				    url: '../history/history'
+				});
+			}
 		}
 	}
 </script>

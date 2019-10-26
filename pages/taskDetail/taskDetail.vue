@@ -7,58 +7,84 @@
 			:minute="0" 
 			:second="0">
 		</uni-countdown>
-		<view class="header">
-			<text>{{title}}</text>
-			<view class="right-progress">
-				<text class="text-blue">{{curryIndex}}</text>
-				/
-				<text>{{allIndex}}</text>
-			</view>
-		</view>
-		<view class="content">
-			<text>(单项选择器)福建省大立科技分类考试大减肥快乐圣诞节里看风景昂克赛拉的减肥快乐大数据库了房间卡拉圣诞节疯狂了的萨芬的时刻来访接待室</text>
-		</view>
-		<view class="ans-list">
-			<view class="ans-item" v-for="(item, index) in anslist" :key="index" >
-				<view class="item-left flex-sub">
-					<view class="border-info">{{item.ides}}</view>
+		<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="false" :interval="2000" :duration="500" current="curryIndex" @change="change">
+			<swiper-item v-for="(item, index) in list" :key="index">
+				<view class="header">
+					<text>{{item.ttitle}}</text>
+					<view class="right-progress">
+						<text class="text-blue">{{curryIndex+1}}</text>
+						/
+						<text>{{allIndex}}</text>
+					</view>
 				</view>
-				<view class="item-right">{{item.contentInfo}}</view>
+				<view class="content">
+					<text>({{item.type==1? '单选题':'多选题'}}){{item.title}}</text>
+				</view>
+				<view class="ans-list">
+					<view class="ans-item" v-for="(subitem, subindex) in item.item_list" :key="subindex" @click="setChoose(index,subindex,subitem)">
+						<view class="item-left flex-sub">
+							<view :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view>
+						</view>
+						<view class="item-right">{{subitem.content}}</view>
+					</view>
+				</view>
+			</swiper-item>
+		</swiper>
+		<neil-modal
+		    :show="true" 
+		    @close="closeModal" 
+		    title="答题卡" 
+		    @cancel="bindBtn('cancel')" 
+			confirmText="交卷并查看结果"
+		    @confirm="bindBtn('confirm')">
+			<text class="modal_info">
+				多种题型综合
+			</text>
+			<view class="flex">
+				<view class="border-info3 flex-sub">
+					1
+				</view>
+				<view class="border-info3 flex-sub">
+					2
+				</view>
+				<view class="border-info3 flex-sub">
+					3
+				</view>
+				<view class="border-info3 flex-sub">
+					4
+				</view>
+				<view class="border-info3 flex-sub">
+					5
+				</view>
 			</view>
-		</view>
+			
+		</neil-modal>
     </view>
 </template>
 
 <script>
 	import uniCountdown from "@/components/uni-countdown/uni-countdown.vue"
 	import config from '../../config.js';
+	import neilModal from '@/components/neil-modal/neil-modal.vue';
     export default {
-		 components: {uniCountdown},
+		 components: {uniCountdown,neilModal},
         data() {
 			return {
-				title:'2013年联考10月真题',
-				curryIndex:'1',
-				allIndex:'5',
-				anslist:[{
-					'ides':'A',
-					'contentInfo':'123'
-				},{
-					'ides':'B',
-					'contentInfo':'一个范德萨六块腹肌独立思考今飞凯达开了房电视剧里看风景代理商会计分录看电视剧开了房电视剧里看风景的时刻垃圾分类大开杀戒了看电视剧了一个范德萨六块腹肌独立思考今飞凯达开了房电视剧里看风景代理商会计分录看电视剧开了房电视剧里看风景的时刻垃圾分类大开杀戒了看电视剧了'
-				},{
-					'ides':'C',
-					'contentInfo':'一个范德萨六块腹肌独立思考今飞凯达开了房电视剧里看风景代理商会计分录看电视剧开了房电视剧里看风景的时刻垃圾分类大开杀戒了看电视剧了一个范德萨六块腹肌独立思考今飞凯达开了房电视剧里看风景代理商会计分录看电视剧开了房电视剧里看风景的时刻垃圾分类大开杀戒了看电视剧了'
-				},{
-					'ides':'D',
-					'contentInfo':'一个范德萨六块腹肌独立思考今飞凯达开了房电视剧里看风景代理商会计分录看电视剧开了房电视剧里看风景的时刻垃圾分类大开杀戒了看电视剧了一个范德萨六块腹肌独立思考今飞凯达开了房电视剧里看风景代理商会计分录看电视剧开了房电视剧里看风景的时刻垃圾分类大开杀戒了看电视剧了'
-				}]
+				ttitle:'',
+				indicatorDots:false,
+				curryIndex:0,
+				allIndex:5,
+				type:'',
+				list:[],
+				item_list:[],
+				ansList:[]
 			}   
          },
 		 onShow(){
 		 	this.getDetail();
 		 },
 		 onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
-		    this.topicid = option.topicid;
+		    // this.topicid = option.topicid;
 		    this.title = option.title;
 			this.subTitle = option.subTitle;
 			this.pages =option.pages;
@@ -71,13 +97,35 @@
 				let id =uni.getStorageSync('customer_id');
 				// 获取做题列表
 				uni.request({
-					url: config.url+'/app/qa/list?topicid=0bc80cb9-8528-4678-bf0e-31c8448451d3&special_work='+this.title+'&epoint='+this.subTitle+'&pageindex='+this.pages, //仅为示例，并非真实接口地址。
+					url: config.url+'/app/qa/list?special_work='+this.title+'&epoint='+this.subTitle+'&pageindex='+this.pages, //仅为示例，并非真实接口地址。
 				    data: {
 				    },
 				    success: (res) => {
-						console.log(res.data.data);
+						res.data.data.map((data)=>{
+							data.item_list.map((data2)=>{
+								data2.isChoose = false;
+							})
+						})
+						this.list = res.data.data;
 				    }
 				});
+			},
+			change(e){
+				this.curryIndex = e.detail.current
+			},
+			setChoose(index,subindex,subitem){
+				this.list[index].item_list.map((data2)=>{
+					data2.isChoose = false;
+				})
+				this.ansList.push({
+					qa_id:subitem.qa_id,
+					is_true:subitem.is_true,
+					answer:subitem.option
+				});
+				this.list[index].item_list[subindex]['isChoose'] = true;
+			},
+			bindBtn(type){
+				
 			}
         }
     }
@@ -86,8 +134,19 @@
 <style scoped lang="scss">
 	@import "../../static/icon.css";
 	@import "../../static/main.css";
+	uni-page-body{
+		height: 100%;
+	}
+	uni-swiper {
+	    height: 100%;
+	}
+	uni-swiper-item{
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
     .taskDetail{
 		width:100%;
+		height: 100%;
 		padding: 0rpx 20rpx;
 		.header{
 			display: flex;
@@ -118,6 +177,10 @@
 					color: #0081ff;
 					background-color: #fff;
 				}
+				.border-info2{
+					color: #fff;
+					background-color: #0081ff;
+				}
 			}
 			.item-right{
 				font-size: 30rpx;
@@ -126,10 +189,22 @@
 				align-self: center;
 			}
 		}
-		.ans-item:hover .border-info{
-			color: #fff;
-			background-color: #0081ff;
-		}
 	}
-	
+	.border-info3{
+		max-width: 80rpx;
+		height: 80rpx;
+		border: 2rpx #0081ff solid;
+		font-size: 30rpx;
+		line-height: 80rpx;
+		border-radius: 50%;
+		text-align: center;
+		font-weight: bold;
+		color: #fff;
+		background-color: #0081ff;
+		margin: 40rpx 10rpx 50rpx 20rpx;
+	}
+	.modal_info{
+		margin: 10rpx 10rpx 20rpx 20rpx;
+		display: inline-block;
+	}
 </style>
