@@ -168,11 +168,11 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 	justify-content: space-between;
 	margin-top: 10rpx;
 	height: 150rpx;
-	&--disabled {
+	.uni-list-item--disabled {
 		@include list-disabled;
 	}
 
-	&__container {
+	.uni-list-item__container {
 		padding: $list-item-pd;
 		width: 100%;
 		box-sizing: border-box;
@@ -184,11 +184,11 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 		align-items: center;
 	}
 
-	&__content {
+	.uni-list-item__content {
 		flex: 1;
 		display: flex;
 		color: #3b4144;
-		&-title {
+		.uni-list-item__content-title {
 			font-size: $uni-font-size-lg;
 			text-overflow: ellipsis;
 			white-space: nowrap;
@@ -198,38 +198,38 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 			display: inline-block;
 		}
 
-		&-note {
-			margin-top: 6upx;
-			color: $uni-text-color-grey;
-			font-size: $uni-font-size-base;
-			white-space: normal;
-			display: -webkit-box;
-			-webkit-box-orient: vertical;
-			-webkit-line-clamp: 2;
-			overflow: hidden;
-		}
+		// &-note {
+		// 	margin-top: 6upx;
+		// 	color: $uni-text-color-grey;
+		// 	font-size: $uni-font-size-base;
+		// 	white-space: normal;
+		// 	display: -webkit-box;
+		// 	-webkit-box-orient: vertical;
+		// 	-webkit-line-clamp: 2;
+		// 	overflow: hidden;
+		// }
 	}
 
-	&__extra {
-		width: 25%;
-		display: flex;
-		flex-direction: row;
-		justify-content: flex-end;
-		align-items: center;
-	}
+	// &__extra {
+	// 	width: 25%;
+	// 	display: flex;
+	// 	flex-direction: row;
+	// 	justify-content: flex-end;
+	// 	align-items: center;
+	// }
 
-	&__icon {
-		margin-right: 18upx;
-		display: flex;
-		flex-direction: row;
-		justify-content: center;
-		align-items: center;
+	// &__icon {
+	// 	margin-right: 18upx;
+	// 	display: flex;
+	// 	flex-direction: row;
+	// 	justify-content: center;
+	// 	align-items: center;
 
-		&-img {
-			height: $uni-img-size-base;
-			width: $uni-img-size-base;
-		}
-	}
+	// 	&-img {
+	// 		height: $uni-img-size-base;
+	// 		width: $uni-img-size-base;
+	// 	}
+	// }
 }
 
 .uni-list > .uni-list-item:last-child .uni-list-item-container:after {

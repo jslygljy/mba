@@ -31,7 +31,7 @@
 			</swiper-item>
 		</swiper>
 		<neil-modal
-		    :show="true" 
+		    :show="isShow" 
 		    @close="closeModal" 
 		    title="答题卡" 
 		    @cancel="bindBtn('cancel')" 
@@ -77,7 +77,8 @@
 				type:'',
 				list:[],
 				item_list:[],
-				ansList:[]
+				ansList:[],
+				isShow:false
 			}   
          },
 		 onShow(){
@@ -117,15 +118,32 @@
 				this.list[index].item_list.map((data2)=>{
 					data2.isChoose = false;
 				})
-				this.ansList.push({
-					qa_id:subitem.qa_id,
-					is_true:subitem.is_true,
-					answer:subitem.option
-				});
+				
+				if(!this.ansList[index]){
+					this.ansList.push({
+						qa_id:subitem.qa_id,
+						is_true:subitem.is_true,
+						answer:subitem.option
+					});
+				}else{
+					this.ansList[index].qa_id = subitem.qa_id;
+					this.ansList[index].is_true = subitem.is_true;
+					this.ansList[index].answer = subitem.option;
+				}
+				
 				this.list[index].item_list[subindex]['isChoose'] = true;
+				if(this.ansList.length==5){
+					this.isShow = true
+				}
+				
 			},
 			bindBtn(type){
-				
+				uni.navigateTo({
+				    url: '../report/report?list='+JSON.stringify(this.ansList)
+				});
+			},
+			closeModal(){
+				this.isShow = false
 			}
         }
     }
@@ -139,6 +157,9 @@
 	}
 	uni-swiper {
 	    height: 100%;
+	}
+	.swiper{
+		height: 100%;
 	}
 	uni-swiper-item{
 		overflow-y: scroll;

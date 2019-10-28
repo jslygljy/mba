@@ -7,7 +7,7 @@
 				<button class="cu-btn bg-blue shadow margin-left" @tap="showModal" data-target="DrawerModalR">筛选</button>
 			</view>
 		</view>
-		<view class="cu-modal drawer-modal justify-end" :class="modalName=='DrawerModalR'?'show':''" @tap="hideModal">
+		<view class="cu-modal drawer-modal justify-end" :class="modalName=='DrawerModalR'?'show':''">
 			<view class="cu-dialog basis-xl info-y" :style="[{top:CustomBar+'px',height:'calc(100vh - ' + CustomBar + 'px)'}]">
 				<view class="cu-list menu text-left">
 					<view class="selectInfo" v-for="(item, index) in list" :key="index">
@@ -27,7 +27,7 @@
 			</view>
 		</view>
 		<uni-list class="list-info">
-			<view class="flex solids-bottom lists" @click="goToDetail(item.innerid)" v-for="(item, index) in list2" :key="index">
+			<view class="flex solids-bottom lists" @click="goToDetail(item.innerid)" v-for="(item, index) in list2" :key="index" v-if="list2.length>0">
 				<view class="flex-sub">
 					<image :src="item.logo" mode="" style="width: 150rpx;height: 150rpx;margin: 0px 12rpx;"></image>
 				</view>
@@ -42,12 +42,19 @@
 					</view>
 				</view>
 				<view class="flex-sub">
-					<view style="margin: 0px 20rpx">
-						<uni-badge :text="item.nature" type="primary" style="margin-top: 60px;display: inline-block;margin-right: 9px;"></uni-badge>
+					<view style="margin: 0px -6rpx">
+						<uni-badge :text="item.nature" type="primary" style="margin-top: 60px;display: inline-block;    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+width: 80rpx;
+    overflow-wrap: break-word;"></uni-badge>
 					</view>
 				</view>
 			</view>
 		</uni-list>
+		<view class="text-center" v-if="list2.length==0">
+			<text>暂无数据</text>
+		</view>
 	</view>
 </template>
 
@@ -199,22 +206,7 @@
 				edu_system:[],
 				item_category:[],
 				area:[],
-				list2: [ 
-					{ 
-						"innerid": "bc79272b-146b-4a24-84c4-9cd02951e943", 
-						"name": "内蒙古科技大学土木工程学院MEM项目", 
-						"logo": "http://47.104.64.220/public/upload/ec581336-03b4-475f-a4f3-137e740eb4c1.png", 
-						"establish_time": "1988", 
-						"nature": "" 
-						}, 
-						{ 
-						"innerid": "3b8e8f3f-dc0e-4d4e-bbd1-56fa80c724e5", 
-						"name": "清华大学五道口金融学院MBA项目", 
-						"logo": "http://47.104.64.220/public/upload/cf8d8109-7edd-4f85-a700-d6abc2d60375.png", 
-						"establish_time": "2015", 
-						"nature": "985"
-					} 
-				] 
+				list2: [] 
 			}
 		},
 		onLoad() {
@@ -260,7 +252,7 @@
 						area:this.area
 					},
 					success: (res) => {
-						console.log(res);
+						this.list2 = res.data.data;
 					}
 				});
 			},

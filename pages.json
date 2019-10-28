@@ -98,6 +98,12 @@
 				"navigationStyle": "custom"
 			}
         }
+        ,{
+            "path" : "pages/report/report",
+            "style" : {
+				"navigationBarTitleText": "练习报告"
+			}
+        }
     ],
     "tabBar": {
         "color": "#7a7e83",

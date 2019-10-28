@@ -241,7 +241,6 @@
 				this.index = e.tab.value;
 			},
 			change(e) {
-				console.log(e)
 			},
 			setPlay(firitem,item,index){
 				let c = [];
@@ -284,10 +283,9 @@
 				    data: {
 				    },
 				    success: (res) => {
-						console.log(res);
 						if(res.data.errcode==0){
 							// console.log(res.data.data)
-							this.summary = res.data.data.summary.split('&&').join('');
+							this.summary = res.data.data.summary;
 							
 							this.old_price = res.data.data.price
 							this.buy_count = res.data.data.buy_count;

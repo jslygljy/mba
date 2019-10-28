@@ -5,7 +5,7 @@
 			<view class="bg-gradual-purple padding radius text-center shadow-blur flex-sub margin-lr" style="height: 150rpx;">
 				<view class="text-lg" style="line-height: 3;">书城</view>
 			</view>
-		<view class="bg-gradual-blue padding radius text-center shadow-blur flex-sub margin-lr" style="height: 150rpx;">
+			<view class="bg-gradual-blue padding radius text-center shadow-blur flex-sub margin-lr" style="height: 150rpx;" @click="goToUc">
 				<view class="text-lg" style="line-height: 3;">院校指南</view>
 			</view>
 		</view>
@@ -98,8 +98,13 @@
                 console.log(e);
             },
 			goToRead(){
-				 uni.navigateTo({
+				uni.navigateTo({
 				    url: '../read/read',
+				});
+			},
+			goToUc(){
+				uni.navigateTo({
+				    url: '../ucList/ucList',
 				});
 			}
 		}

@@ -3,7 +3,7 @@
 		
 		<view class="paper-classify-item-name"><i class="right-point"></i><text>联考真题题库</text><i class="left-point"></i></view>
 		<uni-list class="list-info">
-			<view class="flex solids-bottom lists" @click="onClick" v-for="(item, index) in list" :key="item.topicid">
+			<view class="flex solids-bottom lists" @click="onClick" v-for="(item, index) in list" :key="item.innerid">
 				<view class="flex-four">
 					<view class="uni-list-item__container">
 					  <view class="uni-list-item__content">
@@ -29,11 +29,7 @@
 		data() {
 			return {
 				title:'123',
-				list:[{
-					title:'123'
-				},{
-					title:'123'
-				}],
+				list:[],
 				tabObjectList: [ //对象数组赋值
 					{
 						name: '历年真题',
@@ -58,12 +54,12 @@
 				let id = uni.getStorageSync('customer_id');
 				// 推荐课程
 				uni.request({
-					url: config.url + '/app/topic/', //仅为示例，并非真实接口地址。
+					url: config.url + '/app/topic/list', //仅为示例，并非真实接口地址。
 					method:"GET",
 					data: {
 					},
 					success: (res) => {
-						console.log(res);
+						this.list = res.data.data;
 					}
 				});
 			},
