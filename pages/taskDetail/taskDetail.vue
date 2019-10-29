@@ -157,8 +157,6 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
 	uni-page-body{
 		height: 100%;
 	}
@@ -173,6 +171,7 @@
 		width:100%;
 		height: 100%;
 		padding: 0rpx 20rpx;
+		background-color: #fff;
 		.header{
 			display: flex;
 			justify-content: space-between;

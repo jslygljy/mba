@@ -132,10 +132,13 @@
 </script>
 
 <style scoped lang="scss">
+	page{
+		height: 100%;
+	}
 	.task-content{
 		height:100%;
 		width: 100%;
-		padding-bottom: 100rpx;
+		background-color: #fff;
 		.list{
 			display: flex;
 			margin-bottom: 20rpx;

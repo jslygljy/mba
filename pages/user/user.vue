@@ -113,6 +113,7 @@
 <style scoped lang="scss">
 	.my-content{
 		width: 100%;
+		background-color: #fff;
 	}
 	.borderInfo{
 		border-top:1rpx #ccc solid;
