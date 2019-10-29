@@ -102,7 +102,7 @@
 			},
 			goToDetail(topicid,title,subTitle){
 				uni.navigateTo({
-				    url: '../taskDetail/taskDetail?id='+topicid+'&title='+title+'&subTitle='+subTitle+'&pages=0'
+				    url: '../taskDetail/taskDetail?id='+topicid+'&title='+title+'&subTitle='+subTitle+'&pages=0&showdetail=false'
 				});
 			},
 			getList(){
@@ -132,10 +132,9 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
 	.task-content{
 		height:100%;
+		width: 100%;
 		padding-bottom: 100rpx;
 		.list{
 			display: flex;

@@ -64,8 +64,6 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
     /* comment */
     .uni-padding-wrap {
         padding:0rpx 30upx;

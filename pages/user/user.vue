@@ -111,8 +111,6 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
 	.my-content{
 		width: 100%;
 	}

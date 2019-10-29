@@ -121,8 +121,6 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../../static/icon.css";
-    @import "../../static/main.css";
 	page {
         height: 100%;
     }

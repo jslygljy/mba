@@ -3,19 +3,19 @@
 		<bw-swiper :swiperList="swiperList" style="width:100%"></bw-swiper>
 		<view class="list">
 			<view class="item">
-				<text class="icon1 i"></text>
+				<image src="/static/img/bookmark.png" mode="" class="i"></image>
 				<text>书城</text>
 			</view>
 			<view class="item" @click="goToRead">
-				<text class="icon2 i"></text>
+				<image src="/static/img/notebook.png" mode="" class="i"></image>
 				<text>每日阅读</text>
 			</view>
 			<view class="item" @click="goToCurriculum">
-				<text class="icon3 i"></text>
+				<image src="/static/img/report.png" mode="" class="i"></image>
 				<text>我的课程</text>
 			</view>
 			<view class="item">
-				<text class="icon4 i"></text>
+				<image src="/static/img/monitor.png" mode="" class="i"></image>
 				<text>学习报告</text>
 			</view>
 		</view>
@@ -230,8 +230,6 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
 
 	.content {
 		padding: 0upx;
@@ -310,12 +308,17 @@
 			flex: 1;
 			text-align: center;
 			font-size: 24rpx;
+			display: block;
+			text{
+				display: block;
+			}
 		}
 
 		.i {
-			margin-left: 60rpx;
-			margin-top: 20rpx;
+			margin-top: 40rpx;
 			margin-bottom: 20rpx;
+			width: 64upx;
+			height: 64upx;
 		}
 	}
 
@@ -335,37 +338,5 @@
 	.title {
 		color: #8f8f94;
 		margin-top: 50upx;
-	}
-
-	.icon1 {
-		background-image: url('/static/img/bookmark.png');
-		display: block;
-		width: 64upx;
-		height: 64upx;
-		background-size: 100% 100%;
-	}
-
-	.icon2 {
-		background-image: url('/static/img/notebook.png');
-		display: block;
-		width: 64upx;
-		height: 64upx;
-		background-size: 100% 100%;
-	}
-
-	.icon3 {
-		background-image: url('/static/img/report.png');
-		display: block;
-		width: 64upx;
-		height: 64upx;
-		background-size: 100% 100%;
-	}
-
-	.icon4 {
-		background-image: url('/static/img/monitor.png');
-		display: block;
-		width: 64upx;
-		height: 64upx;
-		background-size: 100% 100%;
 	}
 </style>

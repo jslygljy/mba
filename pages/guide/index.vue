@@ -110,8 +110,8 @@ export default {
     border-style: solid;
     border-radius: 30rpx;
     font-size: 28rpx;
-    padding-top: 5rpx;
-    padding-bottom: 5rpx;
+    padding-top: 15rpx;
+    padding-bottom: 15rpx;
     padding-left: 25rpx;
     padding-right: 25rpx;
 }

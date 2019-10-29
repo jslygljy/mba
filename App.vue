@@ -13,7 +13,9 @@
 	}
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
+	@import "/static/icon.css";
+	@import "/static/main.css";
 	/*每个页面公共css */
 	page {
 		min-height: 100%;
@@ -60,7 +62,7 @@
 		display: flex;
 		flex: 1;
 		flex-direction: column;
-		background-color: #efeff4;
+		background-color: #fff;
 		padding: 20upx;
 	}
 

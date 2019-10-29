@@ -57,9 +57,11 @@
 					5
 				</view>
 			</view>
-			
 		</neil-modal>
-    </view>
+		<view class="" v-if="showdetail">
+			getinfo
+		</view>
+	</view>
 </template>
 
 <script>
@@ -78,17 +80,19 @@
 				list:[],
 				item_list:[],
 				ansList:[],
-				isShow:false
+				isShow:false,
+				showdetail:false
 			}   
          },
 		 onShow(){
 		 	this.getDetail();
 		 },
 		 onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
-		    // this.topicid = option.topicid;
+		    this.topicid = option.topicid;
 		    this.title = option.title;
 			this.subTitle = option.subTitle;
 			this.pages =option.pages;
+			this.showdetail = option.showdetail ==="false" ? false : true;
 		 },
         methods: {
 			objectChange(e){
@@ -102,12 +106,15 @@
 				    data: {
 				    },
 				    success: (res) => {
-						res.data.data.map((data)=>{
-							data.item_list.map((data2)=>{
-								data2.isChoose = false;
+						if(res.data.errcode==0&&res.data.data.length>0){
+							res.data.data.map((data)=>{
+								data.item_list.map((data2)=>{
+									data2.isChoose = false;
+								})
 							})
-						})
-						this.list = res.data.data;
+							this.list = res.data.data;
+						}
+						
 				    }
 				});
 			},
@@ -139,7 +146,7 @@
 			},
 			bindBtn(type){
 				uni.navigateTo({
-				    url: '../report/report?list='+JSON.stringify(this.ansList)
+				    url: '../report/report?id='+this.topicid+'&title='+this.title+'&subTitle='+this.subTitle+'&pages=0&showdetail=false'+'&list='+JSON.stringify(this.ansList)
 				});
 			},
 			closeModal(){
@@ -157,9 +164,6 @@
 	}
 	uni-swiper {
 	    height: 100%;
-	}
-	.swiper{
-		height: 100%;
 	}
 	uni-swiper-item{
 		overflow-y: scroll;

@@ -1,6 +1,8 @@
 <template>
 	<view class="box">
-		<text>形式逻辑</text>
+		<text class="info-title">
+			形式逻辑
+		</text>
 		<view class="view_box">
 			<iCircle
 				style="width:300rpx;height:300rpx;margin-left: 100rpx;margin-right: 100rpx;"
@@ -33,7 +35,7 @@
 				<text class="text-df text-grey margin-top">正确率</text>
 			</view>
 		</view>
-		<text class="">
+		<text class="info-title">
 			多钟题型综合
 		</text>
 		<view class="flex">
@@ -41,13 +43,16 @@
 				{{index+1}}
 			</view>
 		</view>
-		<text class="">
+		<text class="info-title">
 			考点
 		</text>
 		<view class="button_box">
 			<button type="primary" class="button_item" @click="add">+</button>
 		</view>
-		
+		<view class="flex bottom-fix">
+			<text class="bg-blue flex-sub text-white" @click="goToDetail">全部解析</text>
+			<text class="bg-purple flex-sub text-white">继续练习</text>
+		</view>
 		
 	</view>
 </template>
@@ -66,11 +71,17 @@
 				success_scode:'',
 				success_rate:'',
 				itemList:[],
-				total_scode:''
+				total_scode:'',
+				title:'',
+				subTitle:'',
+				pages:''
 			}
 		},
 		onLoad: function (option) { 
 		   this.list = JSON.parse(option.list);
+		   this.title = option.title;
+		   this.subTitle = option.subTitle;
+		   this.pages =option.pages;
 		},
 		computed: {
 			color() {
@@ -106,20 +117,24 @@
 						this.total_scode = res.data.data.total_scode;
 				    }
 				});
+			},
+			goToDetail(){
+				uni.navigateTo({
+				    url: '../taskDetail/taskDetail?id='+this.topicid+'&title='+this.title+'&subTitle='+this.subTitle+'&pages='+ this.pages+'&showdetail=true'
+				});
 			}
 		}
 	}
 </script>
 
-<style>
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
+<style scoped lang="scss">
 	.box {
 		/* margin-top: var(--status-bar-height); */
 		flex: 1;
-		padding: 30rpx;
+		
 	}
 	.view_box {
+		padding: 30rpx;
 		width: 100%;
 		height: 100%;
 		display: flex;
@@ -159,5 +174,17 @@
 		font-weight: bold;
 		color: #fff;
 		margin: 40rpx 10rpx 50rpx 34rpx;
+	}
+	.info-title{
+		margin-left: 30rpx;
+	}
+	.bottom-fix{
+		position: fixed;
+		bottom: 0px;
+		width: 100%;
+		height: 90rpx;
+		line-height: 90rpx;
+		font-size: 26rpx;
+		text-align: center;
 	}
 </style>

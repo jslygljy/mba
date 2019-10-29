@@ -67,8 +67,6 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
     .readDetail{
 		width:100%;
 		.uni-tab-item{

@@ -99,8 +99,6 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
 	
 	.login-content{
 		padding-left: 40rpx;

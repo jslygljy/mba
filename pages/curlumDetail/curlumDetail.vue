@@ -19,7 +19,7 @@
 				{{old_price==0?'免费':old_price+'元'}}
 			</text>
 			<view class="content-img">
-				<image :src="content" mode="widthFix" style="width: 100%;"></image>
+				<image :src="content" mode="widthFix" style="width: 100%;height: 100%;"></image>
 			</view>
 		</view>
 		<!-- 目录 -->
@@ -354,10 +354,9 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
 .curlum-detail{
 	background-color: #fff;
+	width: 100%;
 	video{
 		width: 100%
 	}
@@ -390,7 +389,6 @@
 		}
 	}
 	.directory{
-		height: 100%;
 		padding-bottom: 100rpx;
 		.item{
 			width: 100%;
@@ -462,5 +460,8 @@
 			background-color: blue;
 		}
 	}
+	
+	
+	
 }
 </style>

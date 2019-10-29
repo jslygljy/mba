@@ -118,8 +118,6 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
 	.content{
 		padding: 10upx;
 	}

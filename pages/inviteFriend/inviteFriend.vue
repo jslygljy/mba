@@ -95,8 +95,6 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
 	.inviteContent{
 		.card-swiper{
 			height: 910upx !important

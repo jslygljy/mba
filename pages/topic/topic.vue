@@ -73,8 +73,6 @@
 </script>
 
 <style lang="scss">
-@import "../../static/icon.css";
-	@import "../../static/main.css";
 
 
 @mixin list-disabled {

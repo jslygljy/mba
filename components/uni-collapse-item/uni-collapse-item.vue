@@ -159,10 +159,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
-
-
 @mixin collapse-disabled {
 	opacity: 0.3;
 }

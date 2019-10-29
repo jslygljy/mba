@@ -129,30 +129,28 @@
 </script>
 
 <style scoped lang="scss">
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
-	@charset "UTF-8";
-
+	
+	
+	//  toggle样式
 	.uni-collapse-cell {
 		position: relative
 	}
-
 	.uni-collapse-cell--hover {
 		background-color: #f5f5f5
 	}
-
+	
 	.uni-collapse-cell--open {
 		background-color: #f5f5f5
 	}
-
+	
 	.uni-collapse-cell--disabled {
 		opacity: .3
 	}
-
+	
 	.uni-collapse-cell--animation {
 		transition: all .3s
 	}
-
+	
 	.uni-collapse-cell__title {
 		padding: 24upx 30upx;
 		width: 100%;
@@ -164,7 +162,7 @@
 		justify-content: space-between;
 		align-items: center
 	}
-
+	
 	.uni-collapse-cell__title-extra {
 		margin-right: 18upx;
 		display: flex;
@@ -172,30 +170,30 @@
 		justify-content: center;
 		align-items: center
 	}
-
+	
 	.uni-collapse-cell__title-img {
 		height: 52upx;
 		width: 52upx
 	}
-
+	
 	.uni-collapse-cell__title-arrow {
 		width: 20px;
 		height: 20px;
 		transform: rotate(0);
-		transform-origin: center center
+		transform-origin: 34% 38%;
 	}
-
+	
 	.uni-collapse-cell__title-arrow.uni-active {
 		transform: rotate(-180deg)
 	}
-
+	
 	.uni-collapse-cell__title-inner {
 		flex: 1;
 		overflow: hidden;
 		display: flex;
 		flex-direction: column
 	}
-
+	
 	.uni-collapse-cell__title-text {
 		font-size: 28upx;
 		text-overflow: ellipsis;
@@ -204,14 +202,14 @@
 		line-height: 1.5;
 		overflow: hidden
 	}
-
+	
 	.uni-collapse-cell__content {
 		position: relative;
 		width: 100%;
 		overflow: hidden;
 		background: #fff
 	}
-
+	
 	.uni-collapse-cell__content .view {
 		font-size: 28upx
 	}

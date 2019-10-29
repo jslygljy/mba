@@ -115,8 +115,6 @@
 </script>
 
 <style lang="scss">
-	@import "../../static/icon.css";
-	@import "../../static/main.css";
 .ucDetail{
 	.title2{
 		font-size:28rpx;

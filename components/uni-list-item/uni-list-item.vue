@@ -130,11 +130,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import "../../static/icon.css";
-	@import "../../static/main.css";
-
-
+<style lang="scss" scoped>
 @mixin list-disabled {
 	opacity: 0.3;
 }

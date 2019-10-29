@@ -291,8 +291,6 @@ width: 80rpx;
 </script>
 
 <style lang="scss">
-@import "../../static/icon.css";
-@import "../../static/main.css";
 .info-y{
 	overflow-y: scroll;
 }
