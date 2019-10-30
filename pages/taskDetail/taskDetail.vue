@@ -159,17 +159,24 @@
 <style scoped lang="scss">
 	uni-page-body{
 		height: 100%;
+		display: flex;
+		flex-direction: column;
 	}
 	uni-swiper {
 	    height: 100%;
+		display: flex;
+		flex-direction: column;
 	}
 	uni-swiper-item{
 		overflow-y: scroll;
 		overflow-x: hidden;
 	}
+	.container{
+	  
+	}
     .taskDetail{
 		width:100%;
-		height: 100%;
+		min-height: 100vh;
 		padding: 0rpx 20rpx;
 		background-color: #fff;
 		.header{

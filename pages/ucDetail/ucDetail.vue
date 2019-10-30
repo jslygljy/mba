@@ -116,6 +116,7 @@
 
 <style lang="scss">
 .ucDetail{
+	background-color: #fff;
 	.title2{
 		font-size:28rpx;
 	}

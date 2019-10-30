@@ -59,7 +59,6 @@
 	}
 
 	.content {
-		display: flex;
 		flex: 1;
 		flex-direction: column;
 		background-color: #fff;

@@ -1,5 +1,5 @@
 <template>
-	<view class="">
+	<view class="uclist">
 		<view class="cu-bar bg-white margin-top">
 			<view class="action">
 			</view>
@@ -290,7 +290,11 @@ width: 80rpx;
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+	.uclist{
+		width: 100%;
+		background-color: #fff;
+	}
 .info-y{
 	overflow-y: scroll;
 }

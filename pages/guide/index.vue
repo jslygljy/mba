@@ -3,14 +3,7 @@
         <swiper class="flex1" interval="3000" :show-indicators="false" :auto-play="autoPlay" @change="sliderChange" :infinite="false" :forbid-slide-animation="false">
             <swiper-item class="flex1" v-for="(img, index) in imageList" :key="index">
                 <view class="flex1">
-                    <!-- #ifndef APP-PLUS -->
-                    <image class="flex1" mode="aspectFill" :style="{ width: screenWidth+ 'px' }" :src="img.src" />
-
-                    <!-- #endif -->
-
-                    <!-- #ifdef APP-PLUS -->
-                    <image class="flex1" resize="contain" :src="img.src" />
-                    <!-- #endif -->
+					<image class="flex1" mode="widthFix" style="width: 100vw; height: 100vh;" :src="img.src" />
                 </view>
             </swiper-item>
         </swiper>
