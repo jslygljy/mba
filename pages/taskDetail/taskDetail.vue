@@ -23,10 +23,31 @@
 				<view class="ans-list">
 					<view class="ans-item" v-for="(subitem, subindex) in item.item_list" :key="subindex" @click="setChoose(index,subindex,subitem)">
 						<view class="item-left flex-sub">
+							<!-- <view v-if="" :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view> -->
 							<view :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view>
 						</view>
 						<view class="item-right">{{subitem.content}}</view>
 					</view>
+				</view>
+				<view class="" v-if="showdetail">
+					<text class="title">
+						本题出自
+					</text>
+					<text class="info">
+						{{item.ttitle}}
+					</text>
+					<text class="title">
+						考点
+					</text>
+					<text class="info">
+						{{item.special_work}}
+					</text>
+					<text class="title">
+						解析
+					</text>
+					<text class="info">
+						{{item.reason}}
+					</text>
 				</view>
 			</swiper-item>
 		</swiper>
@@ -58,9 +79,7 @@
 				</view>
 			</view>
 		</neil-modal>
-		<view class="" v-if="showdetail">
-			getinfo
-		</view>
+		
 	</view>
 </template>
 
@@ -86,6 +105,7 @@
          },
 		 onShow(){
 		 	this.getDetail();
+			this.getErrDetail();
 		 },
 		 onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
 		    this.topicid = option.topicid;
@@ -114,7 +134,6 @@
 							})
 							this.list = res.data.data;
 						}
-						
 				    }
 				});
 			},
@@ -122,6 +141,7 @@
 				this.curryIndex = e.detail.current
 			},
 			setChoose(index,subindex,subitem){
+				if(this.showdetail)return false;
 				this.list[index].item_list.map((data2)=>{
 					data2.isChoose = false;
 				})
@@ -157,26 +177,27 @@
 </script>
 
 <style scoped lang="scss">
-	uni-page-body{
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-	}
-	uni-swiper {
-	    height: 100%;
-		display: flex;
-		flex-direction: column;
-	}
+
 	uni-swiper-item{
 		overflow-y: scroll;
 		overflow-x: hidden;
 	}
-	.container{
-	  
+	.swiper {
+		display:flex;
+		flex: 1 1 auto;
 	}
+	uni-swiper{
+		height: auto;
+	}
+	uni-swiper .uni-swiper-wrapper{
+		overflow-x: hidden;
+		overflow-y: scroll;
+	}
+	
     .taskDetail{
-		width:100%;
-		min-height: 100vh;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
 		padding: 0rpx 20rpx;
 		background-color: #fff;
 		.header{
@@ -237,5 +258,17 @@
 	.modal_info{
 		margin: 10rpx 10rpx 20rpx 20rpx;
 		display: inline-block;
+	}
+	.title{
+		font-weight: bold;
+		font-size: 34rpx;
+		padding: 10rpx;
+		display: block;
+		margin-top: 20rpx;
+	}
+	.info{
+		font-size: 28rpx;
+		padding: 10rpx;
+		display: block;
 	}
 </style>

@@ -127,7 +127,7 @@
 		padding: 2upx 0;
 		display: inline-flex;
 		flex-wrap: nowrap;
-		justify-content: center;
+		justify-content: start;
 		font-size: 30rpx;
 		&__splitor {
 			justify-content: center;

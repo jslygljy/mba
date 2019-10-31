@@ -39,7 +39,7 @@
 					<text class="text-grey">下载管理</text>
 				</view>
 			</view>
-			<view class="cu-item arrow">
+			<view class="cu-item arrow" @click="goToError">
 				<view class="content">
 					<text class="cuIcon-writefill text-blue"></text>
 					<text class="text-grey">我的错题</text>
@@ -104,6 +104,11 @@
             toFriend(){
 				uni.navigateTo({
 				    url: '../inviteFriend/inviteFriend',
+				});
+			},
+			goToError(){
+				uni.navigateTo({
+				    url: '../myError/myError',
 				});
 			}
         }

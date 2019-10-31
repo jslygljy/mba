@@ -1,19 +1,20 @@
 <template>
-	<view class="topic-content">
-		
-		<view class="paper-classify-item-name"><i class="right-point"></i><text>联考真题题库</text><i class="left-point"></i></view>
+	<view class="error-content">
+		<ChooseLits :list="filerList" :arr="arr" @chooseLike="chooseLike"></ChooseLits>
 		<uni-list class="list-info">
-			<view class="flex solids-bottom lists" @click="onClick" v-for="(item, index) in list" :key="item.innerid">
-				<view class="flex-four">
-					<view class="uni-list-item__container">
-					  <view class="uni-list-item__content">
-						  <view class="uni-list-item__content-title">{{ item.title }}</view>
-					  </view>
-					</view>
+			<view class="flex solids-bottom lists" @click="onClick(item.innerid)" v-for="(item, index) in list" :key="item.innerid">
+				<view class="uni-list-item__container">
+				  <view class="uni-list-item__content">
+					  <view class="uni-list-item__content-title text-df">{{ item.title }}</view>
+				  </view>
+				  <view class="flex justify-between align-center text-gray">
+				  	<view class="uni-list-item__content-title text-sm">{{ item.ttitle }}</view>
+				  	<text class="text-sm">
+				  		{{(new Date(item.createdtime).getMonth()+1) + '-' + new Date(item.createdtime).getDate()}}
+				  	</text>
+				  </view>
 				</view>
-				<view class="flex-sub">
-					<text class="cuIcon-edit text-grey edit-button"></text>
-				</view>
+				
 			</view>
 		</uni-list>
 		<view class="text-center" v-if="list.length==0">
@@ -25,14 +26,19 @@
 <script>
 	import uniList from '@/components/uni-list/uni-list.vue';
 	import config from '../../config.js';
+	import ChooseLits from '@/components/choose-Cade/choose-Cade.vue'
 	export default {
 		components: {
-			uniList
+			uniList,
+			ChooseLits
 		},
 		data() {
 			return {
 				title:'123',
 				list:[],
+				pageindex:'',
+				filerList: ['综合排序', '类型不限', '金额不限'], 
+				arr: [ ['综合排序', '价格降序', '价格升序'], ['类型不限', '高通过率', '利率低'], ['金额不限', '5k以下', '5k-10k', '10k以上'] ],
 				tabObjectList: [ //对象数组赋值
 					{
 						name: '历年真题',
@@ -46,18 +52,16 @@
 			}
 		},
 		onLoad() {
-
 		},
 		onShow() {
 			this.getList();
-
 		},
 		methods: {
 			getList() {
 				let id = uni.getStorageSync('customer_id');
 				// 推荐课程
 				uni.request({
-					url: config.url + '/app/topic/list', //仅为示例，并非真实接口地址。
+					url: config.url + '/app/qa/error/list/'+id+'?pageindex='+this.pageindex,
 					method:"GET",
 					data: {
 					},
@@ -66,8 +70,13 @@
 					}
 				});
 			},
-			onClick(){
-				
+			chooseLike(e){
+				console.log(e)
+			},
+			onClick(qa_id){
+				uni.navigateTo({
+				    url: '../errDetail/errDetail?qa_id='+qa_id
+				});
 			}
 			
 		}
@@ -81,7 +90,7 @@
 @mixin list-disabled {
 	opacity: 0.3;
 }
-.topic-content{
+.error-content{
 	width: 100%;
 	background: #fff;
 }
@@ -122,7 +131,6 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 	margin-left: 60rpx;
 }
 .lists{
-	height: 100rpx;
 }
 .blueRound{
 	display: inline-block;
@@ -133,12 +141,6 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 	border-radius: 50%;
 	margin-top: 14rpx;
 	margin-right: 20rpx;
-}
-.edit-button{
-	position: absolute;
-	right: 60rpx;
-    top: 20rpx;
-	font-size: 50rpx;
 }
 .uni-list-item {
 	font-size: $uni-font-size-lg;
@@ -156,12 +158,9 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 		padding: $list-item-pd;
 		width: 100%;
 		box-sizing: border-box;
-		flex: 1;
 		position: relative;
 		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
+		flex-direction: column;
 	}
 
 	&__content {
@@ -169,13 +168,11 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 		display: flex;
 		color: #3b4144;
 		&-title {
-			font-size: $uni-font-size-lg;
-			text-overflow: ellipsis;
-			white-space: nowrap;
 			color: inherit;
 			line-height: 1.5;
 			overflow: hidden;
 			display: inline-block;
+			padding-bottom: 10rpx;
 		}
 
 		&-note {

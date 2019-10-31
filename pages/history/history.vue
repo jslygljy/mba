@@ -1,5 +1,5 @@
 <template>
-	<view class="">
+	<view class="history-content">
 		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name"></sun-tab>
 		<!-- <view class="paper-classify-item-name"><i class="right-point"></i><text>联考真题题库</text><i class="left-point"></i></view> -->
 		<uni-list class="list-info">
@@ -19,6 +19,9 @@
 				</view>
 			</view>
 		</uni-list>
+		<view class="text-center" v-if="list.length==0">
+			<text>暂无数据</text>
+		</view>
 	</view>
 </template>
 
@@ -35,17 +38,7 @@
 			return {
 				title:'123',
 				index:0,
-				list:[{
-					title:'123',
-					num:0,
-					is_true:'123',
-					time:123231
-				},{
-					title:'123',
-					num:0,
-					is_true:'123',
-					time:123231
-				}],
+				list:[],
 				tabObjectList: [ //对象数组赋值
 					{
 						name: '专项练习',
@@ -67,10 +60,8 @@
 		},
 		methods: {
 			objectChange(e){
-				console.log(e);
 				this.index=e.tab.value;
 				this.getList();
-				
 			},
 			getList() {
 				let id = uni.getStorageSync('customer_id');
@@ -82,7 +73,7 @@
 						data: {
 						},
 						success: (res) => {
-							console.log(res);
+							this.list = res.data.data
 						}
 					});
 				}else{
@@ -92,13 +83,10 @@
 						data: {
 						},
 						success: (res) => {
-							console.log(res);
+							this.list = res.data.data;
 						}
 					});
 				}
-				
-				
-				
 			},
 			onClick(){
 				
@@ -111,7 +99,10 @@
 
 <style lang="scss">
 
-
+.history-content{
+	width: 100%;
+	background-color: #fff;
+}
 @mixin list-disabled {
 	opacity: 0.3;
 }

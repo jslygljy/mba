@@ -103,6 +103,16 @@
             "style" : {
 				"navigationBarTitleText": "练习报告"
 			}
+        },{
+            "path" : "pages/myError/myError",
+            "style" : {
+				"navigationBarTitleText": "我的错题"
+			}
+        },{
+            "path" : "pages/errDetail/errDetail",
+            "style" : {
+				"navigationStyle": "custom"
+			}
         }
     ],
     "tabBar": {
