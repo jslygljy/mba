@@ -118,111 +118,111 @@
 </script>
 
 <style scoped lang="scss">
-	.content{
-		padding: 10upx;
-	}
-	.list-item{
-		margin-top: 50rpx;
-		margin-left: 15rpx;
-		font-size: 40rpx;
-		.list-item-content{
-			display: flex;
-			margin-top: 30rpx;
-			image{
-				width: 200rpx;
-				height: 200rpx;
-				border-radius: 10rpx;
-			}
-			.item-right{
-				font-size: 24rpx;
-				margin-left: 40rpx;
+	.currlum-content{
+		background-color: #fff;
+		.list-item{
+			margin-top: 50rpx;
+			margin-left: 15rpx;
+			font-size: 40rpx;
+			.list-item-content{
 				display: flex;
-				flex-direction: column;
-				margin-right: 20rpx;
-				.h4{
-					font-size: 32rpx;
-					margin-top: 2rpx;
-					display: block;
-					margin-bottom: 10rpx;
+				margin-top: 30rpx;
+				image{
+					width: 200rpx;
+					height: 200rpx;
+					border-radius: 10rpx;
 				}
-				.grey{
-					color: #8f8f94
-				}
-				.item-bottom{
-					flex:1
-				}
-				.price{
-					color: #dc143c;
-					font-size: 30rpx;
-				}
-				.sale{
-					margin-left: 20rpx;
-					color: #8f8f94;
-					text-decoration:line-through;
-				}
-				.buy{
-					color: #8f8f94;
-					margin-left: 60rpx;
+				.item-right{
+					font-size: 24rpx;
+					margin-left: 40rpx;
+					display: flex;
+					flex-direction: column;
+					margin-right: 20rpx;
+					.h4{
+						font-size: 32rpx;
+						margin-top: 2rpx;
+						display: block;
+						margin-bottom: 10rpx;
+					}
+					.grey{
+						color: #8f8f94
+					}
+					.item-bottom{
+						flex:1
+					}
+					.price{
+						color: #dc143c;
+						font-size: 30rpx;
+					}
+					.sale{
+						margin-left: 20rpx;
+						color: #8f8f94;
+						text-decoration:line-through;
+					}
+					.buy{
+						color: #8f8f94;
+						margin-left: 60rpx;
+					}
 				}
 			}
 		}
-	}
-	.list{
-		display: flex;
-		margin-bottom: 20rpx;
-		margin-top: 20rpx;
-		.item{
-			flex:1;
-			text-align: center;
-			font-size: 24rpx;
-		}
-		.i{
-			margin-left: 60rpx;
-			margin-top: 20rpx;
+		.list{
+			display: flex;
 			margin-bottom: 20rpx;
+			margin-top: 20rpx;
+			.item{
+				flex:1;
+				text-align: center;
+				font-size: 24rpx;
+			}
+			.i{
+				margin-left: 60rpx;
+				margin-top: 20rpx;
+				margin-bottom: 20rpx;
+			}
 		}
-	}
-	.ad{
-		
-		width: 100%;
-		height: 100rpx;
-		margin-bottom: 20rpx;
-		image{
-			margin: 0px 0rpx 0px 10rpx;
-			width: 710rpx;
-			height: 100%;
+		.ad{
+			
+			width: 100%;
+			height: 100rpx;
+			margin-bottom: 20rpx;
+			image{
+				margin: 0px 0rpx 0px 10rpx;
+				width: 710rpx;
+				height: 100%;
+			}
 		}
-	}
-    .title {
-        color: #8f8f94;
-        margin-top: 50upx;
-    }
-	.icon1{
-		background-image: url('/static/img/bookmark.png');
-		display: block;
-		width: 64upx;
-		height: 64upx;
-		background-size: 100% 100%;
-	}
-	.icon2{
-		background-image: url('/static/img/notebook.png');
-		display: block;
-		width: 64upx;
-		height: 64upx;
-		background-size: 100% 100%;
-	}
-	.icon3{
-		background-image: url('/static/img/report.png');
-		display: block;
-		width: 64upx;
-		height: 64upx;
-		background-size: 100% 100%;
-	}
-	.icon4{
+		.title {
+			color: #8f8f94;
+			margin-top: 50upx;
+		}
+		.icon1{
+			background-image: url('/static/img/bookmark.png');
+			display: block;
+			width: 64upx;
+			height: 64upx;
+			background-size: 100% 100%;
+		}
+		.icon2{
+			background-image: url('/static/img/notebook.png');
+			display: block;
+			width: 64upx;
+			height: 64upx;
+			background-size: 100% 100%;
+		}
+		.icon3{
+			background-image: url('/static/img/report.png');
+			display: block;
+			width: 64upx;
+			height: 64upx;
+			background-size: 100% 100%;
+		}
+		.icon4{
 		background-image: url('/static/img/monitor.png');
 		display: block;
 		width: 64upx;
 		height: 64upx;
 		background-size: 100% 100%;
+	}
 	}
 </style>

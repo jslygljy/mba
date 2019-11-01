@@ -223,7 +223,7 @@ $collapse-title-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 			width: 45rpx;
 			height: 45rpx;
 			transform: rotate(0deg);
-			transform-origin: 50% 45%;
+			transform-origin: 45% 50%;
 			margin-right: 20rpx;
 			font-size: 24rpx;
 			&.uni-active {
