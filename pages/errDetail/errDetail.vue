@@ -78,7 +78,7 @@
 				let id =uni.getStorageSync('customer_id');
 				// 获取做题列表
 				uni.request({
-					url: config.url+'/app/qa/history/detail/'+id+ '?topicid='+ this.qa_id +'&special_work='+this.title+'&pageindex=0', //仅为示例，并非真实接口地址。
+					url: config.url+'/app/qa/error/detail/'+this.qa_id ,
 				    data: {
 				    },
 				    success: (res) => {

@@ -14,7 +14,7 @@
 			>
 				<view class="flex-direction">
 					<text class="middeFont">
-						<text class="text-bold text-lg">{{success_scode}}
+						<text class="text-bold text-lg">{{success_scode || 0}}
 						</text>
 					分</text>
 					<text class="middeFont text-df margin-top">总分{{total_scode}}分</text>
@@ -31,7 +31,7 @@
 				</view>
 			</iCircle>
 			<view class="flex-sub flex-direction flex">
-				<text class="text-bold text-lg">{{success_rate}}%</text>
+				<text class="text-bold text-lg">{{success_rate || 0}}%</text>
 				<text class="text-df text-grey margin-top">正确率</text>
 			</view>
 		</view>
@@ -111,6 +111,7 @@
 						qa_list:this.list
 				    },
 				    success: (res) => {
+						console.log(res.data.data)
 						this.itemList = res.data.data.item_list;
 						this.success_rate = res.data.data.success_rate;
 						this.success_scode = res.data.data.success_scode;
