@@ -51,6 +51,7 @@
 			return {
 				list:[],
 				index: 0,
+				curryindex: 1,
 				tabObjectList: [ //对象数组赋值
 				    {
 				        name: '逻辑',
@@ -96,7 +97,7 @@
 				console.log(e)
 			},
 			objectChange(e){
-				this.index = e.tab.value-1;
+				this.curryindex = e.tab.value;
 				this.getList();
 				
 			},
@@ -109,7 +110,7 @@
 				let id =uni.getStorageSync('customer_id');
 				// 获取做题列表
 				uni.request({
-					url: config.url+'/app/qa/special/list?courseid='+this.index, //仅为示例，并非真实接口地址。
+					url: config.url+'/app/qa/special/list?courseid='+this.curryindex, //仅为示例，并非真实接口地址。
 				    data: {
 				    },
 				    success: (res) => {
