@@ -1,7 +1,7 @@
 <template>
 	<view class="box">
 		<text class="info-title">
-			形式逻辑
+			{{title}}}
 		</text>
 		<view class="view_box">
 			<iCircle
@@ -39,15 +39,9 @@
 			多钟题型综合
 		</text>
 		<view class="flex">
-			<view :class="['border-info3','flex-sub',data.is_true==0?'bg-red':'bg-green']" v-for="(data,index) in itemList" :key="index">
+			<view :class="['border-info3','flex-sub',data.is_true==0?'bg-red':'bg-green']" v-for="(data,index) in itemList" :key="index" @click="goToErrDetail(data.qa_id)">
 				{{index+1}}
 			</view>
-		</view>
-		<text class="info-title">
-			考点
-		</text>
-		<view class="button_box">
-			<button type="primary" class="button_item" @click="add">+</button>
 		</view>
 		<view class="flex bottom-fix">
 			<text class="bg-blue flex-sub text-white" @click="goToDetail">全部解析</text>
@@ -123,7 +117,14 @@
 				uni.navigateTo({
 				    url: '../taskDetail/taskDetail?id='+this.topicid+'&title='+this.title+'&subTitle='+this.subTitle+'&pages='+ this.pages+'&showdetail=true'
 				});
+			},
+			goToErrDetail(qa_id){
+				
+				uni.navigateTo({
+				    url: '../errDetail/errDetail?qa_id='+qa_id
+				});
 			}
+			
 		}
 	}
 </script>

@@ -7,7 +7,9 @@
 				<button class="cu-btn bg-blue shadow margin-left" @tap="showModal" data-target="DrawerModalR">筛选</button>
 			</view>
 		</view>
-		<view class="cu-modal drawer-modal justify-end" :class="modalName=='DrawerModalR'?'show':''">
+		<view class="cu-modal" :class="modalName=='DrawerModalR'?'show':''" @click="hideModal">
+		</view>
+		<view class="drawer-modal cu-modal1" :class="modalName=='DrawerModalR'?'show':''">
 			<view class="cu-dialog basis-xl info-y" :style="[{top:CustomBar+'px',height:'calc(100vh - ' + CustomBar + 'px)'}]">
 				<view class="cu-list menu text-left">
 					<view class="selectInfo" v-for="(item, index) in list" :key="index">
@@ -26,10 +28,12 @@
 				</view>
 			</view>
 		</view>
+		
+		
 		<uni-list class="list-info">
 			<view class="flex solids-bottom lists" @click="goToDetail(item.innerid)" v-for="(item, index) in list2" :key="index" v-if="list2.length>0">
 				<view class="flex-sub">
-					<image :src="item.logo" mode="" style="width: 150rpx;height: 150rpx;margin: 0px 12rpx;"></image>
+					<image :src="item.logo" mode="" style="width: 110rpx;height: 110rpx;margin: 30rpx 32rpx 0px;"></image>
 				</view>
 				<view class="flex-sub">
 					<view class="uni-list-item__container">
@@ -314,7 +318,7 @@ width: 80rpx;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	color: inherit;
-	font-size: 32rpx;
+	font-size: 28rpx;
 	line-height: 1.5;
 	overflow: hidden;
 	display: inline-block;

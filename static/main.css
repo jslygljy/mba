@@ -2447,6 +2447,39 @@ button.cuIcon.lg {
 	pointer-events: auto;
 }
 
+.cu-modal1 {
+	position: fixed;
+	top: 0;
+	right: 0;
+	opacity: 0;
+	outline: 0;
+	z-index: 1111;
+	text-align: center;
+	-ms-transform: scale(0.785);
+	transform: scale(0.785);
+	backface-visibility: hidden;
+	perspective: 2000upx;
+	transition: all 0.3s linear 0s;
+	pointer-events: none;
+	width: 80%;
+}
+
+.cu-modal1::before {
+	content: "\200B";
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.cu-modal1.show {
+	opacity: 1;
+	transition-duration: 0.3s;
+	-ms-transform: scale(1);
+	transform: scale(1);
+	overflow-x: hidden;
+	overflow-y: auto;
+	pointer-events: auto;
+}
 .cu-dialog {
 	position: relative;
 	display: inline-block;
