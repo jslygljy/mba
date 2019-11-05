@@ -7,7 +7,7 @@
 			:minute="0" 
 			:second="0">
 		</uni-countdown>
-		<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="false" :interval="2000" :duration="500" current="curryIndex" @change="change">
+		<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="false" :interval="2000" :duration="500" :current="curryIndex">
 			<swiper-item v-for="(item, index) in list" :key="index">
 				<view class="header">
 					<text>{{item.ttitle}}</text>
@@ -136,9 +136,6 @@
 				    }
 				});
 			},
-			change(e){
-				this.curryIndex = e.detail.current
-			},
 			setChoose(index,subindex,subitem){
 				if(this.showdetail)return false;
 				this.list[index].item_list.map((data2)=>{
@@ -159,7 +156,8 @@
 				
 				this.list[index].item_list[subindex]['isChoose'] = true;
 				if(this.ansList.length==5){
-					this.isShow = true
+					this.isShow = true;
+					this.curryIndex = this.curryIndex+1
 				}
 				
 			},
