@@ -21,7 +21,7 @@
 					<text>({{item.type==1? '单选题':'多选题'}}){{item.title}}</text>
 				</view>
 				<view class="ans-list">
-					<view class="ans-item" v-for="(subitem, subindex) in item.item_list" :key="subindex" @click="setChoose(index,subindex,subitem)">
+					<view class="ans-item" v-for="(subitem, subindex) in item.item_list" :key="subindex" @click="setChoose(index,subindex,subitem,item.type)">
 						<view class="item-left flex-sub">
 							<!-- <view v-if="" :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view> -->
 							<view :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view>
@@ -136,7 +136,7 @@
 				    }
 				});
 			},
-			setChoose(index,subindex,subitem){
+			setChoose(index,subindex,subitem,type){
 				if(this.showdetail)return false;
 				this.list[index].item_list.map((data2)=>{
 					data2.isChoose = false;
@@ -157,8 +157,10 @@
 				this.list[index].item_list[subindex]['isChoose'] = true;
 				if(this.ansList.length==5){
 					this.isShow = true;
+				}else{
 					this.curryIndex = this.curryIndex+1
 				}
+				
 				
 			},
 			bindBtn(type){
