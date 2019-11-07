@@ -16,7 +16,9 @@
 			<view class="ans-list">
 				<view class="ans-item" v-for="(subitem, subindex) in item.item_list" :key="subindex">
 					<view class="item-left flex-sub">
-						<view :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view>
+						<view v-if="subitem.option===item.answer && subitem.is_true ==0" class='border-info border-red'>{{subitem.option}}</view>
+						<view v-if="subitem.option!==item.answer && subitem.is_true ==1" class='border-info border-green'>{{subitem.option}}</view>
+						<view v-if="subitem.option!==item.answer && subitem.is_true ==0" class='border-info'>{{subitem.option}}</view>
 					</view>
 					<view class="item-right">{{subitem.content}}</view>
 				</view>
@@ -61,7 +63,8 @@
 				ansList:[],
 				isShow:false,
 				showdetail:false,
-				qa_id:''
+				qa_id:'',
+				answer:''
 			}   
          },
 		 onShow(){
@@ -178,6 +181,17 @@
 				.border-info2{
 					color: #fff;
 					background-color: #0081ff;
+					border:2rpx #0081ff solid;
+				}
+				.border-green{
+					color: #fff;
+					background-color: #00C777;
+					border:2rpx #00C777 solid;
+				}
+				.border-red{
+					color: #fff;
+					background-color: #DD514C;
+					border:2rpx #DD514C solid;
 				}
 			}
 			.item-right{

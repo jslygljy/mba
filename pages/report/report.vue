@@ -45,7 +45,7 @@
 		</view>
 		<view class="flex bottom-fix">
 			<text class="bg-blue flex-sub text-white" @click="goToDetail">全部解析</text>
-			<text class="bg-purple flex-sub text-white">继续练习</text>
+			<text class="bg-purple flex-sub text-white" @click="goToStaillDetail">继续练习</text>
 		</view>
 		
 	</view>
@@ -111,7 +111,7 @@
 						this.success_scode = res.data.data.success_scode;
 						this.total_scode = res.data.data.total_scode;
 				    }
-				});
+				});	
 			},
 			goToDetail(){
 				uni.navigateTo({
@@ -119,12 +119,15 @@
 				});
 			},
 			goToErrDetail(qa_id){
-				
 				uni.navigateTo({
 				    url: '../errDetail/errDetail?qa_id='+qa_id
 				});
+			},
+			goToStaillDetail(){
+				uni.navigateTo({
+					url: '../taskDetail/taskDetail?id='+this.topicid+'&title='+this.title+'&subTitle='+this.subTitle+'&pages='+ (Number(this.pages) + 1)+'&showdetail=false'
+				});	
 			}
-			
 		}
 	}
 </script>

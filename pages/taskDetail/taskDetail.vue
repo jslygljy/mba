@@ -62,20 +62,8 @@
 				多种题型综合
 			</text>
 			<view class="flex">
-				<view class="border-info3 flex-sub">
-					1
-				</view>
-				<view class="border-info3 flex-sub">
-					2
-				</view>
-				<view class="border-info3 flex-sub">
-					3
-				</view>
-				<view class="border-info3 flex-sub">
-					4
-				</view>
-				<view class="border-info3 flex-sub">
-					5
+				<view class="border-info3 flex-sub" v-for="(item,index) in list" :key="index">
+					{{index+1}}
 				</view>
 			</view>
 		</neil-modal>
@@ -155,7 +143,7 @@
 				}
 				
 				this.list[index].item_list[subindex]['isChoose'] = true;
-				if(this.ansList.length==5){
+				if(this.ansList.length==this.list.length){
 					this.isShow = true;
 				}else{
 					this.curryIndex = this.curryIndex+1
