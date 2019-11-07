@@ -21,7 +21,7 @@
 		</view>
 
 		<view class="list-info">
-			<mescroll-uni @up="upCallback" :down="downOption" :up="upOption" :fixed="false" bottom="20" @init="mescrollInit">
+			<mescroll-uni @up="upCallback" :up="upOption" :fixed="false" bottom="20" @init="mescrollInit">
 				<view class="flex solids-bottom lists" @click="goToDetail(item.innerid)" v-for="(item, index) in list2" :key="index"
 				 v-if="list2.length>0">
 					<view class="flex-sub">
@@ -36,7 +36,7 @@
 								<view class="title">创办时间: {{item.establish_time}}</view>
 							</view>
 							<view class="uni-list-item__container" style="margin-bottom: 14upx;">
-								<uni-badge :text="t" type="primary" class="tag" v-for="(t,i) in item.nature.split('，')"></uni-badge>
+								<uni-badge :text="t" type="primary" class="tag" :key="i" v-for="(t,i) in item.nature.split('，')"></uni-badge>
 							</view>
 						</view>
 					</view>
@@ -172,7 +172,6 @@
 		data() {
 			return {
 				list: JSON.parse(JSON.stringify(initData)),
-				pageindex: 0,
 				modalName: null,
 				CustomBar: this.CustomBar,
 				edu_system: [],

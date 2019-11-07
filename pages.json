@@ -146,8 +146,8 @@
             "iconPath": "static/img/task.png",
             "selectedIconPath": "static/img/taskHL.png"
         },{
-            "pagePath": "pages/find/find",
-            "text": "发现",
+            "pagePath": "pages/ucList/ucList",
+            "text": "院校指南",
             "iconPath": "static/img/find.png",
             "selectedIconPath": "static/img/findHL.png"
         }, {

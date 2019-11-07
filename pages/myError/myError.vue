@@ -2,20 +2,21 @@
 	<view class="error-content">
 		<ChooseLits :list="filerList" :arr="arr" @chooseLike="chooseLike"></ChooseLits>
 		<uni-list class="list-info">
-			<view class="flex solids-bottom lists" @click="onClick(item.innerid)" v-for="(item, index) in list" :key="item.innerid">
-				<view class="uni-list-item__container">
-				  <view class="uni-list-item__content">
-					  <view class="uni-list-item__content-title text-df">{{ item.title }}</view>
-				  </view>
-				  <view class="flex justify-between align-center text-gray">
-				  	<view class="uni-list-item__content-title text-sm">{{ item.ttitle }}</view>
-				  	<text class="text-sm">
-				  		{{(new Date(item.createdtime).getMonth()+1) + '-' + new Date(item.createdtime).getDate()}}
-				  	</text>
-				  </view>
+			<mescroll-uni @up="upCallback" :up="upOption" :fixed="false" bottom="20" @init="mescrollInit">
+				<view class="flex solids-bottom lists" @click="onClick(item.innerid)" v-for="(item, index) in list" :key="item.innerid">
+					<view class="uni-list-item__container">
+					  <view class="uni-list-item__content">
+						  <view class="uni-list-item__content-title text-df">{{ item.title }}</view>
+					  </view>
+					  <view class="flex justify-between align-center text-gray">
+						<view class="uni-list-item__content-title text-sm">{{ item.ttitle }}</view>
+						<text class="text-sm">
+							{{(new Date(item.createdtime).getMonth()+1) + '-' + new Date(item.createdtime).getDate()}}
+						</text>
+					  </view>
+					</view>
 				</view>
-				
-			</view>
+			</mescroll-uni>
 		</uni-list>
 		<view class="text-center" v-if="list.length==0">
 			<text>暂无数据</text>
@@ -27,16 +28,18 @@
 	import uniList from '@/components/uni-list/uni-list.vue';
 	import config from '../../config.js';
 	import ChooseLits from '@/components/choose-Cade/choose-Cade.vue'
+	import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue";
 	export default {
 		components: {
 			uniList,
-			ChooseLits
+			ChooseLits,
+			MescrollUni
 		},
 		data() {
 			return {
 				title:'123',
 				list:[],
-				pageindex:'',
+				mescroll: null,
 				filerList: ['综合排序', '类型不限', '金额不限'], 
 				arr: [ ['综合排序', '价格降序', '价格升序'], ['类型不限', '高通过率', '利率低'], ['金额不限', '5k以下', '5k-10k', '10k以上'] ],
 				tabObjectList: [ //对象数组赋值
@@ -48,7 +51,22 @@
 						name: '模拟练习',
 						value: 1,
 					}
-				]
+				],
+				downOption: {
+					use: false,
+					auto: false
+				},
+				upOption: {
+					use: true,
+					auto: true,
+					isBounce: false,
+					page: {
+						num: 0,
+						size: 10
+					},
+					noMoreSize: 1,
+					offset: 80
+				},
 			}
 		},
 		onLoad() {
@@ -57,18 +75,40 @@
 			this.getList();
 		},
 		methods: {
-			getList() {
+			mescrollInit(mescroll) {
+				this.mescroll = mescroll;
+			},
+			getList(pageindex,cb) {
 				let id = uni.getStorageSync('customer_id');
 				// 推荐课程
 				uni.request({
-					url: config.url + '/app/qa/error/list/'+id+'?pageindex='+this.pageindex,
+					url: config.url + '/app/qa/error/list/'+id+'?pageindex='+pageindex,
 					method:"GET",
 					data: {
 					},
 					success: (res) => {
-						this.list = res.data.data;
+						cb && cb(res.data.data)
 					}
 				});
+			},
+			upCallback(mescroll) {
+				this.getListDataFromNet(mescroll.num, (curPageData) => {
+					mescroll.endSuccess(curPageData.length);
+					if (mescroll.num == 1) this.list2 = []; //如果是第一页需手动制空列表
+					this.list = this.list.concat(curPageData); //追加新数据
+				}, () => {
+					mescroll.endErr();
+				})
+			},
+			getListDataFromNet(pageNum, successCallback, errorCallback) {
+				setTimeout(() => {
+					try {
+						this.getList(pageNum - 1, successCallback)
+					} catch (e) {
+						//联网失败的回调
+						errorCallback && errorCallback();
+					}
+				}, 300)
 			},
 			chooseLike(e){
 				console.log(e)
