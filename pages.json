@@ -84,7 +84,15 @@
 		},{
 			"path": "pages/ucList/ucList",
 			"style": {
-			    "navigationBarTitleText": "院校指南"
+			    "navigationBarTitleText": "院校指南",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "筛选",
+							"fontSize": "14px"
+						}]
+					}
+				}
 			}
 		},{
 			"path": "pages/curlumDetail/curlumDetail",
@@ -95,7 +103,15 @@
         ,{
             "path" : "pages/ucDetail/ucDetail",
             "style" : {
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "院校简介",
+				// "backgroundColor": "#FFFFFF",
+				// "navigationBarBackgroundColor": "#0081ff",
+				"app-plus": {
+					"titleNView": {
+						"autoBackButton": "true"
+					}
+				}
+				
 			}
         }
         ,{
