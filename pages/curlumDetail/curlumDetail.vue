@@ -42,7 +42,7 @@
 			</uni-collapse>
 		</view>
 		<!-- 评论 -->
-		<view class="comment" v-if="index==2">
+		<!-- <view class="comment" v-if="index==2">
 			<text class="title">精彩评论({{goodlist.length}})</text>
 			<comment :list="goodlist" @thumbsGoodUp="thumbsGoodUp"></comment>
 			<text class="title">最新评论({{newlist.length}})</text>
@@ -54,7 +54,7 @@
 		</view>
 		<view class="comment-post" v-if="is_sgin==0">
 			<text class="post-button2" @click="reportInfo">立即报名</text>
-		</view>
+		</view> -->
     </view>
 </template>
 
@@ -148,11 +148,12 @@
                     {
                         name: '目录',
                         value: 1
-                    },
-                    {
-                        name: '评论',
-                        value: 2
                     }
+					// ,
+     //                {
+     //                    name: '评论',
+     //                    value: 2
+     //                }
                 ],
 				course_id:'',
 				is_sgin:'',

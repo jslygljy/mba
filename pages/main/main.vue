@@ -2,22 +2,22 @@
 	<view class="content">
 		<bw-swiper :swiperList="swiperList" style="width:100%"></bw-swiper>
 		<view class="list">
-			<view class="item">
+			<!-- <view class="item">
 				<image src="/static/img/bookmark.png" mode="" class="i"></image>
 				<text>书城</text>
-			</view>
-			<view class="item" @click="goToRead">
+			</view> -->
+			<!-- <view class="item" @click="goToRead">
 				<image src="/static/img/notebook.png" mode="" class="i"></image>
 				<text>每日阅读</text>
-			</view>
+			</view> -->
 			<view class="item" @click="goToCurriculum">
 				<image src="/static/img/report.png" mode="" class="i"></image>
 				<text>我的课程</text>
 			</view>
-			<view class="item">
+			<!-- <view class="item">
 				<image src="/static/img/monitor.png" mode="" class="i"></image>
 				<text>学习报告</text>
-			</view>
+			</view> -->
 		</view>
 		<!-- <view class="ad">
 			<image src="../../static/main/activity1.jpg" mode=""></image>

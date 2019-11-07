@@ -6,6 +6,12 @@
 				"navigationBarTitleText": ""
 			}
 		},
+		{
+			"path": "pages/allDetail/allDetail",
+			"style": {
+				"navigationBarTitleText": "全部解析"
+			}
+		},
         {
             "path": "pages/main/main",
             "style": {
