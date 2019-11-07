@@ -14,7 +14,7 @@
 					<view class="right-progress">
 						<text class="text-blue">{{curryIndex+1}}</text>
 						/
-						<text>{{allIndex}}</text>
+						<text>{{list.length}}</text>
 					</view>
 				</view>
 				<view class="content">
@@ -82,7 +82,6 @@
 				ttitle:'',
 				indicatorDots:false,
 				curryIndex:0,
-				allIndex:5,
 				type:'',
 				list:[],
 				item_list:[],
@@ -153,7 +152,7 @@
 			},
 			bindBtn(type){
 				uni.navigateTo({
-				    url: '../report/report?id='+this.topicid+'&title='+this.title+'&subTitle='+this.subTitle+'&pages=0&showdetail=false'+'&list='+JSON.stringify(this.ansList)
+				    url: '../report/report?id='+this.topicid+'&title='+this.title+'&subTitle='+this.subTitle+'&pages='+ this.pages +'&showdetail=false'+'&list='+JSON.stringify(this.ansList)
 				});
 			},
 			closeModal(){

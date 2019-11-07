@@ -124,9 +124,34 @@
 				});
 			},
 			goToStaillDetail(){
-				uni.navigateTo({
-					url: '../taskDetail/taskDetail?id='+this.topicid+'&title='+this.title+'&subTitle='+this.subTitle+'&pages='+ (Number(this.pages) + 1)+'&showdetail=false'
-				});	
+				let id =uni.getStorageSync('customer_id');
+				// 获取做题列表
+				uni.request({
+					url: config.url+'/app/qa/list?special_work='+this.title+'&epoint='+this.subTitle+'&pageindex='+(Number(this.pages) + 1), //仅为示例，并非真实接口地址。
+				    data: {
+				    },
+				    success: (res) => {
+						if(res.data.errcode==0&&res.data.data.length>0){
+							uni.navigateTo({
+								url: '../taskDetail/taskDetail?id='+this.topicid+'&title='+this.title+'&subTitle='+this.subTitle+'&pages='+ (Number(this.pages) + 1) +'&showdetail=false'
+							});	
+						}else{
+							uni.showToast({
+							    title: '恭喜您，已经学完了本节课程',
+							    duration: 2000,
+								complete:function(){
+									setTimeout(function(){
+										uni.switchTab({
+										    url: '../task/task',
+										});
+									},2000)
+								}
+							});
+						}
+				    }
+				});
+				
+				
 			}
 		}
 	}
