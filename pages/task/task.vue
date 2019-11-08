@@ -15,7 +15,7 @@
 			专项练习
 		</text>
 		<view class="collapse-info">
-			<uni-collapse @change="change" v-for="(item, index) in list" :key="item.topicid" v-if="list.length!==0">
+			<uni-collapse @change="change" v-for="item in list" :key="item.topicid" v-if="list.length!==0">
 				<uni-collapse-item :title="item.title" :show-animation="true" :curryNum="item.have_sure" :allNum="item.arate" :haveSure="item.have_sure">
 					<uni-list class="list-info">
 						<uni-list-item @click="goToDetail(subitem.topicid,item.title,subitem.title)" v-for="(subitem, subindex) in item.item_list" :key="subindex" :title="subitem.title" :curryNum="subitem.have_sure" :allNum="subitem.arate" :haveSure="subitem.have_sure">

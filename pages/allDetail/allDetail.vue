@@ -1,14 +1,14 @@
 <template>
     <view class="errDetail">
-		<!-- <swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="false" :interval="2000" :duration="500" current="curryIndex" @change="change">
-			<swiper-item v-for="(item, index) in list" :key="index"> -->
+		<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="false" :interval="2000" :duration="500" current="curryIndex" @change="change">
+			<swiper-item v-for="(item, index) in list" :key="index">
 			<view class="header">
 				<text>{{item.ttitle}}</text>
-				<!-- <view class="right-progress">
+				<view class="right-progress">
 					<text class="text-blue">{{curryIndex+1}}</text>
 					/
-					<text>{{allIndex}}</text>
-				</view> -->
+					<text>{{qa_id.length}}</text>
+				</view>
 			</view>
 			<view class="content">
 				<text>({{item.type==1? '单选题':'多选题'}}){{item.title}}</text>
@@ -23,8 +23,8 @@
 					<view class="item-right">{{subitem.content}}</view>
 				</view>
 			</view>
-			<!-- </swiper-item>
-		</swiper> -->
+			</swiper-item>
+		</swiper>
 		<text class="title">
 			本题出自
 		</text>
@@ -58,12 +58,12 @@
 				curryIndex:0,
 				allIndex:5,
 				type:'',
-				item:{},
+				items:{},
 				item_list:[],
 				ansList:[],
 				isShow:false,
 				showdetail:false,
-				qa_id:'',
+				qa_id:[],
 				answer:''
 			}   
          },
@@ -71,57 +71,26 @@
 		 	this.getErrDetail();
 		 },
 		 onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
-		    this.qa_id = option.qa_id;
+		    this.qa_id = JSON.parse(option.qa_id);
 		 },
         methods: {
-			objectChange(e){
-				this.curryIndex = e.tab.value
-			},
 			getErrDetail(){
 				let id =uni.getStorageSync('customer_id');
+				console.log(this.qa_id);
 				// 获取做题列表
 				uni.request({
-					url: config.url+'/app/qa/error/detail/'+this.qa_id ,
+					url: config.url+'/app/qa/error/detail/'+this.qa_id[0].qa_id ,
 				    data: {
 				    },
 				    success: (res) => {
-						this.item = res.data.data;
+						this.items = res.data.data;
+						this.list.push(res.data.data);
 				    }
 				});
 			},
 			change(e){
+				console.log(2);
 				this.curryIndex = e.detail.current
-			},
-			setChoose(index,subindex,subitem){
-				this.list[index].item_list.map((data2)=>{
-					data2.isChoose = false;
-				})
-				
-				if(!this.ansList[index]){
-					this.ansList.push({
-						qa_id:subitem.qa_id,
-						is_true:subitem.is_true,
-						answer:subitem.option
-					});
-				}else{
-					this.ansList[index].qa_id = subitem.qa_id;
-					this.ansList[index].is_true = subitem.is_true;
-					this.ansList[index].answer = subitem.option;
-				}
-				
-				this.list[index].item_list[subindex]['isChoose'] = true;
-				if(this.ansList.length==5){
-					this.isShow = true
-				}
-				
-			},
-			bindBtn(type){
-				uni.navigateTo({
-				    url: '../report/report?id='+this.topicid+'&title='+this.title+'&subTitle='+this.subTitle+'&pages=0&showdetail=false'+'&list='+JSON.stringify(this.ansList)
-				});
-			},
-			closeModal(){
-				this.isShow = false
 			}
         }
     }

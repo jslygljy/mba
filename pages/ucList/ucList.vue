@@ -14,14 +14,13 @@
 					</view>
 				</view>
 			</view>
-			<view class="flex" style="position: absolute;bottom: 0px;background-color: #FFFFFF;text-align: center;width: 100%;height: 80px;">
+			<view class="flex" style="position: absolute;bottom: 0px;background-color: #FFFFFF;text-align: center;width: 100%;height: 120rpx;">
 				<button class="cu-btn round line-blue flex-sub margin" @click="reset">重置</button>
 				<button class="cu-btn round bg-blue flex-sub margin" @click="getList2">确定</button>
 			</view>
 		</view>
-
-		<view class="list-info">
-			<mescroll-uni @up="upCallback" :up="upOption" :fixed="false" bottom="20" @init="mescrollInit">
+		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upCallback" :fixed="false" bottom="20" @init="mescrollInit">
+			<view class="list-info">
 				<view class="flex solids-bottom lists" @click="goToDetail(item.innerid)" v-for="(item, index) in list2" :key="index"
 				 v-if="list2.length>0">
 					<view class="flex-sub">
@@ -46,8 +45,8 @@
 						</view>
 					</view>
 				</view>
-			</mescroll-uni>
-		</view>
+			</view>
+		</mescroll-uni>
 	</view>
 </template>
 
@@ -222,7 +221,9 @@
 					}
 				}, 300)
 			},
-
+			downCallback(mescroll){
+				mescroll.endSuccess()
+			},
 			getList(pageindex, cb) {
 				this.area = [];
 				this.item_category = [];
@@ -262,7 +263,8 @@
 						area: this.area
 					},
 					success: (res) => {
-						cb && cb(res.data.data)
+						let c = res.data.data.concat(res.data.data).concat(res.data.data).concat(res.data.data).concat(res.data.data);
+						cb && cb(c);
 					}
 				});
 			},

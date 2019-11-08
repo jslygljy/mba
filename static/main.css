@@ -2426,7 +2426,6 @@ button.cuIcon.lg {
 	backface-visibility: hidden;
 	perspective: 2000upx;
 	background: rgba(0, 0, 0, 0.6);
-	transition: all 0.3s ease-in-out 0s;
 	pointer-events: none;
 }
 
@@ -2439,7 +2438,6 @@ button.cuIcon.lg {
 
 .cu-modal.show {
 	opacity: 1;
-	transition-duration: 0.3s;
 	-ms-transform: scale(1);
 	transform: scale(1);
 	overflow-x: hidden;
@@ -2459,7 +2457,6 @@ button.cuIcon.lg {
 	transform: scale(0.785);
 	backface-visibility: hidden;
 	perspective: 2000upx;
-	transition: all 0.3s linear 0s;
 	pointer-events: none;
 	width: 80%;
 }
@@ -2473,7 +2470,6 @@ button.cuIcon.lg {
 
 .cu-modal1.show {
 	opacity: 1;
-	transition-duration: 0.3s;
 	-ms-transform: scale(1);
 	transform: scale(1);
 	overflow-x: hidden;

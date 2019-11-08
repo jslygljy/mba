@@ -1,9 +1,9 @@
 <template>
 	<view class="error-content">
-		<ChooseLits :list="filerList" :arr="arr" @chooseLike="chooseLike"></ChooseLits>
-		<uni-list class="list-info">
-			<mescroll-uni @up="upCallback" :up="upOption" :fixed="false" bottom="20" @init="mescrollInit">
-				<view class="flex solids-bottom lists" @click="onClick(item.innerid)" v-for="(item, index) in list" :key="item.innerid">
+		<!-- <ChooseLits :list="filerList" :arr="arr" @chooseLike="chooseLike"></ChooseLits> -->
+		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upCallback" :fixed="false" bottom="20" @init="mescrollInit">
+			<uni-list class="list-info" v-if="list.length>0">
+				<view class="flex solids-bottom lists" @click="onClick(item.innerid)" v-for="(item, index) in list" :key="item.innerid" v-if="list.length>0">
 					<view class="uni-list-item__container">
 					  <view class="uni-list-item__content">
 						  <view class="uni-list-item__content-title text-df">{{ item.title }}</view>
@@ -16,11 +16,8 @@
 					  </view>
 					</view>
 				</view>
-			</mescroll-uni>
-		</uni-list>
-		<view class="text-center" v-if="list.length==0">
-			<text>暂无数据</text>
-		</view>
+			</uni-list>
+		</mescroll-uni>
 	</view>
 </template>
 
@@ -37,21 +34,20 @@
 		},
 		data() {
 			return {
-				title:'123',
 				list:[],
 				mescroll: null,
-				filerList: ['综合排序', '类型不限', '金额不限'], 
-				arr: [ ['综合排序', '价格降序', '价格升序'], ['类型不限', '高通过率', '利率低'], ['金额不限', '5k以下', '5k-10k', '10k以上'] ],
-				tabObjectList: [ //对象数组赋值
-					{
-						name: '历年真题',
-						value: 0,
-					},
-					{
-						name: '模拟练习',
-						value: 1,
-					}
-				],
+				// filerList: ['综合排序', '类型不限', '金额不限'], 
+				// arr: [ ['综合排序', '价格降序', '价格升序'], ['类型不限', '高通过率', '利率低'], ['金额不限', '5k以下', '5k-10k', '10k以上'] ],
+				// tabObjectList: [ //对象数组赋值
+				// 	{
+				// 		name: '历年真题',
+				// 		value: 0,
+				// 	},
+				// 	{
+				// 		name: '模拟练习',
+				// 		value: 1,
+				// 	}
+				// ],
 				downOption: {
 					use: false,
 					auto: false
@@ -72,11 +68,14 @@
 		onLoad() {
 		},
 		onShow() {
-			this.getList();
+			// this.getList();
 		},
 		methods: {
 			mescrollInit(mescroll) {
 				this.mescroll = mescroll;
+			},
+			downCallback(mescroll){
+				mescroll.endSuccess()
 			},
 			getList(pageindex,cb) {
 				let id = uni.getStorageSync('customer_id');
@@ -94,7 +93,7 @@
 			upCallback(mescroll) {
 				this.getListDataFromNet(mescroll.num, (curPageData) => {
 					mescroll.endSuccess(curPageData.length);
-					if (mescroll.num == 1) this.list2 = []; //如果是第一页需手动制空列表
+					if (mescroll.num == 1) this.list = []; //如果是第一页需手动制空列表
 					this.list = this.list.concat(curPageData); //追加新数据
 				}, () => {
 					mescroll.endErr();
@@ -132,6 +131,7 @@
 }
 .error-content{
 	width: 100%;
+	height: 100%;
 	background: #fff;
 }
 .paper-classify-item-name{

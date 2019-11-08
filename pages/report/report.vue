@@ -115,7 +115,7 @@
 			},
 			goToDetail(){
 				uni.navigateTo({
-				    url: '../taskDetail/taskDetail?id='+this.topicid+'&title='+this.title+'&subTitle='+this.subTitle+'&pages='+ this.pages+'&showdetail=true'
+				    url: '../allDetail/allDetail?qa_id='+ JSON.stringify(this.itemList),
 				});
 			},
 			goToErrDetail(qa_id){
