@@ -131,6 +131,11 @@
 				"navigationBarTitleText": "我的错题"
 			}
         },{
+            "path" : "pages/buyDetail/buyDetail",
+            "style" : {
+				"navigationBarTitleText": "购买页面"
+			}
+        },{
             "path" : "pages/errDetail/errDetail",
             "style" : {
 				"navigationStyle": "custom"

@@ -31,7 +31,7 @@
 		<view v-if="index==0">
 			<h3 class="list-title">推荐课程</h3>
 			<view class="list-item" v-for="(item,index) in tuijianlist" :key="item.innerid">
-				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin)">
+				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin,false,item)">
 					<image :src="item.speaker_heading" mode=""></image>
 					<view class="item-right">
 						<view style="flex:4">
@@ -53,7 +53,7 @@
 		<view style="margin-bottom: 40upx;">
 			<h3 class="list-title">{{subName}}</h3>
 			<view class="list-item" v-for="(item,index) in mianfeilist" :key="item.innerid">
-				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin)">
+				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin,true,item)">
 					<image :src="item.speaker_heading" mode="" class="people"></image>
 					<view class="item-right">
 						<view style="flex:5">
@@ -156,10 +156,17 @@
 
 		},
 		methods: {
-			goToDetail(id, is_sgin) {
-				uni.navigateTo({
-					url: '../curlumDetail/curlumDetail?course_id=' + id + '&is_sgin=' + is_sgin
-				});
+			goToDetail(id, is_sgin,flag,item) {
+				if(!flag){
+					uni.navigateTo({
+						url: '../buyDetail/buyDetail?content=' + item.content + '&price=' + item.price +'&old_price=' + item.old_price +'&buy_count='+ item.buy_count +'&title='+item.title + '&innerid='+item.innerid 
+					});
+				}else{
+					uni.navigateTo({
+						url: '../curlumDetail/curlumDetail?course_id=' + id + '&is_sgin=' + is_sgin
+					});
+				}
+				
 			},
 			objectChange(e) {
 				if (e.tab.value == 0) {

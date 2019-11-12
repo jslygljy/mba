@@ -31,7 +31,7 @@
 		},
 		data() {
 			return {
-				title:'123',
+				title:'',
 				list:[],
 				tabObjectList: [ //对象数组赋值
 					{
