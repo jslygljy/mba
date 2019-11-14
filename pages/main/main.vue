@@ -31,7 +31,7 @@
 		<view v-if="index==0">
 			<h3 class="list-title">推荐课程</h3>
 			<view class="list-item" v-for="(item,index) in tuijianlist" :key="item.innerid">
-				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin,false,item)">
+				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin,item)">
 					<image :src="item.speaker_heading" mode=""></image>
 					<view class="item-right">
 						<view style="flex:4">
@@ -39,7 +39,8 @@
 							<text class="grey">{{item.subinfo}}</text>
 						</view>
 						<view class="item-bottom">
-							<text class="price">{{item.price}}</text>
+							<text class="price" v-if="item.price>0">{{item.price}}元</text>
+							<text class="price" v-else>免费</text>
 							<text class="sale">{{item.old_price}}</text>
 							<text class="buy">{{item.buy_count}}人已购</text>
 						</view>
@@ -53,7 +54,7 @@
 		<view style="margin-bottom: 40upx;">
 			<h3 class="list-title">{{subName}}</h3>
 			<view class="list-item" v-for="(item,index) in mianfeilist" :key="item.innerid">
-				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin,true,item)">
+				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin,item)">
 					<image :src="item.speaker_heading" mode="" class="people"></image>
 					<view class="item-right">
 						<view style="flex:5">
@@ -61,7 +62,8 @@
 							<text class="grey">{{item.subinfo}}</text>
 						</view>
 						<view class="item-bottom">
-							<text class="price">免费</text>
+							<text class="price" v-if="item.price>0">{{item.price}}元</text>
+							<text class="price" v-else>免费</text>
 							<text class="buy">{{item.buy_count}}人已报名</text>
 						</view>
 					</view>
@@ -153,11 +155,10 @@
 			if (this.index == 0) {
 				this.getList();
 			}
-
 		},
 		methods: {
-			goToDetail(id, is_sgin,flag,item) {
-				if(!flag){
+			goToDetail(id, is_sgin,item) {
+				if(item.is_pay==0 && item.price!==0){
 					uni.navigateTo({
 						url: '../buyDetail/buyDetail?content=' + item.content + '&price=' + item.price +'&old_price=' + item.old_price +'&buy_count='+ item.buy_count +'&title='+item.title + '&innerid='+item.innerid 
 					});

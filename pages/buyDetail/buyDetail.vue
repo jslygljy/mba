@@ -1,11 +1,11 @@
 <template>
     <view class="buy-detail">
-		<image :src="content" mode="widthFix" style="width: 100%;height: 100%;position: fixed;padding-bottom: 100rpx;"></image>
+		<image :src="content" mode="widthFix" style="width: 100%;height: 100%;padding-bottom: 100rpx;"></image>
 		<view class="comment-post">
-			<view class="">
-				<text>{{price}}</text>
-				<text>{{old_price}}</text>
-				<text>{{buy_count}}人已购</text>
+			<view class="left">
+				<text class="price">{{price}}</text>
+				<text class="old_price">原价:{{old_price || 2}}</text>
+				<view class="buy_num">{{buy_count}}人已购</view>
 			</view>
 			<text class="post-button2" @click="reportInfo">立即购买</text>
 		</view>
@@ -55,25 +55,25 @@
 						customer_id:id
 					},
 					success: (res) => {
-						let obj = {
-							appid: res.data.data.appid,
-							noncestr: res.data.data.nonce_str,
-							package: 'Sign=WXPay',
-							partnerid:res.data.data.partnerid,
-							prepayid:res.data.data.prepay_id,
-							timestamp:res.data.data.timestamp,
-							sign:res.data.data.sign
-						}
+						let orderInfo = JSON.stringify(res.data.data);
 						// 第一种写法，传对象
-						let orderInfo = JSON.stringify(obj)
 						uni.requestPayment({
 						    provider: 'wxpay',
 						    orderInfo: orderInfo, //微信、支付宝订单数据
-						    success: function (res) {
-						        console.log('success:' + JSON.stringify(res));
+						    success: function (res2) {
+						        console.log('success:' + JSON.stringify(res2));
 						    },
 						    fail: function (err) {
 						        console.log('fail:' + JSON.stringify(err));
+								uni.request({
+									url: config.url + '/app/pay/status/'+res.prepayid, //仅为示例，并非真实接口地址。
+									method:"POST",
+									data: {
+									},
+									success: (res3) => {
+										console.log(3)
+									}
+								})
 						    }
 						})
 					}
@@ -88,7 +88,21 @@
 	background-color: #fff;
 	width: 100%;
 	height: 100%;
-	
+	.price{
+		color: #BD2C00;
+		font-size: 50rpx;
+		font-weight: bold;
+	}
+	.old_price{
+		color: #ccc;
+		font-size: 24rpx;
+		font-weight: bold;
+		text-decoration: line-through;
+		margin-left: 30rpx;
+	}
+	.buy_num{
+		font-size: 24rpx;
+	}
 	.comment-post{
 		position: fixed;
 		bottom: 0px;
@@ -97,6 +111,9 @@
 		width: 100%;
 		background: #fff;
 		z-index: 1;
+		.left{
+			margin: 2rpx 50rpx 0px 40rpx;
+		}
 		input{
 			flex:3;
 			margin: 20rpx 0rpx 0px 30rpx;
@@ -120,7 +137,7 @@
 		}
 		.post-button2{
 			flex:1;
-			margin: 20rpx 100rpx 0px 100rpx;
+			margin: 20rpx 20rpx 0px 30rpx;
 			border-radius: 40rpx;
 			font-size: 28rpx;
 			text-align: center;

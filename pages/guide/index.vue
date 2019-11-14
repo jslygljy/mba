@@ -40,25 +40,28 @@ export default {
             screenWidth: SystemInfo.screenWidth
         };
     },
+	onShow(){
+	},
     methods: {
         sliderChange(e) {
             console.log(e);
             this.currIndex = e.detail.current;
         },
-		callback(){
-			
-		},
         launchApp() {
-            let id =uni.getStorageSync('customer_id');
-            if (!id) {
-                uni.navigateTo({
-                    url: '../login/login'
-                });
-            } else {
-                uni.switchTab({
-                    url: '../main/main'
-                });
-            }
+			var pages = getCurrentPages();
+			// 判断当前页面是否是引导页面
+			if(pages[0].route == 'pages/guide/index'){
+				let id =uni.getStorageSync('customer_id');
+				if (!id) {
+				    uni.reLaunch({
+				        url: '../login/login'
+				    });
+				} else {
+				    uni.switchTab({
+				        url: '../main/main'
+				    });
+				}
+			}
         }
     }
 };

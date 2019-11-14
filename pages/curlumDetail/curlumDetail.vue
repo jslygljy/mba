@@ -51,10 +51,10 @@
 		<view class="comment-post" v-if="is_sgin==1">
 			<input type="text" :value="commentInfo" placeholder="请输入你的评论"/>
 			<text class="post-button">发布</text>
-		</view>
+		</view> -->
 		<view class="comment-post" v-if="is_sgin==0">
 			<text class="post-button2" @click="reportInfo">立即报名</text>
-		</view> -->
+		</view>
     </view>
 </template>
 
@@ -258,6 +258,7 @@
 					
 				}else{
 					this.vedio_url = item.vedio_url;
+					this.videoContext.play();
 				}
 				this.book_id = item.innerid;
 			},

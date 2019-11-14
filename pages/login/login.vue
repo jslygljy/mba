@@ -1,7 +1,7 @@
 <template>
     <view class="login-content">
         <view class="input-group">
-            <view class="input-row border">
+            <view class="border">
                 <text class="title">手机号码</text>
                 <input class="m-input" type="number" clearable focus v-model="account" placeholder="请输入手机号码" style="font-size: 26px;"></input>
             </view>
@@ -98,8 +98,8 @@
 
 <style scoped lang="scss">
 	.login-content{
-		padding-left: 40rpx;
-		
+		width: 100%;
+		background-color: #fff;
 		.input-group{
 			margin: 40rpx 0px 0px 0px;
 		}
@@ -149,6 +149,22 @@
 				color: dodgerblue;
 				display: inline-block;
 			}
+		}
+		.input-group {
+			background-color: #ffffff;
+			margin: 40upx;
+			position: relative;
+		}
+		.input-group::after {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			height: 1upx;
+			content: '';
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5);
+			background-color: #c8c7cc;
 		}
 		
 	}

@@ -137,7 +137,7 @@ export default {
 
 $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 .progress{
-	width: 70%;
+	width: 80%;
 	margin-left: 60rpx;
 }
 .blueRound{

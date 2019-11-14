@@ -65,35 +65,7 @@
 		padding: 20upx;
 	}
 
-	.input-group {
-		background-color: #ffffff;
-		margin-top: 40upx;
-		position: relative;
-	}
-
-	.input-group::before {
-		position: absolute;
-		right: 0;
-		top: 0;
-		left: 0;
-		height: 1upx;
-		content: '';
-		-webkit-transform: scaleY(.5);
-		transform: scaleY(.5);
-		background-color: #c8c7cc;
-	}
-
-	.input-group::after {
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		height: 1upx;
-		content: '';
-		-webkit-transform: scaleY(.5);
-		transform: scaleY(.5);
-		background-color: #c8c7cc;
-	}
+	
 
 	.input-row {
 		display: flex;

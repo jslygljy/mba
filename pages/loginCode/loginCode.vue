@@ -1,7 +1,7 @@
 <template>
-    <view class="login-content">
+    <view class="loginCode-content">
         <view class="input-group">
-            <view class="input-row border">
+            <view class="border">
                 <text class="title">已发送4位验证码至{{tel}}</text>
                 <wakary-input type="bottom" @finish="finish" style="width: 100%;"></wakary-input>
             </view>
@@ -100,8 +100,9 @@
 
 <style scoped lang="scss">
 	
-	.login-content{
-		padding-left: 40rpx;
+	.loginCode-content{
+		width: 100%;
+		background-color: #fff;
 		
 		.input-group{
 			margin: 40rpx 0px 0px 0px;
@@ -153,7 +154,22 @@
 				display: inline-block;
 			}
 		}
-		
+		.input-group {
+			background-color: #ffffff;
+			margin: 40upx;
+			position: relative;
+		}
+		.input-group::after {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			height: 1upx;
+			content: '';
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5);
+			background-color: #c8c7cc;
+		}
 	}
     
 </style>
