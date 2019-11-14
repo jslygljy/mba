@@ -87,7 +87,8 @@
 				item_list:[],
 				ansList:[],
 				isShow:false,
-				showdetail:false
+				showdetail:false,
+				isTopic:false
 			}   
          },
 		 onShow(){
@@ -98,6 +99,7 @@
 		    this.title = option.title;
 			this.subTitle = option.subTitle;
 			this.pages =option.pages;
+			this.isTopic = option.isTopic;
 			this.showdetail = option.showdetail ==="false" ? false : true;
 		 },
         methods: {
@@ -106,9 +108,16 @@
 			},
 			getDetail(){
 				let id =uni.getStorageSync('customer_id');
+				let url =''
+				if(this.isTopic){
+					url = config.url+'/app/qa/list?topicid='+this.topicid+'&pageindex='+this.pages;
+				}else{
+					url = config.url+'/app/qa/list?special_work='+this.title+'&epoint='+this.subTitle+'&pageindex='+this.pages;
+				}
 				// 获取做题列表
 				uni.request({
-					url: config.url+'/app/qa/list?special_work='+this.title+'&epoint='+this.subTitle+'&pageindex='+this.pages, //仅为示例，并非真实接口地址。
+					// url: config.url+'/app/qa/list?special_work='+this.title+'&epoint='+this.subTitle+'&pageindex='+this.pages,
+					url, 
 				    data: {
 				    },
 				    success: (res) => {
@@ -119,6 +128,17 @@
 								})
 							})
 							this.list = res.data.data;
+						}else{
+							uni.showToast({
+							    title: '恭喜您，已经学完了本节课程',
+							    duration: 2000,
+								complete:function(){
+									setTimeout(function(){
+										uni.navigateBack()
+									},2000)
+								}
+							});
+							
 						}
 				    }
 				});

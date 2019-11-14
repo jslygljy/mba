@@ -141,6 +141,12 @@
 				"navigationStyle": "custom"
 			}
         }
+        ,{
+            "path" : "pages/paysuc/paysuc",
+            "style" : {
+				"navigationBarTitleText": "支付成功"
+			}
+        }
     ],
     "tabBar": {
         "color": "#7a7e83",

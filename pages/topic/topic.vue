@@ -3,7 +3,7 @@
 		
 		<view class="paper-classify-item-name"><i class="right-point"></i><text>联考真题题库</text><i class="left-point"></i></view>
 		<uni-list class="list-info">
-			<view class="flex solids-bottom lists" @click="onClick" v-for="(item, index) in list" :key="item.innerid">
+			<view class="flex solids-bottom lists" @click="goToStaillDetail(item.innerid)" v-for="item in list" :key="item.innerid">
 				<view class="flex-four">
 					<view class="uni-list-item__container">
 					  <view class="uni-list-item__content">
@@ -33,6 +33,7 @@
 			return {
 				title:'',
 				list:[],
+				pages:0,
 				tabObjectList: [ //对象数组赋值
 					{
 						name: '历年真题',
@@ -66,10 +67,13 @@
 					}
 				});
 			},
-			onClick(){
-				
+			goToStaillDetail(id){
+				// let id =uni.getStorageSync('customer_id');
+				// 获取做题列表
+				uni.navigateTo({
+					url: '../taskDetail/taskDetail?topicid='+id+'&pages='+ (Number(this.pages)) +'&showdetail=false&isTopic=true'
+				});	
 			}
-			
 		}
 
 	}
@@ -122,7 +126,7 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 	margin-left: 60rpx;
 }
 .lists{
-	height: 100rpx;
+	
 }
 .blueRound{
 	display: inline-block;
@@ -137,8 +141,8 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 .edit-button{
 	position: absolute;
 	right: 60rpx;
-    top: 20rpx;
-	font-size: 50rpx;
+    top: 30rpx;
+	font-size: 36rpx;
 }
 .uni-list-item {
 	font-size: $uni-font-size-lg;
@@ -147,13 +151,13 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 	flex-direction: column;
 	justify-content: space-between;
 	margin-top: 10rpx;
-	height: 150rpx;
+	padding-bottom: 20rpx;
 	&--disabled {
 		@include list-disabled;
 	}
 
 	&__container {
-		padding: $list-item-pd;
+		padding: 30rpx;
 		width: 100%;
 		box-sizing: border-box;
 		flex: 1;
