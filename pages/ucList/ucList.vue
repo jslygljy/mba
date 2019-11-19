@@ -263,7 +263,7 @@
 						area: this.area
 					},
 					success: (res) => {
-						let c = res.data.data.concat(res.data.data).concat(res.data.data).concat(res.data.data).concat(res.data.data);
+						let c = res.data.data;
 						cb && cb(c);
 					}
 				});

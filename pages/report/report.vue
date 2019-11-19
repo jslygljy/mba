@@ -1,7 +1,7 @@
 <template>
 	<view class="box">
 		<text class="info-title">
-			{{title}}}
+			{{title}}
 		</text>
 		<view class="view_box">
 			<iCircle

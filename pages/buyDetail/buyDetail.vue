@@ -64,14 +64,17 @@
 						        console.log('success:' + JSON.stringify(res2));
 						    },
 						    fail: function (err) {
-						        console.log('fail:' + JSON.stringify(err));
+								console.log(err.errMsg);
+								uni.showToast({
+									title: err.errMsg
+								});
 								uni.request({
 									url: config.url + '/app/pay/status/'+res.prepayid, //仅为示例，并非真实接口地址。
 									method:"POST",
 									data: {
 									},
 									success: (res3) => {
-										console.log(3)
+										
 									}
 								})
 						    }
