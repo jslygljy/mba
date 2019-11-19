@@ -3,7 +3,7 @@
 		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name"></sun-tab>
 		<!-- <view class="paper-classify-item-name"><i class="right-point"></i><text>联考真题题库</text><i class="left-point"></i></view> -->
 		<uni-list class="list-info">
-			<view class="flex solids-bottom lists" @click="onClick" v-for="(item, index) in list" :key="item.topicid">
+			<view class="flex solids-bottom lists" @click="onClick(item)" v-for="(item, index2) in list" :key="index2">
 				<view class="flex-four">
 					<view class="uni-list-item__container">
 					  <view class="uni-list-item__content">
@@ -11,11 +11,12 @@
 					  </view>
 					</view>
 					<view class="uni-list-item__container">
-						<view class="uni-list-item__content-title">共{{item.num}}道题,答对{{item.is_true}}道</view>				  
+						<view class="uni-list-item__content-title" v-if="index==0">共{{item.num}}道题,答对{{item.is_true}}道</view>				  
+						<view class="uni-list-item__content-title" v-if="index==1">{{item.title}}</view>				  
 					</view>
 				</view>
 				<view class="flex-sub">
-					<text class="right-time">{{item.time}}</text>
+					<text class="right-time">{{filterDate(item.createdtime)}}</text>
 				</view>
 			</view>
 		</uni-list>
@@ -39,6 +40,7 @@
 				title:'',
 				index:0,
 				list:[],
+				pages:0,
 				tabObjectList: [ //对象数组赋值
 					{
 						name: '专项练习',
@@ -63,9 +65,12 @@
 				this.index=e.tab.value;
 				this.getList();
 			},
+			filterDate(date){
+				return new Date(date).getMonth()+1 +'-'+new Date(date).getDate();
+			},
 			getList() {
 				let id = uni.getStorageSync('customer_id');
-				// 推荐课程
+				// 专项练习
 				if(this.index==0){
 					uni.request({
 						url: config.url + '/app/qa/history/list/'+id, //仅为示例，并非真实接口地址。
@@ -77,6 +82,7 @@
 						}
 					});
 				}else{
+					// 套题练习
 					uni.request({
 						url: config.url + '/app/qa/history/topic/'+id, //仅为示例，并非真实接口地址。
 						method:"GET",
@@ -88,8 +94,15 @@
 					});
 				}
 			},
-			onClick(){
-				
+			onClick(item){
+				if(this.index==0){
+					
+				}
+				else{
+					uni.navigateTo({
+					    url: '../errDetail/errDetail?qa_id='+item.innerid
+					});
+				}
 			}
 			
 		}
