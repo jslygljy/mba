@@ -96,6 +96,13 @@
 
 <style scoped lang="scss">
 	.inviteContent{
+		padding: 0upx;
+		/* #ifndef APP-PLUS */
+		display: flex;
+		/* #endif */
+		flex-direction: column;
+		flex: 1;
+		background-color: #fff;
 		.card-swiper{
 			height: 910upx !important
 		}

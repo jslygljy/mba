@@ -147,6 +147,12 @@
 				"navigationBarTitleText": "支付成功"
 			}
         }
+        ,{
+            "path" : "pages/studyReport/studyReport",
+            "style" : {
+				"navigationBarTitleText": "学习报告"
+			}
+        }
     ],
     "tabBar": {
         "color": "#7a7e83",

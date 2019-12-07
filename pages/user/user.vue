@@ -52,16 +52,16 @@
 					<text class="text-grey">订单记录</text>
 				</view>
 			</view>
-			<!-- <view class="cu-item arrow">
+			<view class="cu-item arrow">
 				<view class="content">
 					<text class="cuIcon-favorfill text-blue"></text>
 					<text class="text-grey">我的收藏</text>
 				</view>
-			</view> -->
+			</view>
 		</view>
 		<!-- <view class="borderInfo"></view> -->
 		<view class="card-menu margin-top cu-list menu">
-			<!-- <view class="cu-item arrow" @click="toFriend">
+			<view class="cu-item arrow" @click="toFriend">
 				<view class="content">
 					<text class="cuIcon-profile text-yellow"></text>
 					<text class="text-grey">推荐好友</text>
@@ -70,7 +70,7 @@
 					<text class="text-yellow text-sm">邀请可得40元学习大礼包</text>
 				</view>
 			</view>
-			<view class="cu-item arrow">
+			<!-- <view class="cu-item arrow">
 				<view class="content">
 					<text class="cuIcon-present text-yellow"></text>
 					<text class="text-grey">我的优惠券</text>

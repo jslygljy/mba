@@ -10,6 +10,10 @@
 				<text class="cuIcon-babyfill text-purple i"></text>
 				<text>做题历史</text>
 			</view>
+			<view class="item" @click="goToReport">
+				<text class="cuIcon-babyfill text-purple i"></text>
+				<text>学习报告</text>
+			</view>
 		</view>
 		<text class="practice-title">
 			专项练习
@@ -126,6 +130,11 @@
 			goToHistory(){
 				uni.navigateTo({
 				    url: '../history/history'
+				});
+			},
+			goToReport(){
+				uni.navigateTo({
+				    url: '../studyReport/studyReport'
 				});
 			}
 		}
