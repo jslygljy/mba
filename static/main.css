@@ -3959,3 +3959,6 @@ scroll-view.cu-steps .cu-item {
 .text-darkGrey{
 	color: #bbb;
 }
+.disInline{
+	display: inline-block;
+}

@@ -106,9 +106,17 @@
 				
 			},
 			goToDetail(topicid,title,subTitle){
-				uni.navigateTo({
-				    url: '../taskDetail/taskDetail?id='+topicid+'&title='+title+'&subTitle='+subTitle+'&pages=0&showdetail=false'
-				});
+				if(this.curryindex == 3){
+					uni.navigateTo({
+					    url: '../englishDetail/englishDetail?id='+topicid+'&title='+title+'&subTitle='+subTitle+'&pages=0&showdetail=false'
+					});
+				}else{
+					uni.navigateTo({
+					    url: '../taskDetail/taskDetail?id='+topicid+'&title='+title+'&subTitle='+subTitle+'&pages=0&showdetail=false'
+					});
+				}
+				 
+				
 			},
 			getList(){
 				let id =uni.getStorageSync('customer_id');
