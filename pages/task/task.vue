@@ -20,9 +20,11 @@
 		</text>
 		<view class="collapse-info">
 			<uni-collapse @change="change" v-for="item in list" :key="item.topicid" v-if="list.length!==0">
-				<uni-collapse-item :title="item.title" :show-animation="true" :curryNum="item.have_sure" :allNum="item.arate" :haveSure="item.have_sure">
+				<uni-collapse-item :title="item.title" :show-animation="true" :curryNum="item.have_sure" :allNum="item.arate"
+				 :haveSure="item.have_sure">
 					<uni-list class="list-info">
-						<uni-list-item @click="goToDetail(subitem.topicid,item.title,subitem.title)" v-for="(subitem, subindex) in item.item_list" :key="subindex" :title="subitem.title" :curryNum="subitem.have_sure" :allNum="subitem.arate" :haveSure="subitem.have_sure">
+						<uni-list-item @click="goToDetail(subitem.topicid,item.title,subitem.title)" v-for="(subitem, subindex) in item.item_list"
+						 :key="subindex" :title="subitem.title" :curryNum="subitem.have_sure" :allNum="subitem.arate" :haveSure="subitem.have_sure">
 						</uni-list-item>
 					</uni-list>
 				</uni-collapse-item>
@@ -31,7 +33,7 @@
 				<text>暂无数据</text>
 			</view>
 		</view>
-		
+
 	</view>
 </template>
 
@@ -51,40 +53,40 @@
 			sunTab
 		},
 		data() {
-			
+
 			return {
-				list:[],
+				list: [],
 				index: 0,
 				curryindex: 1,
 				tabObjectList: [ //对象数组赋值
-				    {
-				        name: '逻辑',
-				        value: 1
-				    },
-				    {
-				        name: '数学',
-				        value: 2
-				    },
-				    {
-				        name: '英语',
-				        value: 3
-				    },
-				    {
-				        name: '写作',
-				        value: 4
-				    },
-				    {
-				        name: '面试',
-				        value: 5
-				    },
-				    {
-				        name: '助力',
-				        value: 6
-				    }
+					{
+						name: '逻辑',
+						value: 1
+					},
+					{
+						name: '数学',
+						value: 2
+					},
+					{
+						name: '英语',
+						value: 3
+					},
+					{
+						name: '写作',
+						value: 4
+					},
+					{
+						name: '面试',
+						value: 5
+					},
+					{
+						name: '助力',
+						value: 6
+					}
 				],
 			}
 		},
-		onShow(){
+		onShow() {
 			this.getList();
 		},
 		methods: {
@@ -100,49 +102,68 @@
 			change(e) {
 				console.log(e)
 			},
-			objectChange(e){
+			objectChange(e) {
 				this.curryindex = e.tab.value;
 				this.getList();
-				
+
 			},
-			goToDetail(topicid,title,subTitle){
-				if(this.curryindex == 3){
-					uni.navigateTo({
-					    url: '../englishDetail/englishDetail?id='+topicid+'&title='+title+'&subTitle='+subTitle+'&pages=0&showdetail=false'
-					});
-				}else{
-					uni.navigateTo({
-					    url: '../taskDetail/taskDetail?id='+topicid+'&title='+title+'&subTitle='+subTitle+'&pages=0&showdetail=false'
-					});
-				}
-				 
-				
-			},
-			getList(){
-				let id =uni.getStorageSync('customer_id');
+
+			goToDetail(topicid, title, subTitle) {
+				let id = uni.getStorageSync('customer_id');
 				// 获取做题列表
 				uni.request({
-					url: config.url+'/app/qa/special/list?courseid='+this.curryindex, //仅为示例，并非真实接口地址。
-				    data: {
-				    },
-				    success: (res) => {
+					url: config.url + '/app/qa/list?special_work=' + title + '&epoint=' + subTitle + '&pageindex=0',
+					data: {},
+					success: (res) => {
+						if (res.data.data.qtype == 4) {
+							uni.navigateTo({
+								url: '../englishDetail/englishDetail?id=' + topicid + '&title=' + title + '&subTitle=' + subTitle +
+									'&pages=0&showdetail=false'
+							});
+						} else {
+							uni.navigateTo({
+								url: '../taskDetail/taskDetail?id=' + topicid + '&title=' + title + '&subTitle=' + subTitle +
+									'&pages=0&showdetail=false'
+							});
+						}
+					}
+				});
+				// if (this.curryindex == 3) {
+				// 	uni.navigateTo({
+				// 		url: '../englishDetail/englishDetail?id=' + topicid + '&title=' + title + '&subTitle=' + subTitle +
+				// 			'&pages=0&showdetail=false'
+				// 	});
+				// } else {
+				// 	uni.navigateTo({
+				// 		url: '../taskDetail/taskDetail?id=' + topicid + '&title=' + title + '&subTitle=' + subTitle +
+				// 			'&pages=0&showdetail=false'
+				// 	});
+				// }
+			},
+			getList() {
+				let id = uni.getStorageSync('customer_id');
+				// 获取做题列表
+				uni.request({
+					url: config.url + '/app/qa/special/list?courseid=' + this.curryindex, //仅为示例，并非真实接口地址。
+					data: {},
+					success: (res) => {
 						this.list = res.data.data;
-				    }
+					}
 				});
 			},
-			goToRead(){
+			goToRead() {
 				uni.navigateTo({
-				    url: '../topic/topic'
+					url: '../topic/topic'
 				});
 			},
-			goToHistory(){
+			goToHistory() {
 				uni.navigateTo({
-				    url: '../history/history'
+					url: '../history/history'
 				});
 			},
-			goToReport(){
+			goToReport() {
 				uni.navigateTo({
-				    url: '../studyReport/studyReport'
+					url: '../studyReport/studyReport'
 				});
 			}
 		}
@@ -150,36 +171,43 @@
 </script>
 
 <style scoped lang="scss">
-	page{
+	page {
 		height: 100%;
 	}
-	.task-content{
-		height:100%;
+
+	.task-content {
+		height: 100%;
 		min-height: 100vh;
 		width: 100%;
 		background-color: #fff;
-		.list{
+
+		.list {
 			display: flex;
 			margin-bottom: 20rpx;
 			margin-top: 30rpx;
-			.item{
-				flex:1;
+
+			.item {
+				flex: 1;
 				text-align: center;
 				font-size: 24rpx;
-				.i{
+
+				.i {
 					display: block;
 					font-size: 80rpx;
 				}
 			}
 		}
-		.practice-title{
+
+		.practice-title {
 			margin: 40rpx 0px 0rpx 30rpx;
 			display: inline-block;
 		}
-		.list-info{
+
+		.list-info {
 			margin: 20rpx 0px 0rpx 20rpx;
 		}
-		.collapse-info{
+
+		.collapse-info {
 			margin-top: 25rpx;
 		}
 	}
