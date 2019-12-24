@@ -2,7 +2,7 @@
 	<view class="entaskDetail">
 		<!-- <uni-countdown :showDay="false" :day="0" :hour="0" :minute="0" :second="0">
 		</uni-countdown> -->
-		<view class="advertisement">
+		<view class="advertisement" :style="['height:'+height]">
 			<scroll-view :scroll-y="true" bindscrolltolower="scrollbot">
 				<!-- <web-view src="/hybrid/html/local.html" style="height: 200rpx;top:100rpx" @message="getMessage"></web-view> -->
 				<!-- <u-parse :content="titleContent" :clickHandler="clickHandler" />
@@ -77,8 +77,6 @@
 	import config from '../../config.js';
 	import neilModal from '@/components/neil-modal/neil-modal.vue';
 	import uParse from '@/components/gaoyia-parse/parse.vue'
-
-	// import mockinfo from './mockinfo.json'
 	export default {
 		components: {
 			uniCountdown,
@@ -94,6 +92,7 @@
 				list: [],
 				item_list: [],
 				ansList: [],
+				height: 0,
 				isShow: false,
 				showdetail: false,
 				isTopic: false,
@@ -151,6 +150,27 @@
 			this.showdetail = option.showdetail === "false" ? false : true;
 		},
 		methods: {
+			// bindTouch(e) {
+			// 	src_posi_Y = e.pageY; //鼠标指针的位置
+			// 	is_mouse_down = true;
+			// },
+			// bindMove(e) {
+			// 	dest_posi_Y = e.pageY;
+			// 	move_Y = src_posi_Y - dest_posi_Y;
+			// 	src_posi_Y = dest_posi_Y;
+			// 	const query = uni.createSelectorQuery();
+			// 	query.select('.advertisement').boundingClientRect();
+			// 	query.exec(obj => {
+			// 		const rect = obj[0]
+			// 		if (rect) {
+			// 			destHeight = rect.height - move_Y;
+			// 			if (is_mouse_down) {
+			// 				this.height = destHeight+20 + 'px'
+			// 			}
+			// 		}
+			// 	});
+
+			// },
 			titleIndex(data, index) {
 				if (data.indexOf('${') > 0) {
 					this.clickIndex = index;
@@ -167,7 +187,17 @@
 					if (data3 === this.chooseList[e.detail.current]) {
 						this.clickIndex = index3;
 					}
+				});
+				const query = uni.createSelectorQuery()
+				query.select('.text-blue').boundingClientRect()
+				query.selectViewport().scrollOffset()
+				query.exec(function(res) {
+					uni.pageScrollTo({
+					    scrollTop: res[0].top,
+					    duration: 300
+					});
 				})
+				
 			},
 			getMessage(e) {
 				uni.showModal({
@@ -275,10 +305,12 @@
 		overflow-x: hidden;
 		overflow-y: scroll;
 	}
-	.swiper{
+
+	.swiper {
 		margin-top: 20rpx;
 		height: 200px;
 	}
+
 	.advertisement {
 		width: 100%;
 		min-height: 40%;
@@ -293,6 +325,7 @@
 		padding: 0rpx 20rpx;
 		background-color: #fff;
 		height: 100%;
+
 		.header {
 			display: flex;
 			justify-content: space-between;
