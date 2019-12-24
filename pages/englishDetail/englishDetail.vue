@@ -2,8 +2,8 @@
 	<view class="entaskDetail">
 		<!-- <uni-countdown :showDay="false" :day="0" :hour="0" :minute="0" :second="0">
 		</uni-countdown> -->
-		<view class="advertisement" :style="['height:'+height]">
-			<scroll-view :scroll-y="true" bindscrolltolower="scrollbot">
+		<view class="flex flex-direction">
+			<view class="advertisement" :style="{height:clientHeight?clientHeight+'px':'auto'}">
 				<!-- <web-view src="/hybrid/html/local.html" style="height: 200rpx;top:100rpx" @message="getMessage"></web-view> -->
 				<!-- <u-parse :content="titleContent" :clickHandler="clickHandler" />
 				<view class="uni-common-mt" style="background:#FFF; padding:20rpx;">
@@ -17,51 +17,51 @@
 				<!-- <text @click="getIndex">
 					{{titleContent}}
 				</text> -->
-			</scroll-view>
-		</view>
-		<swiper class="swiper" :indicator-dots="indicatorDots" @change="objectChange" :autoplay="false" :interval="2000"
-		 :duration="500" :current="curryIndex">
-			<swiper-item v-for="(item, index) in list" :key="index">
-				<scroll-view :scroll-y="true" bindscrolltolower="scrollbot">
-					<view class="ans-list">
-						<view class="ans-item" v-for="(subitem, subindex) in item" :key="subindex" @click="setChoose(index,subindex,subitem,item.type)">
-							<view class="item-left flex-sub">
-								<!-- <view v-if="" :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view> -->
-								<view :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view>
-							</view>
-							<view class="item-right">
-								<u-parse :content="subitem.content" />
+			</view>
+			<swiper class="swiper" :indicator-dots="indicatorDots" @change="objectChange" :autoplay="false" :interval="2000"
+			 :duration="500" :current="curryIndex" :style="{height:clientHeight?clientHeight+'px':'auto'}">
+				<swiper-item v-for="(item, index) in list" :key="index">
+					<scroll-view :scroll-y="true" bindscrolltolower="scrollbot">
+						<view class="ans-list">
+							<view class="ans-item" v-for="(subitem, subindex) in item" :key="subindex" @click="setChoose(index,subindex,subitem,item.type)">
+								<view class="item-left flex-sub">
+									<!-- <view v-if="" :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view> -->
+									<view :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view>
+								</view>
+								<view class="item-right">
+									<u-parse :content="subitem.content" />
+								</view>
 							</view>
 						</view>
-					</view>
-					<view class="" v-if="showdetail">
-						<text class="title">
-							本题出自
-						</text>
-						<text class="info">
-							{{item.ttitle}}
-						</text>
-						<text class="title">
-							考点
-						</text>
-						<text class="info">
-							{{item.special_work}}
-						</text>
-						<text class="title">
-							解析
-						</text>
-						<text class="info">
-							{{item.reason}}
-						</text>
-					</view>
-				</scroll-view>
-			</swiper-item>
-		</swiper>
+						<view class="" v-if="showdetail">
+							<text class="title">
+								本题出自
+							</text>
+							<text class="info">
+								{{item.ttitle}}
+							</text>
+							<text class="title">
+								考点
+							</text>
+							<text class="info">
+								{{item.special_work}}
+							</text>
+							<text class="title">
+								解析
+							</text>
+							<text class="info">
+								{{item.reason}}
+							</text>
+						</view>
+					</scroll-view>
+				</swiper-item>
+			</swiper>
+		</view>
 		<neil-modal :show="isShow" @close="closeModal" title="答题卡" @cancel="bindBtn('cancel')" confirmText="交卷并查看结果" @confirm="bindBtn('confirm')">
 			<text class="modal_info">
 				多种题型综合
 			</text>
-			<view class="flex">
+			<view class="flex flex-wrap">
 				<view class="border-info3 flex-sub" v-for="(item,index) in Object.keys(list)" :key="index">
 					{{index+Number(1)}}
 				</view>
@@ -97,6 +97,7 @@
 				showdetail: false,
 				isTopic: false,
 				clientHeight: 0,
+				clientHeight2:0,
 				fileList: [],
 				titleContent: [],
 				clickIndex: -1,
@@ -125,7 +126,7 @@
 			var that = this
 			wx.getSystemInfo({
 				success: (res) => {
-					this.clientHeight = res.windowHeight
+					this.clientHeight = res.windowHeight/2;
 				}
 			});
 		},
@@ -193,11 +194,11 @@
 				query.selectViewport().scrollOffset()
 				query.exec(function(res) {
 					uni.pageScrollTo({
-					    scrollTop: res[0].top,
-					    duration: 300
+						scrollTop: res[0].top,
+						duration: 300
 					});
 				})
-				
+
 			},
 			getMessage(e) {
 				uni.showModal({
@@ -308,13 +309,10 @@
 
 	.swiper {
 		margin-top: 20rpx;
-		height: 200px;
 	}
 
 	.advertisement {
 		width: 100%;
-		min-height: 40%;
-		max-height: 40%;
 		padding: 20upx;
 		overflow-y: scroll;
 		border-bottom: 4upx #555555 solid;
@@ -325,6 +323,7 @@
 		padding: 0rpx 20rpx;
 		background-color: #fff;
 		height: 100%;
+		display: flex;
 
 		.header {
 			display: flex;
@@ -375,7 +374,7 @@
 	}
 
 	.border-info3 {
-		max-width: 80rpx;
+		min-width: 80rpx;
 		height: 80rpx;
 		border: 2rpx #0081ff solid;
 		font-size: 30rpx;

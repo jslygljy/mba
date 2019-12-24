@@ -38,7 +38,7 @@
 		<text class="info-title">
 			多钟题型综合
 		</text>
-		<view class="flex">
+		<view class="flex flex-wrap">
 			<view :class="['border-info3','flex-sub',data.is_true==0?'bg-red':'bg-green']" v-for="(data,index) in itemList" :key="index" @click="goToErrDetail(data.qa_id)">
 				{{index+1}}
 			</view>
@@ -192,7 +192,7 @@
 		display: block;
 	}
 	.border-info3{
-		max-width: 100rpx;
+		min-width: 100rpx;
 		height: 100rpx;
 		font-size: 30rpx;
 		line-height: 100rpx;
