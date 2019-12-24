@@ -309,18 +309,19 @@
 
 	.swiper {
 		margin-top: 20rpx;
+		padding: 30rpx;
 	}
 
 	.advertisement {
 		width: 100%;
-		padding: 20upx;
 		overflow-y: scroll;
 		border-bottom: 4upx #555555 solid;
+		background-color: #E9E9E9;
+		padding: 20rpx;
 	}
 
 	.entaskDetail {
 		width: 100%;
-		padding: 0rpx 20rpx;
 		background-color: #fff;
 		height: 100%;
 		display: flex;
