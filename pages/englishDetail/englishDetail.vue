@@ -1,83 +1,69 @@
 <template>
-	<view class="taskDetail">
+	<view class="entaskDetail">
 		<!-- <uni-countdown :showDay="false" :day="0" :hour="0" :minute="0" :second="0">
 		</uni-countdown> -->
-		<view class="flex">
-			<view class="advertisement" style="width: 100%;">
+		<view class="advertisement">
+			<scroll-view :scroll-y="true" bindscrolltolower="scrollbot">
 				<!-- <web-view src="/hybrid/html/local.html" style="height: 200rpx;top:100rpx" @message="getMessage"></web-view> -->
 				<!-- <u-parse :content="titleContent" :clickHandler="clickHandler" />
 				<view class="uni-common-mt" style="background:#FFF; padding:20rpx;">
 					<rich-text :nodes="nodes"></rich-text>
 					<view v-html="titleContent" @click="clicki"></view>
 				</view> -->
-				<view v-for="(item,index) in titleContent" :key="index" :class="[item.indexOf('<')>=0?'block':'disInline','margin-left-sm',clickIndex==index?'text-red':'']"
+				<view v-for="(item,index) in titleContent" :key="index" :class="[item.indexOf('<')>=0?'block':'disInline','margin-left-sm',clickIndex==index?'text-blue':'']"
 				 @click="titleIndex(item,index)" v-html="item">
 					<!-- <u-parse :content="" /> -->
 				</view>
 				<!-- <text @click="getIndex">
 					{{titleContent}}
 				</text> -->
-			</view>
-			<swiper class="swiper" :style="{height:clientHeight?clientHeight+'px':'auto'}" :indicator-dots="indicatorDots"
-			 @change="objectChange" :autoplay="false" :interval="2000" :duration="500" :current="curryIndex">
-				<swiper-item v-for="(item, index) in list" :key="index">
-					<scroll-view :scroll-y="true" :style="{height:clientHeight?clientHeight+'px':'auto'}" bindscrolltolower="scrollbot">
-						<view class="header">
-							<text>{{item.ttitle}}</text>
-							<view class="right-progress">
-								<text class="text-blue">{{curryIndex+1}}</text>
-								/
-								<text>{{list.length}}</text>
-							</view>
-						</view>
-						<view class="content">
-							<view>
-								<text>({{item.type==1? '单选题':'多选题'}})</text>
-								<u-parse :content="item.title" />
-							</view>
-						</view>
-						<view class="ans-list">
-							<view class="ans-item" v-for="(subitem, subindex) in item.item_list" :key="subindex" @click="setChoose(index,subindex,subitem,item.type)">
-								<view class="item-left flex-sub">
-									<!-- <view v-if="" :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view> -->
-									<view :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view>
-								</view>
-								<view class="item-right">
-									<u-parse :content="subitem.content" />
-								</view>
-							</view>
-						</view>
-						<view class="" v-if="showdetail">
-							<text class="title">
-								本题出自
-							</text>
-							<text class="info">
-								{{item.ttitle}}
-							</text>
-							<text class="title">
-								考点
-							</text>
-							<text class="info">
-								{{item.special_work}}
-							</text>
-							<text class="title">
-								解析
-							</text>
-							<text class="info">
-								{{item.reason}}
-							</text>
-						</view>
-					</scroll-view>
-				</swiper-item>
-			</swiper>
+			</scroll-view>
 		</view>
+		<swiper class="swiper" :indicator-dots="indicatorDots" @change="objectChange" :autoplay="false" :interval="2000"
+		 :duration="500" :current="curryIndex">
+			<swiper-item v-for="(item, index) in list" :key="index">
+				<scroll-view :scroll-y="true" bindscrolltolower="scrollbot">
+					<view class="ans-list">
+						<view class="ans-item" v-for="(subitem, subindex) in item" :key="subindex" @click="setChoose(index,subindex,subitem,item.type)">
+							<view class="item-left flex-sub">
+								<!-- <view v-if="" :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view> -->
+								<view :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view>
+							</view>
+							<view class="item-right">
+								<u-parse :content="subitem.content" />
+							</view>
+						</view>
+					</view>
+					<view class="" v-if="showdetail">
+						<text class="title">
+							本题出自
+						</text>
+						<text class="info">
+							{{item.ttitle}}
+						</text>
+						<text class="title">
+							考点
+						</text>
+						<text class="info">
+							{{item.special_work}}
+						</text>
+						<text class="title">
+							解析
+						</text>
+						<text class="info">
+							{{item.reason}}
+						</text>
+					</view>
+				</scroll-view>
+			</swiper-item>
+		</swiper>
 		<neil-modal :show="isShow" @close="closeModal" title="答题卡" @cancel="bindBtn('cancel')" confirmText="交卷并查看结果" @confirm="bindBtn('confirm')">
 			<text class="modal_info">
 				多种题型综合
 			</text>
 			<view class="flex">
-				<view class="border-info3 flex-sub" v-for="(item,index) in list" :key="index">
-					{{index+1}}
+				<view class="border-info3 flex-sub" v-for="(item,index) in Object.keys(list)" :key="index">
+					{{index+Number(1)}}
 				</view>
 			</view>
 		</neil-modal>
@@ -115,6 +101,7 @@
 				fileList: [],
 				titleContent: [],
 				clickIndex: -1,
+				chooseList: [],
 				nodes: [{
 					name: 'div',
 					attrs: {
@@ -164,13 +151,23 @@
 			this.showdetail = option.showdetail === "false" ? false : true;
 		},
 		methods: {
-			titleIndex(data,index) {
+			titleIndex(data, index) {
 				if (data.indexOf('${') > 0) {
 					this.clickIndex = index;
 				}
+				this.chooseList.forEach((data3, index3) => {
+					if (data3 === data) {
+						this.curryIndex = index3;
+					}
+				})
 			},
 			objectChange(e) {
 				this.curryIndex = e.detail.current;
+				this.titleContent.forEach((data3, index3) => {
+					if (data3 === this.chooseList[e.detail.current]) {
+						this.clickIndex = index3;
+					}
+				})
 			},
 			getMessage(e) {
 				uni.showModal({
@@ -196,49 +193,34 @@
 					url,
 					data: {},
 					success: (res) => {
-						// let newfont = res.data.data[0].title.split('___${').join('<a>').split('}___').join('</a>');
-						// console.log(newfont);
 						let c = res.data.data[0].title.replace(/<(?!\/?br\/?.+?>|\/?img.+?>)[^<>]*>/gi, '');
-
 						c.split(' ').forEach((data) => {
 							if (data.indexOf('<br/>') > 0) {
 								let newLabel = data.split('<br/>').join('#<view class="block"></view>#');
 								let b = newLabel.split('#');
-								console.log(b);
 								this.titleContent = this.titleContent.concat(b);
 							} else {
 								this.titleContent.push(data);
 							}
 						})
-						console.log(this.titleContent);
-						// this.titleContent = c;
-
-						// if (res.data.errcode == 0 && res.data.data.length > 0) {
-						// 	res.data.data.map((data) => {
-						// 		data.item_list.map((data2) => {
-						// 			data2.isChoose = false;
-						// 		})
-						// 	})
-						// 	this.list = res.data.data;
-						// } 
-						// else {
-						// 	uni.showToast({
-						// 		title: '恭喜您，已经学完了本节课程',
-						// 		duration: 2000,
-						// 		complete: function() {
-						// 			setTimeout(function() {
-						// 				uni.navigateBack()
-						// 			}, 2000)
-						// 		}
-						// 	});
-
-						// }
+						this.list = res.data.data[0].item_list;
+						this.titleContent.some((data2, index2) => {
+							if (data2.indexOf('${') > 0) {
+								this.clickIndex = index2;
+								return true;
+							}
+						});
+						this.titleContent.forEach((data, index) => {
+							if (data.indexOf('${') > 0) {
+								this.chooseList.push(data);
+							}
+						})
 					}
 				});
 			},
 			setChoose(index, subindex, subitem, type) {
 				if (this.showdetail) return false;
-				this.list[index].item_list.map((data2) => {
+				this.list[index].map((data2) => {
 					data2.isChoose = false;
 				})
 
@@ -254,11 +236,12 @@
 					this.ansList[index].answer = subitem.option;
 				}
 
-				this.list[index].item_list[subindex]['isChoose'] = true;
-				if (this.ansList.length == this.list.length) {
+				this.list[index][subindex]['isChoose'] = true;
+				if (this.ansList.length == Object.keys(this.list).length) {
 					this.isShow = true;
 				} else {
-					this.curryIndex = this.curryIndex + 1
+					this.curryIndex = this.curryIndex + 1;
+					this.clickIndex = this.clickIndex + 1;
 				}
 
 
@@ -284,11 +267,6 @@
 		overflow-x: hidden;
 	}
 
-	.swiper {
-		display: flex;
-		flex: 1 1 auto;
-	}
-
 	uni-swiper {
 		height: auto;
 	}
@@ -297,16 +275,24 @@
 		overflow-x: hidden;
 		overflow-y: scroll;
 	}
+	.swiper{
+		margin-top: 20rpx;
+		height: 200px;
+	}
+	.advertisement {
+		width: 100%;
+		min-height: 40%;
+		max-height: 40%;
+		padding: 20upx;
+		overflow-y: scroll;
+		border-bottom: 4upx #555555 solid;
+	}
 
-	.advertisement {}
-
-	.taskDetail {
-		display: flex;
-		flex-direction: column;
+	.entaskDetail {
 		width: 100%;
 		padding: 0rpx 20rpx;
 		background-color: #fff;
-
+		height: 100%;
 		.header {
 			display: flex;
 			justify-content: space-between;

@@ -115,7 +115,8 @@
 					url: config.url + '/app/qa/list?special_work=' + title + '&epoint=' + subTitle + '&pageindex=0',
 					data: {},
 					success: (res) => {
-						if (res.data.data.qtype == 4) {
+						// console.log(res.data.data[0].qtype)
+						if (res.data.data[0].qtype == 4) {
 							uni.navigateTo({
 								url: '../englishDetail/englishDetail?id=' + topicid + '&title=' + title + '&subTitle=' + subTitle +
 									'&pages=0&showdetail=false'
