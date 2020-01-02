@@ -52,7 +52,7 @@
 					<text class="text-grey">订单记录</text>
 				</view>
 			</view>
-			<view class="cu-item arrow">
+			<view class="cu-item arrow" @click="goToLike">
 				<view class="content">
 					<text class="cuIcon-favorfill text-blue"></text>
 					<text class="text-grey">我的收藏</text>
@@ -116,6 +116,11 @@
 			goToError(){
 				uni.navigateTo({
 				    url: '../myError/myError',
+				});
+			},
+			goToLike(){
+				uni.navigateTo({
+				    url: '../myLike/myLike',
 				});
 			}
         }

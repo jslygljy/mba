@@ -137,6 +137,11 @@
 				"navigationBarTitleText": "我的错题"
 			}
         },{
+            "path" : "pages/myLike/myLike",
+            "style" : {
+				"navigationBarTitleText": "我的收藏"
+			}
+        },{
             "path" : "pages/buyDetail/buyDetail",
             "style" : {
 				"navigationBarTitleText": "购买页面"

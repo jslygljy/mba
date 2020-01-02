@@ -16,7 +16,7 @@
 		</view>
 		<view class="cu-list grid no-border">
 			<view class="cu-item flex-sub" v-for="(item,index) in cuIconList" :key="index">
-				<view :class="['cuIcon-' + item.cuIcon,'text-' + item.color]">
+				<view :class="['cuIcon-' + item.cuIcon,'text-' + item.color]" @click="item.clickname">
 					<view class="cu-tag badge" v-if="item.badge!=0">
 						<block v-if="item.badge!=1">{{item.badge>99?'99+':item.badge}}</block>
 					</view>
@@ -71,17 +71,14 @@
 					cuIcon: 'weixin',
 					color: 'olive',
 					badge: 0,
-					name: '微信'
+					name: '微信',
+					clickname:'shareFriend'
 				}, {
 					cuIcon: 'similar',
 					color: 'orange',
 					badge: 0,
-					name: '朋友圈'
-				}, {
-					cuIcon: 'newshot',
-					color: 'blue',
-					badge: 0,
-					name: '保存图片'
+					name: '朋友圈',
+					clickname:'shareFriendcricle'
 				}],
         	};
         },
@@ -90,6 +87,40 @@
             cardSwiper(e) {
             	this.cardCur = e.detail.current
             },
+			shareFriend(){
+				uni.share({
+					provider:"weixin",
+					scene:"WXSceneSession",
+					type:0,
+					href:'',
+					title:config.share.title,
+					summary:config.share.summary,
+					imageUrl:config.share.imageUrl,
+					success:function(res){
+						
+					},
+					fail:function(res){
+						
+					}
+				})
+			},
+			shareFriendcricle(){
+				uni.share({
+					provider:"weixin",
+					scene:"WXSenceTimeline",
+					type:0,
+					href:'',
+					title:config.share.title,
+					summary:config.share.summary,
+					imageUrl:config.share.imageUrl,
+					success:function(res){
+						
+					},
+					fail:function(res){
+						
+					}
+				})
+			}
         }
     }
 </script>

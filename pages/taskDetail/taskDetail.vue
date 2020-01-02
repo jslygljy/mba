@@ -1,7 +1,12 @@
 <template>
 	<view class="taskDetail">
-		<uni-countdown :showDay="false" :day="0" :hour="0" :minute="0" :second="0">
-		</uni-countdown>
+		<view class="flex justify-between">
+			<uni-countdown :showDay="false" :day="0" :hour="0" :minute="0" :second="0">
+			</uni-countdown>
+			<view class="icons" @click="likeClick">
+				<text :class="['text-xxl',haslike?'text-red cuIcon-likefill':'cuIcon-like']"></text>
+			</view>
+		</view>
 		<swiper class="swiper" :style="{height:clientHeight?clientHeight+'px':'auto'}" :indicator-dots="indicatorDots"
 		 @change="objectChange" :autoplay="false" :interval="2000" :duration="500" :current="curryIndex">
 			<swiper-item v-for="(item, index) in list" :key="index">
@@ -86,6 +91,7 @@
 				curryIndex: 0,
 				type: '',
 				list: [],
+				haslike:false,
 				item_list: [],
 				ansList: [],
 				isShow: false,
@@ -151,6 +157,9 @@
 						}
 					}
 				});
+			},
+			likeClick(){
+				this.haslike = !this.haslike;
 			},
 			setChoose(index, subindex, subitem, type) {
 				if (this.showdetail) return false;
