@@ -29,7 +29,10 @@ export default {
             imageList: [
                 {
                     src: '../../static/guide/guide_3.9.png'
-                }
+                },
+				{
+				    src: '../../static/guide/guide2.png'
+				}
             ],
 			time1: new Date().getTime() + 5000,
 			format: `<div>
@@ -94,7 +97,7 @@ export default {
     position: absolute;
     z-index: 999;
     right: 40rpx;
-    top: 0rpx;
+    top: 60rpx;
 }
 
 .swiper-to-home-text {
