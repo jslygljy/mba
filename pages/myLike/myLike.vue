@@ -81,7 +81,7 @@
 				let id = uni.getStorageSync('customer_id');
 				// 推荐课程
 				uni.request({
-					url: config.url + '/app/qa/error/list/'+id+'?pageindex='+pageindex,
+					url: config.url + '/app/collect/list/'+id+'?pageindex='+pageindex,
 					method:"GET",
 					data: {
 					},

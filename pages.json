@@ -94,6 +94,11 @@
 			    "navigationBarTitleText": "做题历史"
 			}
 		},{
+			"path": "pages/order/order",
+			"style": {
+			    "navigationBarTitleText": "我的订单"
+			}
+		},{
 			"path": "pages/ucList/ucList",
 			"style": {
 			    "navigationBarTitleText": "院校指南",

@@ -28,13 +28,16 @@
 </template>
 
 <script>
-    
+    import config from '../../config.js';
     export default {
     	components:{
     	},
         data() {
         	return {
         		cardCur: 0,
+				configInfo:{
+					
+				},
         		swiperList: [{
         			id: 0,
         			type: 'image',
@@ -82,6 +85,17 @@
 				}],
         	};
         },
+		onShow() {
+			// 获取配置文件
+			uni.request({
+				url: config.url + '/app/share/detail',
+				data: {},
+				success: (res) => {
+					console.log(res.data.data);
+					this.configInfo = res.data.data
+				}
+			});
+		},
         methods: {
             // cardSwiper
             cardSwiper(e) {
@@ -93,14 +107,14 @@
 					scene:"WXSceneSession",
 					type:0,
 					href:'',
-					title:config.share.title,
-					summary:config.share.summary,
-					imageUrl:config.share.imageUrl,
+					title:this.configInfo.share.title,
+					summary:this.configInfo.share.summary,
+					imageUrl:this.configInfo.share.imageUrl,
 					success:function(res){
-						
+						console.log(res);
 					},
 					fail:function(res){
-						
+						console.log(res);
 					}
 				})
 			},
@@ -110,9 +124,9 @@
 					scene:"WXSenceTimeline",
 					type:0,
 					href:'',
-					title:config.share.title,
-					summary:config.share.summary,
-					imageUrl:config.share.imageUrl,
+					title:this.configInfo.share.title,
+					summary:this.configInfo.share.summary,
+					imageUrl:this.configInfo.share.imageUrl,
 					success:function(res){
 						
 					},

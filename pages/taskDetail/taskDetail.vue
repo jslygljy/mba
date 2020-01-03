@@ -98,6 +98,7 @@
 				showdetail: false,
 				isTopic: false,
 				clientHeight: 0,
+				innerid:'',
 				article: '<p>html代码，具体参见https://github.com/gaoyia/parse/tree/1.0.7/parse-demo中的demo</p>'
 			}
 		},
@@ -126,9 +127,9 @@
 				let id = uni.getStorageSync('customer_id');
 				let url = ''
 				if (this.isTopic) {
-					url = config.url + '/app/qa/list?topicid=' + this.topicid + '&pageindex=' + this.pages;
+					url = config.url + '/app/qa/list?topicid=' + this.topicid + '&pageindex=' + this.pages + '&customer_id='+id;
 				} else {
-					url = config.url + '/app/qa/list?special_work=' + this.title + '&epoint=' + this.subTitle + '&pageindex=' + this.pages;
+					url = config.url + '/app/qa/list?special_work=' + this.title + '&epoint=' + this.subTitle + '&pageindex=' + this.pages+ '&customer_id='+id;
 				}
 				// 获取做题列表
 				uni.request({
@@ -143,6 +144,8 @@
 								})
 							})
 							this.list = res.data.data;
+							this.haslike = res.data.data[0].is_collect;
+							this.innerid = res.data.data[0].innerid;
 						} else {
 							uni.showToast({
 								title: '恭喜您，已经学完了本节课程',
@@ -159,7 +162,37 @@
 				});
 			},
 			likeClick(){
-				this.haslike = !this.haslike;
+				let id = uni.getStorageSync('customer_id');
+				if(!this.haslike){
+					uni.request({
+						url:config.url + '/app/collect/add',
+						method:"POST",
+						data: {
+							customer_id:id,
+							qa_innerid:this.innerid
+						},
+						success: (res) => {
+							if(res.data.errcode==0){
+								this.haslike = 1;
+							}
+						}
+					});
+				}else{
+					uni.request({
+						url:config.url + '/app/collect/del',
+						method:"POST",
+						data: {
+							customer_id:id,
+							qa_innerid:this.innerid
+						},
+						success: (res) => {
+							if(res.data.errcode==0){
+								this.haslike = 0;
+							}
+						}
+					});
+				}
+				
 			},
 			setChoose(index, subindex, subitem, type) {
 				if (this.showdetail) return false;

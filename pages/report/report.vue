@@ -200,6 +200,7 @@
 		text-align: center;
 		font-weight: bold;
 		color: #fff;
+		max-width: 100rpx;
 		margin: 40rpx 10rpx 50rpx 34rpx;
 	}
 	.info-title{
