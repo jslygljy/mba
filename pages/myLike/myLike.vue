@@ -113,9 +113,9 @@
 				console.log(e)
 			},
 			onClick(qa_id){
-				uni.navigateTo({
-				    url: '../errDetail/errDetail?qa_id='+qa_id
-				});
+				// uni.navigateTo({
+				//     url: '../errDetail/errDetail?qa_id='+qa_id
+				// });
 			}
 			
 		}

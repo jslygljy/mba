@@ -46,7 +46,7 @@
 					<text class="text-grey">我的错题</text>
 				</view>
 			</view>
-			<view class="cu-item arrow">
+			<view class="cu-item arrow" @click="goToOrder">
 				<view class="content">
 					<text class="cuIcon-form text-yellow"></text>
 					<text class="text-grey">订单记录</text>
@@ -121,6 +121,11 @@
 			goToLike(){
 				uni.navigateTo({
 				    url: '../myLike/myLike',
+				});
+			},
+			goToOrder(){
+				uni.navigateTo({
+				    url: '../order/order',
 				});
 			}
         }
