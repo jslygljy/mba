@@ -55,7 +55,7 @@
 				做题统计
 			</view>
 		</view>
-		<swiper :indicator-dots="false" :autoplay="false" :current="selectIndex">
+		<swiper class="swiper" @change="objectChange" :style="{height:clientHeight+'px'}" :indicator-dots="false" :autoplay="false" :current="selectIndex">
 			<swiper-item>
 				<view class="swiper-item">
 					<text class="ml20 mt10"><i class="cuIcon-info text-orange mr20"></i>最近7天视频学习时长</text>
@@ -72,22 +72,134 @@
 			<swiper-item>
 				<view class="swiper-item">
 					<text class="title">今日做题</text>
-					<view class="item-list">
+					<view class="item-list2">
 						<view class="number-item">
-							<text>0</text>
-							<text>逻辑</text>
+							<text class="text-xxl block">0</text>
+							<text class="text-grey">逻辑</text>
 						</view>
 						<view class="number-item">
-							<text>0</text>
-							<text>数学</text>
+							<text class="text-xxl block">0</text>
+							<text class="text-grey">数学</text>
 						</view>
 						<view class="number-item">
-							<text>0</text>
-							<text>英语</text>
+							<text class="text-xxl block">0</text>
+							<text class="text-grey">英语</text>
 						</view>
 						<view class="number-item">
-							<text>0</text>
-							<text>总提数</text>
+							<text class="text-xxl block">0</text>
+							<text class="text-grey">总提数</text>
+						</view>
+					</view>
+					<text class="title">做题报告</text>
+					<view class="flex">
+						<view class="number-item item-list3">
+							<text class="text-xxl block margin-top-sm">0</text>
+							<text class="text-grey">总估分</text>
+						</view>
+						<view class="number-item item-list3">
+							<text class="text-xxl block margin-top-sm">0</text>
+							<text class="text-grey">打败用户</text>
+						</view>
+					</view>
+					<view class="flex margin-top-xl">
+						<view class="number-item item-list3 bg-blue light">
+							<text class="text-xxl block margin-top-sm">0</text>
+							<text class="text-grey">做题总数</text>
+						</view>
+						<view class="number-item item-list3 bg-orange light">
+							<text class="text-xxl block margin-top-sm">0</text>
+							<text class="text-grey">错题总数</text>
+						</view>
+						<view class="number-item item-list3 bg-green light">
+							<text class="text-xxl block margin-top-sm">0</text>
+							<text class="text-grey">正确数</text>
+						</view>
+					</view>
+					<text class="title">科目统计</text>
+					<view class="bg-gray padding-sm radius-round margin-sm">
+						<text class="title2 margin-bottom-xs block">逻辑</text>
+						<view class="bg-white flex blockHeight radius-round margin-top-sm">
+							<view class="padding block">
+								<text class="flex-sub margin-left-sm">预估分</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0</text>
+							</view>
+							<view class="">
+								<text class="flex-sub margin-left-sm">击败用户</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0%</text>
+							</view>
+							<view class="padding-top-sm padding-left-sm">
+								<text class="flex-sub margin-left-sm">做题数</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0</text>
+							</view>
+							<view class="padding-top-sm padding-left-sm">
+								<text class="flex-sub margin-left-sm">错题数</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0</text>
+							</view>
+							<view class="padding-top-sm padding-left-sm">
+								<text class="flex-sub margin-left-sm">正确率</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0%</text>
+							</view>
+						</view>
+						<text class="title2 margin-bottom-xs block margin-top-sm">数学</text>
+						<view class="bg-white flex blockHeight radius-round margin-top-sm">
+							<view class="padding block">
+								<text class="flex-sub margin-left-sm">预估分</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0</text>
+							</view>
+							<view class="">
+								<text class="flex-sub margin-left-sm">击败用户</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0%</text>
+							</view>
+							<view class="padding-top-sm padding-left-sm">
+								<text class="flex-sub margin-left-sm">做题数</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0</text>
+							</view>
+							<view class="padding-top-sm padding-left-sm">
+								<text class="flex-sub margin-left-sm">错题数</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0</text>
+							</view>
+							<view class="padding-top-sm padding-left-sm">
+								<text class="flex-sub margin-left-sm">正确率</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0%</text>
+							</view>
+						</view>
+						<text class="title2 margin-bottom-xs block margin-top-sm">逻辑</text>
+						<view class="bg-white flex blockHeight radius-round margin-top-sm">
+							<view class="padding block">
+								<text class="flex-sub margin-left-sm">预估分</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0</text>
+							</view>
+							<view class="">
+								<text class="flex-sub margin-left-sm">击败用户</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0%</text>
+							</view>
+							<view class="padding-top-sm padding-left-sm">
+								<text class="flex-sub margin-left-sm">做题数</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0</text>
+							</view>
+							<view class="padding-top-sm padding-left-sm">
+								<text class="flex-sub margin-left-sm">错题数</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0</text>
+							</view>
+							<view class="padding-top-sm padding-left-sm">
+								<text class="flex-sub margin-left-sm">正确率</text>
+								<text class="flex-four margin-left">------------------------------------</text>
+								<text class="flex-sub margin-left">0%</text>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -136,8 +248,9 @@
 						scroll: 0
 					}
 				],
+				clientHeight:400,
 				isShow: false,
-				tabCurrentIndex: -1,
+				tabCurrentIndex: 0,
 				selectIndex: 0,
 				cWidth: '',
 				cHeight: '',
@@ -146,12 +259,14 @@
 				dataJson: {}
 			}
 		},
-		mounted() {
-			this.tabCurrentIndex = 1
-		},
 		methods: {
-			tabChange(e) {
-				this.tabCurrentIndex = e;
+			objectChange(e) {
+				this.tabCurrentIndex = e.detail.current;
+				if(this.tabCurrentIndex==0){
+					this.clientHeight = 400
+				}else{
+					this.clientHeight = 800
+				}
 			},
 			selectClick(index) {
 				this.selectIndex = index
@@ -268,6 +383,21 @@
 </script>
 
 <style scoped lang="scss">
+	uni-swiper-item{
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
+	.swiper {
+		display:flex;
+		flex: 1 1 auto;
+	}
+	uni-swiper{
+		height: auto;
+	}
+	uni-swiper .uni-swiper-wrapper{
+		overflow-x: hidden;
+		overflow-y: scroll;
+	}
 	.modal_info{
 		padding: 40upx;
 		height: 500upx;
@@ -291,6 +421,21 @@
 			padding-left: 20upx;
 			color: #CCCCCC;
 		}
+		.blockHeight{
+			height: 350upx;
+			display: block;
+		}
+		.title2{
+			font-size: 28upx;
+			font-weight: bold;
+		}
+		.title{
+			font-size: 36rpx;
+			padding-left: 10rpx;
+			font-weight: bold;
+			margin: 40upx 0upx 40upx 20upx;
+			display: block;
+		}
 		.line{
 			margin: 25upx 0px;
 			height: 1px;
@@ -308,6 +453,27 @@
 				align-self: center;
 			}
 		}
+		.item-list2{
+			border-radius: 10rpx;
+			display: block;
+			height: 100px;
+			box-shadow:0upx 12upx 40upx rgba(100, 100, 100, 0.4);
+			margin-left: 40upx;
+			margin-right: 20upx;
+			display: flex;
+		}
+		.item-list3{
+			border-radius: 10rpx;
+			height: 80px;
+			box-shadow:0upx 12upx 40upx rgba(100, 100, 100, 0.4);
+			margin-left: 40upx;
+			margin-right: 40upx;
+		}
+		.number-item{
+			text-align: center;
+			flex:1;
+			align-self: center;
+		}
 		.days{
 			font-size: 30upx;
 			margin: 30upx 20upx;
@@ -318,17 +484,10 @@
 				margin-left: 12upx;
 			}
 		}
-		uni-swiper {
-			height: 100%;
-			display: flex;
-			flex-direction: column;
-		}
-
 		.charts {
 			width: 750upx;
 			height: 500upx;
 		}
-
 		.tabsSwtich {
 			width: 70%;
 			margin-left: 15%;
