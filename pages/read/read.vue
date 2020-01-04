@@ -15,7 +15,7 @@
 			</view>
 	   </view>
 	   <h4 class="lastnew">往期</h4>
-		<you-scroll ref="scroll" @onPullDown="onPullDown" @="" @onLoadMore="onLoadMore">
+		<you-scroll ref="scroll" @onPullDown="onPullDown" @onLoadMore="onLoadMore">
             <view class="cu-timeline"  v-for="(swiper,index) in list" :key="index">
 				<view class="cu-item" @click="goToDetail">
 					<view class="list-content">
@@ -104,6 +104,9 @@
 				uni.navigateTo({
 				    url: '/pages/readDetail/readDetail',
 				});
+			},
+			onPullDown(){
+				
 			},
             onLoadMore(e) {
                 setTimeout(() => {
