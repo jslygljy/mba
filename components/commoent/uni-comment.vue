@@ -4,22 +4,22 @@
             <view class="uni-comment">
                 <view class="uni-comment-list" v-for="(item,index) in list" :key="index">
                     <view class="uni-comment-face">
-                        <image :src="item.headImg" mode="widthFix"></image>
+                        <image :src="item.headImg || '/static/logo.png'" mode="widthFix"></image>
                     </view>
                     <view class="uni-comment-body">
                         <view class="uni-comment-top">
-                            <text>{{item.nickName}}</text>
+                            <text>{{item.nickName || '考研同学'}}</text>
                         </view>
-                        <view class="uni-comment-content">{{item.info}}</view>
+                        <view class="uni-comment-content">{{item.content}}</view>
 						<view class="uni-comment-reply" v-if="item.reply">
 							<text class="text-blue">教学助教回复</text>:
 							<text class="reply-content">{{item.reply}}</text>
 						</view>
                         <view class="uni-comment-date">
-                            <text>{{item.time}}</text>
+                            <text>{{item.createdtime}}</text>
 							<view class="uni-comment-replay-btn">
-								<text class="margin-right-xs">{{item.likeNum}}</text>
-								<text v-if="item.isLike" class="cuIcon-appreciatefill text-blue"></text>
+								<text class="margin-right-xs">{{item.praise_count}}</text>
+								<text v-if="item.is_parise" class="cuIcon-appreciatefill text-blue"></text>
 								<text v-else class="cuIcon-appreciatefill text-grey" @click="onClick(item,index)"></text>
 							</view>
                         </view>
@@ -55,7 +55,10 @@
 					this.$emit('thumbsGoodUp',index)
 				}else{
 					console.log(this.list)
-					this.$emit('thumbsListUp',index)
+					this.$emit('thumbsListUp',{
+						index,
+						item
+					})
 				}
 			  
 			}
@@ -82,6 +85,7 @@
         padding: 20rpx 0 20rpx;
         width: 100%;
         display: flex;
+		flex:1;
 		border-bottom: 1rpx #ddd solid;
     }
 
