@@ -334,7 +334,7 @@
 					},
 					success: (res) => {
 						if (res.data.errcode == 0) {
-							this.newlist[data.index]['isLike'] = true;
+							this.newlist[data.index]['is_praise'] = true;
 							this.newlist[data.index]['praise_count'] = ++this.newlist[data.index]['praise_count'];
 							uni.showToast({
 								title: '点赞成功'
@@ -426,9 +426,8 @@
 
 <style scoped lang="scss">
 	.curlum-detail {
-		background-color: #fff;
 		width: 100%;
-
+		background-color: #fff;
 		video {
 			width: 100%
 		}
@@ -487,8 +486,9 @@
 		}
 		.comment {
 			display: inline-block;
-			padding-bottom: 110rpx;
+			padding-bottom: 50rpx;
 			width: 100%;
+			background-color: #fff;
 			.title {
 				font-size: 32rpx;
 				margin: 16rpx 0px 10rpx 26rpx;

@@ -19,7 +19,7 @@
                             <text>{{item.createdtime}}</text>
 							<view class="uni-comment-replay-btn">
 								<text class="margin-right-xs">{{item.praise_count}}</text>
-								<text v-if="item.is_parise" class="cuIcon-appreciatefill text-blue"></text>
+								<text v-if="item.is_praise" class="cuIcon-appreciatefill text-blue"></text>
 								<text v-else class="cuIcon-appreciatefill text-grey" @click="onClick(item,index)"></text>
 							</view>
                         </view>
@@ -70,7 +70,6 @@
     /* comment */
     .uni-padding-wrap {
         padding:0rpx 30upx;
-		
     }
     .uni-comment {
         padding: 5rpx 0;
