@@ -22,7 +22,8 @@
 					<view class="content">
 						<view>
 							<text>({{item.type==1? '单选题':'多选题'}})</text>
-							<u-parse :content="item.title"/>
+							<!-- <u-parse :content=""/> -->
+							 <view v-html="item.title"></view>
 						</view>
 					</view>
 					<view class="ans-list">
@@ -32,7 +33,8 @@
 								<view :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view>
 							</view>
 							<view class="item-right">
-								<u-parse :content="subitem.content"/>
+								<!-- <u-parse :content="subitem.content"/> -->
+								<view v-html="subitem.content"></view>
 							</view>
 						</view>
 					</view>
@@ -77,7 +79,7 @@
 	import uniCountdown from "@/components/uni-countdown/uni-countdown.vue"
 	import config from '../../config.js';
 	import neilModal from '@/components/neil-modal/neil-modal.vue';
-	import uParse from '@/components/gaoyia-parse/parse.vue'
+	import uParse from '@/components/feng-parse/parse.vue'
 	export default {
 		components: {
 			uniCountdown,
@@ -248,7 +250,7 @@
 	uni-swiper {
 		height: auto;
 	}
-
+	
 	uni-swiper .uni-swiper-wrapper {
 		overflow-x: hidden;
 		overflow-y: scroll;

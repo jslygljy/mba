@@ -102,4 +102,7 @@
 	button.primary {
 		background-color: #0faeff;
 	}
+	.wxParse uni-view{
+		display: inline;
+	}
 </style>
