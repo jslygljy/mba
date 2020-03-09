@@ -26,7 +26,7 @@
 	</view>
     <view
       :class="{ 'uni-collapse-cell--animation': showAnimation === true }"
-      :style="{ height: isOpen ? height : '0px' }"
+      :style="{ height: isOpen ? 'auto' : '0px' }"
       class="uni-collapse-cell__content">
       <view :id="elId">
         <slot />
@@ -101,7 +101,7 @@ export default {
   watch: {
     open (val) {
       this.isOpen = val
-    }
+    },
   },
   inject: ['collapse'],
   created () {

@@ -169,7 +169,7 @@ $list-item-pd: $uni-spacing-col-lg $uni-spacing-row-lg;
 	}
 
 	.uni-list-item__container {
-		padding: $list-item-pd;
+		margin: $list-item-pd;
 		width: 100%;
 		box-sizing: border-box;
 		flex: 1;

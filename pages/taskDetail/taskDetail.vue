@@ -240,7 +240,6 @@
 		overflow-y: scroll;
 		overflow-x: hidden;
 	}
-
 	.swiper {
 		display: flex;
 		flex: 1 1 auto;
@@ -254,7 +253,6 @@
 		overflow-x: hidden;
 		overflow-y: scroll;
 	}
-
 	.taskDetail {
 		display: flex;
 		flex-direction: column;
@@ -275,6 +273,7 @@
 		.content {
 			font-size: 32rpx;
 			margin-bottom: 60rpx;
+			width: 100%;
 		}
 
 		.ans-item {
@@ -306,6 +305,7 @@
 				flex: 5;
 				line-height: 46rpx;
 				align-self: center;
+				margin-left: 20px;
 			}
 		}
 	}
@@ -336,10 +336,11 @@
 		display: block;
 		margin-top: 20rpx;
 	}
-
+	
 	.info {
 		font-size: 28rpx;
 		padding: 10rpx;
 		display: block;
 	}
+	
 </style>

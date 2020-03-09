@@ -173,8 +173,6 @@
 			this.is_sgin = option.is_sgin;
 		},
 		onUnload: function() {
-			console.log(this.book_id);
-			debugger;
 			if(this.book_id){
 				
 			}

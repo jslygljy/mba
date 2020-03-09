@@ -19,12 +19,15 @@
 			专项练习
 		</text>
 		<view class="collapse-info">
-			<uni-collapse @change="change" v-for="item in list" :key="item.topicid" v-if="list.length!==0">
+			<uni-collapse @change="change" v-for="item in list" :key="item.title" v-if="list.length!==0">
 				<uni-collapse-item :title="item.title" :show-animation="true" :curryNum="item.have_sure" :allNum="item.arate"
 				 :haveSure="item.have_sure">
-					<uni-list class="list-info">
-						<uni-list-item @click="goToDetail(subitem.topicid,item.title,subitem.title)" v-for="(subitem, subindex) in item.item_list"
-						 :key="subindex" :title="subitem.title" :curryNum="subitem.have_sure" :allNum="subitem.arate" :haveSure="subitem.have_sure">
+				 
+					<uni-list class="list-info" :key="subindex" v-for="(subitem, subindex) in item.item_list">						
+						<uni-list-item 
+							:title="subitem.title" :curryNum="subitem.have_sure" :allNum="subitem.arate" :haveSure="subitem.have_sure"
+							@click="goToDetail(subitem,item.title)"
+						>
 						</uni-list-item>
 					</uni-list>
 				</uni-collapse-item>
@@ -108,27 +111,32 @@
 
 			},
 
-			goToDetail(topicid, title, subTitle) {
-				let id = uni.getStorageSync('customer_id');
-				// 获取做题列表
-				uni.request({
-					url: config.url + '/app/qa/list?special_work=' + title + '&epoint=' + subTitle + '&pageindex=0',
-					data: {},
-					success: (res) => {
-						// console.log(res.data.data[0].qtype)
-						if (res.data.data[0].qtype == 4) {
-							uni.navigateTo({
-								url: '../englishDetail/englishDetail?id=' + topicid + '&title=' + title + '&subTitle=' + subTitle +
-									'&pages=0&showdetail=false'
-							});
-						} else {
-							uni.navigateTo({
-								url: '../taskDetail/taskDetail?id=' + topicid + '&title=' + title + '&subTitle=' + subTitle +
-									'&pages=0&showdetail=false'
-							});
-						}
-					}
-				});
+			goToDetail(sub,title) {
+				if(this.curryindex==3){
+					uni.navigateTo({
+						url: '../englishDetail/englishDetail?id=' + sub.topicid + '&title=' + title + '&subTitle=' + sub.title +
+							'&pages=0&showdetail=false'
+					});
+				}else{
+					uni.navigateTo({
+						url: '../taskDetail/taskDetail?id=' + sub.topicid + '&title=' + title + '&subTitle=' + sub.title +
+							'&pages=0&showdetail=false'
+					});
+				}
+				// let id = uni.getStorageSync('customer_id');
+				// // 获取做题列表
+				// uni.request({
+				// 	url: config.url + '/app/qa/list?special_work=' + title + '&epoint=' + subTitle + '&pageindex=0',
+				// 	data: {},
+				// 	success: (res) => {
+				// 		console.log(res)
+				// 		// if (res.data.data[0].qtype == 4) {
+							
+				// 		// } else {
+							
+				// 		// }
+				// 	}
+				// });
 				// if (this.curryindex == 3) {
 				// 	uni.navigateTo({
 				// 		url: '../englishDetail/englishDetail?id=' + topicid + '&title=' + title + '&subTitle=' + subTitle +
@@ -174,14 +182,14 @@
 <style scoped lang="scss">
 	page {
 		height: 100%;
+		overflow-y: scroll;
 	}
 
 	.task-content {
-		height: 100%;
 		min-height: 100vh;
 		width: 100%;
 		background-color: #fff;
-
+		overflow-y: scroll;
 		.list {
 			display: flex;
 			margin-bottom: 20rpx;
@@ -209,7 +217,10 @@
 		}
 
 		.collapse-info {
-			margin-top: 25rpx;
+			margin-top: 40rpx;
+		}
+		.uni-collapse{
+			margin-top: -26rpx;
 		}
 	}
 
