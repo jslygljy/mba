@@ -119,10 +119,6 @@
 					{
 						name: '目录',
 						value: 1
-					},
-					{
-						name: '评论',
-						value: 2
 					}
 				],
 				course_id: '',
@@ -153,10 +149,6 @@
 					{
 						name: '目录',
 						value: 1
-					},
-					{
-						name: '评论',
-						value: 2
 					}
 				]
 			}
@@ -258,6 +250,7 @@
 				uni.request({
 					url: config.url + '/app/comment/list/' + this.course_id + '?pageindex=0',
 					success: (res) => {
+						console.log(res.data)
 						if (res.data.errcode == 0) {
 							this.newlist = res.data.data;
 						} else {
