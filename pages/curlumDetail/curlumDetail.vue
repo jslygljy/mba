@@ -24,7 +24,7 @@
 		<!-- 目录 -->
 		<view class="directory" v-if="index==1">
 			<uni-collapse @change="change" v-for="firitem in parintList" :key="firitem.innerid">
-				<uni-collapse-item :title="firitem.title" :show-animation="true">
+				<uniCollapseItemCurlum :title="firitem.title" :show-animation="true">
 					<view class="item flex" v-for="(item,subindex) in firitem.subList" :key="item.innerid" @click="setPlay(firitem,item,subindex)">
 						<view class="item-left">
 							<text :class="[item.isPlaying?'text-blue':'text-darkGrey','cuIcon-videofill','text-xxxl']"></text>
@@ -37,7 +37,7 @@
 							</view>
 						</view>
 					</view>
-				</uni-collapse-item>
+				</uniCollapseItemCurlum>
 			</uni-collapse>
 		</view>
 		<!-- 评论 -->
@@ -69,7 +69,7 @@
 	import sunTab from '@/components/sun-tab/sun-tab.vue';
 	import comment from '@/components/commoent/uni-comment.vue';
 	import uniCollapse from '@/components/uni-collapse/uni-collapse.vue'
-	import uniCollapseItem from '@/components/uni-collapse-item-curlum/uni-collapse-item-curlum.vue'
+	import uniCollapseItemCurlum from '@/components/uni-collapse-item-curlum/uni-collapse-item-curlum.vue'
 	import config from '../../config.js';
 	import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue";
 	export default {
@@ -77,7 +77,7 @@
 			sunTab,
 			comment,
 			uniCollapse,
-			uniCollapseItem,
+			uniCollapseItemCurlum,
 			MescrollUni
 		},
 		data() {
