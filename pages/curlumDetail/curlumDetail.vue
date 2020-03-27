@@ -50,8 +50,8 @@
 					<comment :list="newlist" @thumbsListUp="thumbsListUp"></comment>
 				</view>
 			</mescroll-uni>
-			<view v-if="newlist.length==0">
-				<text class="text-center">暂无评论</text>
+			<view class="text-center" v-if="newlist.length==0">
+				<text>暂无评论</text>
 			</view>
 
 		</view>
@@ -260,7 +260,16 @@
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.errcode == 0) {
+// 							let data =[{
+// innerid: "8d9bc741-67be-464f-b604-f95ba802df52",
+// headimg: "",
+// nickname: 123,
+// content: "123",
+// praise_count: 1,
+// createdtime: "2020-03-27 18:41:49",
+// is_praise: null}]
 							this.newlist = res.data.data;
+							// this.newlist = data;
 						} else {
 
 						}

@@ -8,7 +8,7 @@
                     </view>
                     <view class="uni-comment-body">
                         <view class="uni-comment-top">
-                            <text>{{item.nickName || '考研同学'}}</text>
+                            <text>{{item.nickname || '考研同学'}}</text>
                         </view>
                         <view class="uni-comment-content">{{item.content}}</view>
 						<view class="uni-comment-reply" v-if="item.reply">

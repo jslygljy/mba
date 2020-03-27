@@ -52,7 +52,7 @@
 			open: {
 				// 是否展开
 				type: [Boolean, String],
-				default: true
+				default: false
 			},
 			thumb: {
 				// 缩略图

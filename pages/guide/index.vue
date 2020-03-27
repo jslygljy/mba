@@ -52,6 +52,9 @@ export default {
         },
         launchApp() {
 			var pages = getCurrentPages();
+			if(pages.length>2){
+				return false
+			}
 			// 判断当前页面是否是引导页面
 			if(pages[0].route == 'pages/guide/index'){
 				let id =uni.getStorageSync('customer_id');
