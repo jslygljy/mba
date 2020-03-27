@@ -119,6 +119,10 @@
 					{
 						name: '目录',
 						value: 1
+					},
+					{
+						name: '评论',
+						value: 2
 					}
 				],
 				course_id: '',
@@ -149,6 +153,10 @@
 					{
 						name: '目录',
 						value: 1
+					},
+					{
+						name: '评论',
+						value: 2
 					}
 				]
 			}
