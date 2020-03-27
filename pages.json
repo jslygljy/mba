@@ -114,7 +114,7 @@
 		},{
 			"path": "pages/curlumDetail/curlumDetail",
 			"style": {
-			    "navigationStyle": "custom"
+			    "navigationBarTitleText": "课程详情"
 			}
 		}
         ,{
