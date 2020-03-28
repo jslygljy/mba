@@ -44,7 +44,8 @@
 		<view class="comment" v-if="index==2">
 			<!-- <text class="title">精彩评论({{goodlist.length}})</text>
 			<comment :list="goodlist" @thumbsGoodUp="thumbsGoodUp"></comment> -->
-			<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upCallback" :fixed="false" bottom="20" @init="mescrollInit">
+			<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upCallback" :fixed="false" bottom="20"
+			 @init="mescrollInit">
 				<view v-if="newlist.length!=0">
 					<text class="title">最新评论({{newlist.length}})</text>
 					<comment :list="newlist" @thumbsListUp="thumbsListUp"></comment>
@@ -53,11 +54,11 @@
 			<view class="text-center" v-if="newlist.length==0">
 				<text>暂无评论</text>
 			</view>
+			<view class="comment-post" v-if="is_sgin==1">
+				<input type="text" v-model="commentInfo" placeholder="请输入你的评论" maxlength="100" />
+				<text class="post-button" @click="postCommit">发布</text>
+			</view>
 
-		</view>
-		<view class="comment-post" v-if="is_sgin==1">
-			<input type="text" v-model="commentInfo" placeholder="请输入你的评论" />
-			<text class="post-button" @click="postCommit">发布</text>
 		</view>
 		<view class="comment-post" v-if="is_sgin==0">
 			<text class="post-button2" @click="reportInfo">立即报名</text>
@@ -133,19 +134,19 @@
 			}
 		},
 		onShow() {
-			if(this.is_sgin==0){
+			if (this.is_sgin == 0) {
 				this.getMathDetail();
-				this.tabObjectList= [ //对象数组赋值
+				this.tabObjectList = [ //对象数组赋值
 					{
 						name: '简介',
 						value: 0
 					}
 				]
-			}else{
+			} else {
 				this.getDetail();
 				this.getMathDetail();
 				this.getCommentList();
-				this.tabObjectList=[ //对象数组赋值
+				this.tabObjectList = [ //对象数组赋值
 					{
 						name: '简介',
 						value: 0
@@ -160,8 +161,8 @@
 					}
 				]
 			}
-			
-			
+
+
 		},
 		onReady: function(res) {
 			// #ifndef MP-ALIPAY
@@ -173,8 +174,8 @@
 			this.is_sgin = option.is_sgin;
 		},
 		onUnload: function() {
-			if(this.book_id){
-				
+			if (this.book_id) {
+
 			}
 			let userid = uni.getStorageSync('customer_id');
 			uni.request({
@@ -186,8 +187,7 @@
 					'book_id': this.book_id,
 					'speed_time': this.currentTime,
 				},
-				success: (res) => {
-				}
+				success: (res) => {}
 			});
 		},
 		methods: {
@@ -210,7 +210,7 @@
 					}
 				}, 300)
 			},
-			downCallback(mescroll){
+			downCallback(mescroll) {
 				mescroll.endSuccess()
 			},
 			mescrollInit(mescroll) {
@@ -256,18 +256,18 @@
 				let userid = uni.getStorageSync('customer_id');
 				// 全部
 				uni.request({
-					url: config.url + '/app/comment/list/' + this.course_id + '?pageindex=0',
+					url: config.url + '/app/comment/list/' + this.course_id + '?pageindex=0&customer_id=' + userid,
 					success: (res) => {
 						console.log(res.data)
 						if (res.data.errcode == 0) {
-// 							let data =[{
-// innerid: "8d9bc741-67be-464f-b604-f95ba802df52",
-// headimg: "",
-// nickname: 123,
-// content: "123",
-// praise_count: 1,
-// createdtime: "2020-03-27 18:41:49",
-// is_praise: null}]
+							// 							let data =[{
+							// innerid: "8d9bc741-67be-464f-b604-f95ba802df52",
+							// headimg: "",
+							// nickname: 123,
+							// content: "123",
+							// praise_count: 1,
+							// createdtime: "2020-03-27 18:41:49",
+							// is_praise: null}]
 							this.newlist = res.data.data;
 							// this.newlist = data;
 						} else {
@@ -320,6 +320,8 @@
 				item.isPlaying = true;
 				if (item.vedio_url == '') {
 					uni.showToast({
+						image: "/static/img/error.png",
+						// icon:"none",
 						title: '暂无视频'
 					});
 
@@ -436,6 +438,7 @@
 	.curlum-detail {
 		width: 100%;
 		background-color: #fff;
+
 		video {
 			width: 100%
 		}
@@ -472,31 +475,38 @@
 				// padding: 40rpx;
 			}
 		}
+
 		.directory {
 			padding-bottom: 100rpx;
+
 			.item {
 				width: 100%;
+
 				.item-left {
 					margin: 34rpx 30rpx 0rpx;
 					width: 56rpx;
 					height: 56rpx;
 					max-width: 56rpx;
 				}
+
 				.item-right {
 					border-bottom: 2rpx #ccc solid;
 					padding-top: 30rpx;
 					padding-bottom: 20rpx;
+
 					.item-time {
 						margin-top: 30rpx;
 					}
 				}
 			}
 		}
+
 		.comment {
 			display: inline-block;
 			padding-bottom: 50rpx;
 			width: 100%;
 			background-color: #fff;
+
 			.title {
 				font-size: 32rpx;
 				margin: 16rpx 0px 10rpx 26rpx;

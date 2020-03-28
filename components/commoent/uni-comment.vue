@@ -16,7 +16,7 @@
 							<text class="reply-content">{{item.reply}}</text>
 						</view>
                         <view class="uni-comment-date">
-                            <text>{{item.createdtime}}</text>
+                            <text style="color: #888;">{{item.createdtime}}</text>
 							<view class="uni-comment-replay-btn">
 								<text class="margin-right-xs">{{item.praise_count}}</text>
 								<text v-if="item.is_praise" class="cuIcon-appreciatefill text-blue"></text>
@@ -115,6 +115,7 @@
 
     .uni-comment-top text {
         font-size: 24upx;
+		color: #3e6d94;
     }
 
     .uni-comment-date {

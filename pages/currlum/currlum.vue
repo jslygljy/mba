@@ -1,12 +1,12 @@
 <template>
-    <view class="currlum-content">
+	<view class="currlum-content">
 		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name" :scroll="true"></sun-tab>
 		<view class="list-item" v-if="list.length>0">
 			<view class="list-item-content" v-for="(item,index) in list" :key="item.innerid" @click="goToDetail(item.innerid,item.is_sgin)">
 				<view class="flex-sub">
-					<image :src="item.speaker_heading" mode=""></image>
+					<image :src="item.speaker_heading  || getrandomimg()" mode=""></image>
 				</view>
-				
+
 				<view class="item-right flex-treble">
 					<view style="flex:4">
 						<text class="h4">{{item.title}}</text>
@@ -25,204 +25,227 @@
 				暂无课程
 			</view>
 		</view>
-    </view>
+	</view>
 </template>
 
 <script>
- 
 	import sunTab from '@/components/sun-tab/sun-tab.vue';
 	import config from '../../config.js';
-    export default {
-		components:{
+	export default {
+		components: {
 			sunTab
 		},
 		data() {
-		    return {
+			return {
 				index: 0,
-				
-				list:[{
-					'title':'真题课程包',
-					'teacher':'123',
-					'status':'30',
-					'id':1,
-					'coverimg':'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
+
+				list: [{
+					'title': '真题课程包',
+					'teacher': '123',
+					'status': '30',
+					'id': 1,
+					'coverimg': 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'
 				}],
-                tabObjectList: [ //对象数组赋值
-                    {
-                        name: '全部',
-                        value: ''
-                    },
-                    {
-                        name: '逻辑',
-                        value: 1
-                    },
-                    {
-                        name: '数学',
-                        value: 2
-                    },
-                    {
-                        name: '英语',
-                        value: 3
-                    },
-                    {
-                        name: '写作',
-                        value: 4
-                    },
-                    {
-                        name: '面试',
-                        value: 5
-                    },
-                    {
-                        name: '助力',
-                        value: 6
-                    }
-                ],
+				tabObjectList: [ //对象数组赋值
+					{
+						name: '全部',
+						value: ''
+					},
+					{
+						name: '逻辑',
+						value: 1
+					},
+					{
+						name: '数学',
+						value: 2
+					},
+					{
+						name: '英语',
+						value: 3
+					},
+					{
+						name: '写作',
+						value: 4
+					},
+					{
+						name: '面试',
+						value: 5
+					},
+					{
+						name: '助力',
+						value: 6
+					}
+				],
 			}
 		},
-		onShow(){
+		onShow() {
 			this.getList('');
 		},
-		methods:{
-            objectChange(e){
-                this.getList(e.tab.value)
-            },
-			goToDetail(id,is_sgin){
+		methods: {
+			objectChange(e) {
+				this.getList(e.tab.value)
+			},
+			goToDetail(id, is_sgin) {
 				uni.navigateTo({
-				    url: '../curlumDetail/curlumDetail?course_id='+id+'&is_sgin='+is_sgin
+					url: '../curlumDetail/curlumDetail?course_id=' + id + '&is_sgin=' + is_sgin
 				});
 			},
-			getList(type){
-				let userid =uni.getStorageSync('customer_id');
+			getrandomimg() {
+				var index = Math.floor(Math.random() * (5 - 1) + 1);
+				return '/static/fm/bg' + index + '.png'
+			},
+			getList(type) {
+				let userid = uni.getStorageSync('customer_id');
 				// 全部
 				uni.request({
 					// url: config.url+'/app/course/list/'+userid,
-					url: config.url+'/app/sgincourse/list/'+userid,
-				    data: {
-				        type: type
-				    },
-				    success: (res) => {
-						if(res.data.errcode==0){
+					url: config.url + '/app/sgincourse/list/' + userid,
+					data: {
+						type: type
+					},
+					success: (res) => {
+						if (res.data.errcode == 0) {
 							this.list = res.data.data
-						}else{
+						} else {
 							uni.showToast({
 								title: res.data.errmsg
 							})
 						}
-				        
-				    }
+
+					}
 				});
 			}
 		}
-		
-    }
+
+	}
 </script>
 
 <style scoped lang="scss">
-	.currlum-content{
+	.currlum-content {
 		background-color: #fff;
-		.list-item{
+
+		.list-item {
 			margin-top: 50rpx;
 			margin-left: 15rpx;
 			font-size: 40rpx;
-			.list-item-content{
+
+			.list-item-content {
 				display: flex;
 				margin-top: 30rpx;
-				image{
+
+				image {
 					width: 200rpx;
 					height: 200rpx;
 					border-radius: 10rpx;
 				}
-				.item-right{
+
+				.item-right {
 					font-size: 24rpx;
 					margin-left: 40rpx;
 					display: flex;
 					flex-direction: column;
 					margin-right: 20rpx;
-					.h4{
+
+					.h4 {
 						font-size: 32rpx;
 						margin-top: 2rpx;
 						display: block;
 						margin-bottom: 10rpx;
 					}
-					.grey{
+
+					.grey {
 						color: #8f8f94
 					}
-					.item-bottom{
-						flex:1
+
+					.item-bottom {
+						flex: 1
 					}
-					.price{
+
+					.price {
 						color: #dc143c;
 						font-size: 30rpx;
 					}
-					.sale{
+
+					.sale {
 						margin-left: 20rpx;
 						color: #8f8f94;
-						text-decoration:line-through;
+						text-decoration: line-through;
 					}
-					.buy{
+
+					.buy {
 						color: #8f8f94;
 						margin-left: 60rpx;
 					}
 				}
 			}
 		}
-		.list{
+
+		.list {
 			display: flex;
 			margin-bottom: 20rpx;
 			margin-top: 20rpx;
-			.item{
-				flex:1;
+
+			.item {
+				flex: 1;
 				text-align: center;
 				font-size: 24rpx;
 			}
-			.i{
+
+			.i {
 				margin-left: 60rpx;
 				margin-top: 20rpx;
 				margin-bottom: 20rpx;
 			}
 		}
-		.ad{
-			
+
+		.ad {
+
 			width: 100%;
 			height: 100rpx;
 			margin-bottom: 20rpx;
-			image{
+
+			image {
 				margin: 0px 0rpx 0px 10rpx;
 				width: 710rpx;
 				height: 100%;
 			}
 		}
+
 		.title {
 			color: #8f8f94;
 			margin-top: 50upx;
 		}
-		.icon1{
+
+		.icon1 {
 			background-image: url('/static/img/bookmark.png');
 			display: block;
 			width: 64upx;
 			height: 64upx;
 			background-size: 100% 100%;
 		}
-		.icon2{
+
+		.icon2 {
 			background-image: url('/static/img/notebook.png');
 			display: block;
 			width: 64upx;
 			height: 64upx;
 			background-size: 100% 100%;
 		}
-		.icon3{
+
+		.icon3 {
 			background-image: url('/static/img/report.png');
 			display: block;
 			width: 64upx;
 			height: 64upx;
 			background-size: 100% 100%;
 		}
-		.icon4{
-		background-image: url('/static/img/monitor.png');
-		display: block;
-		width: 64upx;
-		height: 64upx;
-		background-size: 100% 100%;
-	}
+
+		.icon4 {
+			background-image: url('/static/img/monitor.png');
+			display: block;
+			width: 64upx;
+			height: 64upx;
+			background-size: 100% 100%;
+		}
 	}
 </style>
