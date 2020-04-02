@@ -1,6 +1,5 @@
 <template>
-    <view class="content">
-        
+    <view class="find-content">
 		<view class="list flex">
 			<!-- <view class="bg-gradual-purple padding radius text-center shadow-blur flex-sub margin-lr" style="height: 150rpx;">
 				<view class="text-lg" style="line-height: 3;">书城</view>
@@ -10,20 +9,20 @@
 			</view>
 		</view>
 		
-		<sun-tab :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name" :scroll="true" style="margin-top: 40upx;"></sun-tab>
-		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upCallback" :fixed="false" bottom="20" @init="mescrollInit" v-if="index == itemindex" v-for="(data,itemindex) in tabObjectList" :key="itemindex">
-			<view class="list-item">
+		<sun-tab class="tabs" :value.sync="index" @change="objectChange" :tabList="tabObjectList" rangeKey="name" :scroll="true" style="margin-top: 40upx;"></sun-tab>
+		<mescroll-uni :down="downOption" @down="downCallback" :up="upOption" @up="upCallback" :fixed="false" bottom="20" @init="mescrollInit">
+			<view class="list-item" v-for="(data,itemindex) in list" :key="itemindex" @click="goToDetail(data)">
 				<view class="list-item-content">
 					<view class="item-right">
 						<view style="flex:4">
-							<h4 class="h4">真题课程包防腐剂的萨克垃圾分类受打击了飞洒</h4>
+							<h4 class="h4">{{data.title}}</h4>
 						</view>
 						<view class="item-bottom">
 							<text class="price">{{data.name}}</text>
-							<text class="sale">昨天</text>
+							<text class="sale"></text>
 						</view>
 					</view>
-					<image src="https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg" mode=""></image>
+					<image :src="data.cover" mode=""></image>
 				</view>
 			</view>
 		</mescroll-uni>
@@ -37,6 +36,7 @@
 	import bwSwiper from '@/wxcomponents/bw-swiper/bw-swiper.vue'
 	import sunTab from '@/components/sun-tab/sun-tab.vue';
 	import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue";
+	import config from '../../config.js';
     export default {
         computed: mapState(['forcedLogin', 'hasLogin', 'userName']),
 		components:{
@@ -48,6 +48,7 @@
 		    return {
 				swiperList:[{img: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'},{img: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'},{img: 'https://ossweb-img.qq.com/images/lol/web201310/skin/big25011.jpg'}],
 				index: 0,
+				mescroll: null,
 				downOption: {
 					use: false,
 					auto: false
@@ -63,35 +64,33 @@
 					noMoreSize: 1,
 					offset: 80
 				},
-                tabObjectList: [ //对象数组赋值
-                    {
-                        name: '活动',
-                        value: 0
-                    },
-                    {
-                        name: '备考指南',
-                        value: 1
-                    },
-                    {
-                        name: '院校咨询',
-                        value: 2
-                    },
-                    {
-                        name: '干货',
-                        value: 3
-                    },
-                    {
-                        name: '面试',
-                        value: 4
-                    },
-                    {
-                        name: '经验',
-                        value: 5
-                    }
-                ],
+				list:[],
+				pageindex:0,
+                tabObjectList: [],
 			}
 		},
+		onShow() {
+			this.getType();
+		},
 		methods:{
+			getType(){
+				let id = uni.getStorageSync('customer_id');
+				uni.request({
+					url: config.url + '/app/read/type',
+					method:"GET",
+					data: {
+					},
+					success: (res) => {
+						res.data.data.map((date,index)=>{
+							this.tabObjectList.push({
+							    name: date,
+							    value: index
+							})
+						})
+					}
+				});
+					
+			},
 			mescrollInit(mescroll) {
 				this.mescroll = mescroll;
 			},
@@ -102,7 +101,7 @@
 				let id = uni.getStorageSync('customer_id');
 				// 推荐课程
 				uni.request({
-					url: config.url + '/app/qa/error/list/'+id+'?pageindex='+pageindex,
+					url: config.url + '/app/read/list/'+(this.index+1)+'?pageindex='+pageindex,
 					method:"GET",
 					data: {
 					},
@@ -135,8 +134,8 @@
                 console.log(e);
             },
             objectChange(e){
-                console.log('对象数据返回格式');
-                console.log(e);
+				this.index = e.tab.value;
+				this.upCallback(this.mescroll);
             },
 			onScroll(e) {
 			    console.log(e.$el.scrollTop)
@@ -160,15 +159,28 @@
 			},
 			onPullDown(e){
 				console.log(3);
-			}
+			},
+			goToDetail(item){
+				uni.navigateTo({
+				    url: '/pages/readDetail/readDetail?id='+item.innerid,
+				});
+			},
 		}
 		
     }
 </script>
 
 <style scoped lang="scss">
-	.content{
-		padding: 10upx;
+	.find-content{
+		width: 100%;
+		flex: 1;
+		background-color: #fff;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		.uni-tab{
+			line-height: 26px;
+		}
 	}
 	.loadingText {
 	    line-height: 30px;
@@ -280,4 +292,5 @@
 		height: 64upx;
 		background-size: 100% 100%;
 	}
+
 </style>
