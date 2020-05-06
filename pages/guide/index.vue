@@ -3,7 +3,7 @@
         <swiper class="flex1" interval="3000" :show-indicators="false" :auto-play="autoPlay" @change="sliderChange" :infinite="false" :forbid-slide-animation="false">
             <swiper-item class="flex1" v-for="(img, index) in imageList" :key="index">
                 <view class="flex1">
-					<image class="flex1" mode="widthFix" style="width: 100vw; height: 100vh;" :src="img.src" />
+					<image class="flex1" style="width: 100vw; height: 100vh;" :src="img.src" />
                 </view>
             </swiper-item>
         </swiper>
