@@ -85,6 +85,13 @@
 					{
 						name: '助力',
 						value: 6
+					},{
+						name: '真题',
+						value: 7
+					},
+					{
+						name: '联考',
+						value: 8
 					}
 				],
 			}
@@ -162,7 +169,7 @@
 			},
 			goToRead() {
 				uni.navigateTo({
-					url: '../topic/topic'
+					url: '../topic/topic?source='+this.curryindex
 				});
 			},
 			goToHistory() {

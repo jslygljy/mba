@@ -1,9 +1,9 @@
 {
-    "name" : "app.mba.yanyi",
+    "name" : "研毅教育",
     "appid" : "__UNI__4EBD7CA",
     "description" : "研毅教育",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
+    "versionName" : "1.0.9",
+    "versionCode" : 109,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -48,12 +48,36 @@
             "ios" : {},
             /* SDK配置 */
             "sdkConfigs" : {
-                "payment" : {},
+                "payment" : {
+                    "weixin" : {
+                        "appid" : "wx8f1cbb0c01446210",
+                        "UniversalLinks" : "https://www.yanyisz.com/"
+                    }
+                },
                 "share" : {
                     "weixin" : {
                         "appid" : "wx8f1cbb0c01446210",
-                        "UniversalLinks" : ""
+                        "UniversalLinks" : "https://yanyisz.icoc.me"
                     }
+                },
+                "ad" : {},
+                "oauth" : {}
+            },
+            "icons" : {
+                "android" : {
+                    "hdpi" : "E:/Smartac/三方项目/MBA翟/logo/logo72x72.png",
+                    "xhdpi" : "E:/Smartac/三方项目/MBA翟/logo/logo96x96.png",
+                    "xxhdpi" : "E:/Smartac/三方项目/MBA翟/logo/logo144x144.png",
+                    "xxxhdpi" : "E:/Smartac/三方项目/MBA翟/logo/logo192x192.png"
+                },
+                "ios" : {
+                    "iphone" : {
+                        "app@2x" : "E:/Smartac/三方项目/MBA翟/logo/iphone/120.png",
+                        "app@3x" : "E:/Smartac/三方项目/MBA翟/logo/iphone/180.png",
+                        "spotlight@2x" : "E:/Smartac/三方项目/MBA翟/logo/iphone/80.png",
+                        "spotlight@3x" : "E:/Smartac/三方项目/MBA翟/logo/iphone/120.png"
+                    },
+                    "appstore" : "E:/Smartac/三方项目/MBA翟/logo/iphone/1024.png"
                 }
             }
         }

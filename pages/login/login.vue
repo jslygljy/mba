@@ -10,7 +10,8 @@
             <button type="primary" :class="account.length!==11? 'grey':'primary'" @click="bindLogin">获取验证码</button>
         </view>
         <view class="action-row">
-            <navigator url="../main/main" open-type="switchTab" >试用一下</navigator>
+			<text @click="trylogin">试用一下</text>
+           <!-- <navigator url="../main/main" open-type="switchTab" >试用一下</navigator> -->
         </view>
         <!-- <view class="oauth-row" v-if="hasProvider" v-bind:style="{top: positionTop + 'px'}">
             <view class="oauth-image" v-for="provider in providerList" :key="provider.value">
@@ -48,7 +49,13 @@
         computed: mapState(['forcedLogin']),
         methods: {
             ...mapMutations(['login']),
-            
+			
+            trylogin(){
+				uni.setStorageSync('customer_id', "7257ebc4-9bee-11ea-b58d-00163e041ec0");
+				uni.switchTab({
+				    url: '../main/main',
+				});
+			},
             bindLogin() {
                 if (this.account.length !== 11) {
                     uni.showToast({

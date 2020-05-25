@@ -1,6 +1,7 @@
 <template>
-    <view class="errDetail">
-		<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="false" :interval="2000" :duration="500" current="curryIndex" @change="change">
+	<view class="errDetail">
+		<swiper class="swiper" :indicator-dots="indicatorDots" :autoplay="false" :interval="2000" :duration="500" current="curryIndex"
+		 @change="change">
 			<swiper-item v-for="(item, index) in list" :key="index">
 				<view class="header">
 					<text>{{item.ttitle}}</text>
@@ -48,86 +49,87 @@
 
 <script>
 	import config from '../../config.js';
-    export default {
-		 components: {},
-        data() {
+	export default {
+		components: {},
+		data() {
 			return {
-				indicatorDots:false,
-				curryIndex:0,
-				list:[],
-				qa_id:[]
-			}   
-         },
-		 onShow(){
-		 	
-		 },
-		 onLoad: function (option) { //option为object类型，会序列化上个页面传递的参数
-		    this.qa_id = JSON.parse(option.qa_id);
-			this.qa_id.forEach(data=>{
+				indicatorDots: false,
+				curryIndex: 0,
+				list: [],
+				qa_id: []
+			}
+		},
+		onShow() {
+
+		},
+		onLoad: function(option) {
+			this.qa_id = uni.getStorageSync("report_alldetail");
+			this.qa_id.forEach(data => {
 				this.list.push({});
 			});
 			this.getErrDetail(0);
-		 },
-        methods: {
-			getErrDetail(number){
-				console.log(number);
-				let id =uni.getStorageSync('customer_id');
+		},
+		methods: {
+			getErrDetail(number) {
+				var that = this;
+				// let id = uni.getStorageSync('customer_id');
 				// 获取做题列表
 				uni.request({
-					url: config.url+'/app/qa/error/detail/'+this.qa_id[number].qa_id ,
-				    data: {
-				    },
-				    success: (res) => {
-						if(number==0){
+					url: config.url + '/app/qa/error/detail/' + this.qa_id[number].qa_id,
+					data: {},
+					success: (res) => {
+						if (number == 0) {
 							let c = [];
 							c[0] = res.data.data;
-							for(var i = 0;i <(this.qa_id.length -1); i++){
+							for (var i = 0; i < (that.qa_id.length - 1); i++) {
 								c.push({});
 							};
-							this.list = c;
-							console.log(this.list);
-						}else{
-							let c = JSON.parse(JSON.stringify(this.list));
+							that.list = c;
+						} else {
+							let c = JSON.parse(JSON.stringify(that.list));
 							c[number] = res.data.data;
-							this.list = c;
+							that.list = c;
 						}
-				    }
+					}
 				});
 			},
-			change(e){
+			change(e) {
 				this.curryIndex = e.detail.current;
 				this.getErrDetail(this.curryIndex);
-				
+
 			}
-        }
-    }
+		}
+	}
 </script>
 
 <style scoped lang="scss">
-	
-	uni-swiper-item{
+	uni-swiper-item {
 		overflow-y: scroll;
 		overflow-x: hidden;
 	}
+
 	.swiper {
-		display:flex;
+		display: flex;
 		flex: 1 1 auto;
 	}
-	uni-swiper{
+
+	uni-swiper {
 		height: auto;
 	}
-	uni-swiper .uni-swiper-wrapper{
+
+	uni-swiper .uni-swiper-wrapper {
 		overflow-x: hidden;
 		overflow-y: scroll;
 	}
-	
-	.errDetail{
+
+	.errDetail {
 		display: flex;
 		flex-direction: column;
 		width: 100%;
 		padding: 0rpx 20rpx;
 		background-color: #fff;
-		.header{
+
+		.header {
 			display: flex;
 			justify-content: space-between;
 			font-size: 26rpx;
@@ -136,15 +138,18 @@
 			border-bottom: 2rpx #ddd solid;
 			margin-bottom: 40rpx;
 		}
-		.content{
+
+		.content {
 			font-size: 32rpx;
 			margin-bottom: 60rpx;
 		}
-		.ans-item{
+
+		.ans-item {
 			display: flex;
 			margin-bottom: 80rpx;
-			.item-left{
-				.border-info{
+
+			.item-left {
+				.border-info {
 					width: 80rpx;
 					height: 80rpx;
 					border: 2rpx #0081ff solid;
@@ -156,23 +161,27 @@
 					color: #0081ff;
 					background-color: #fff;
 				}
-				.border-info2{
+
+				.border-info2 {
 					color: #fff;
 					background-color: #0081ff;
-					border:2rpx #0081ff solid;
+					border: 2rpx #0081ff solid;
 				}
-				.border-green{
+
+				.border-green {
 					color: #fff;
 					background-color: #00C777;
-					border:2rpx #00C777 solid;
+					border: 2rpx #00C777 solid;
 				}
-				.border-red{
+
+				.border-red {
 					color: #fff;
 					background-color: #DD514C;
-					border:2rpx #DD514C solid;
+					border: 2rpx #DD514C solid;
 				}
 			}
-			.item-right{
+
+			.item-right {
 				font-size: 30rpx;
 				flex: 5;
 				line-height: 46rpx;
@@ -180,7 +189,8 @@
 			}
 		}
 	}
-	.border-info3{
+
+	.border-info3 {
 		max-width: 80rpx;
 		height: 80rpx;
 		border: 2rpx #0081ff solid;
@@ -193,18 +203,21 @@
 		background-color: #0081ff;
 		margin: 40rpx 10rpx 50rpx 20rpx;
 	}
-	.modal_info{
+
+	.modal_info {
 		margin: 10rpx 10rpx 20rpx 20rpx;
 		display: inline-block;
 	}
-	.title{
+
+	.title {
 		font-weight: bold;
 		font-size: 34rpx;
 		padding: 10rpx;
 		display: block;
 		margin-top: 20rpx;
 	}
-	.info{
+
+	.info {
 		font-size: 28rpx;
 		padding: 10rpx;
 		display: block;

@@ -56,6 +56,7 @@
 					},
 					success: (res) => {
 						let orderInfo = JSON.stringify(res.data.data);
+						console.log(orderInfo)
 						// 第一种写法，传对象
 						uni.requestPayment({
 						    provider: 'wxpay',
@@ -64,7 +65,7 @@
 						        console.log('success:' + JSON.stringify(res2));
 						    },
 						    fail: function (err) {
-								console.log(err.errMsg);
+								console.log(err);
 								uni.showToast({
 									title: err.errMsg
 								});

@@ -23,7 +23,7 @@
 						<view>
 							<text>({{item.type==1? '单选题':'多选题'}})</text>
 							<!-- <u-parse :content=""/> -->
-							 <view v-html="item.title"></view>
+							<view v-html="item.title"></view>
 						</view>
 					</view>
 					<view class="ans-list">
@@ -93,14 +93,14 @@
 				curryIndex: 0,
 				type: '',
 				list: [],
-				haslike:false,
+				haslike: false,
 				item_list: [],
 				ansList: [],
 				isShow: false,
 				showdetail: false,
 				isTopic: false,
 				clientHeight: 0,
-				innerid:'',
+				innerid: '',
 				article: '<p>html代码，具体参见https://github.com/gaoyia/parse/tree/1.0.7/parse-demo中的demo</p>'
 			}
 		},
@@ -108,8 +108,8 @@
 			this.getDetail();
 			var that = this
 			wx.getSystemInfo({
-				success: (res)=>{
-					this.clientHeight=res.windowHeight
+				success: (res) => {
+					this.clientHeight = res.windowHeight
 				}
 			});
 		},
@@ -129,9 +129,10 @@
 				let id = uni.getStorageSync('customer_id');
 				let url = ''
 				if (this.isTopic) {
-					url = config.url + '/app/qa/list?topicid=' + this.topicid + '&pageindex=' + this.pages + '&customer_id='+id;
+					url = config.url + '/app/qa/list?topicid=' + this.topicid + '&pageindex=' + this.pages + '&customer_id=' + id;
 				} else {
-					url = config.url + '/app/qa/list?special_work=' + this.title + '&epoint=' + this.subTitle + '&pageindex=' + this.pages+ '&customer_id='+id;
+					url = config.url + '/app/qa/list?special_work=' + this.title + '&epoint=' + this.subTitle + '&pageindex=' + this.pages +
+						'&customer_id=' + id;
 				}
 				// 获取做题列表
 				uni.request({
@@ -163,38 +164,38 @@
 					}
 				});
 			},
-			likeClick(){
+			likeClick() {
 				let id = uni.getStorageSync('customer_id');
-				if(!this.haslike){
+				if (!this.haslike) {
 					uni.request({
-						url:config.url + '/app/collect/add',
-						method:"POST",
+						url: config.url + '/app/collect/add',
+						method: "POST",
 						data: {
-							customer_id:id,
-							qa_innerid:this.innerid
+							customer_id: id,
+							qa_innerid: this.innerid
 						},
 						success: (res) => {
-							if(res.data.errcode==0){
+							if (res.data.errcode == 0) {
 								this.haslike = 1;
 							}
 						}
 					});
-				}else{
+				} else {
 					uni.request({
-						url:config.url + '/app/collect/del',
-						method:"POST",
+						url: config.url + '/app/collect/del',
+						method: "POST",
 						data: {
-							customer_id:id,
-							qa_innerid:this.innerid
+							customer_id: id,
+							qa_innerid: this.innerid
 						},
 						success: (res) => {
-							if(res.data.errcode==0){
+							if (res.data.errcode == 0) {
 								this.haslike = 0;
 							}
 						}
 					});
 				}
-				
+
 			},
 			setChoose(index, subindex, subitem, type) {
 				if (this.showdetail) return false;
@@ -224,9 +225,10 @@
 
 			},
 			bindBtn(type) {
+				uni.setStorageSync("taskdetail_report", this.ansList)
 				uni.navigateTo({
-					url: '../report/report?id=' + this.topicid + '&title=' + this.title + '&subTitle=' + this.subTitle + '&pages=' +
-						this.pages + '&showdetail=false' + '&list=' + JSON.stringify(this.ansList)
+					url: '/pages/report/report?id=' + this.topicid + '&title=' + this.title + '&subTitle=' + this.subTitle +
+						'&pages=' + this.pages + '&showdetail=false'
 				});
 			},
 			closeModal() {
@@ -238,10 +240,12 @@
 
 <style scoped lang="scss">
 	@import url("../../components/gaoyia-parse/parse.css");
+
 	uni-swiper-item {
 		overflow-y: scroll;
 		overflow-x: hidden;
 	}
+
 	.swiper {
 		display: flex;
 		flex: 1 1 auto;
@@ -250,11 +254,12 @@
 	uni-swiper {
 		height: auto;
 	}
-	
+
 	uni-swiper .uni-swiper-wrapper {
 		overflow-x: hidden;
 		overflow-y: scroll;
 	}
+
 	.taskDetail {
 		display: flex;
 		flex-direction: column;
@@ -338,11 +343,10 @@
 		display: block;
 		margin-top: 20rpx;
 	}
-	
+
 	.info {
 		font-size: 28rpx;
 		padding: 10rpx;
 		display: block;
 	}
-	
 </style>

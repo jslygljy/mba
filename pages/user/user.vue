@@ -1,12 +1,12 @@
 <template>
-    <view class="my-content">
+	<view class="my-content">
 		<view class="a-swiper-dot">
 			<view class="cu-list menu-avatar">
 				<view class="cu-item">
 					<view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg);"></view>
 					<view class="content flex-sub">
 						<view class="text-grey">
-							U52832832 
+							U52832832
 							<text class="cuIcon-crownfill margin-left-sm"></text>
 						</view>
 						<view class="text-gray text-sm flex cu-capsule">
@@ -32,14 +32,14 @@
 				</view>
 			</view>
 		</view>
-        <view class="card-menu margin-top cu-list menu">
+		<view class="card-menu margin-top cu-list menu">
 			<!-- <view class="cu-item arrow">
 				<view class="content">
 					<text class="cuIcon-down text-blue"></text>
 					<text class="text-grey">下载管理</text>
 				</view>
 			</view> -->
-			
+
 			<view class="cu-item arrow" @click="goToError">
 				<view class="content">
 					<text class="cuIcon-writefill text-blue"></text>
@@ -60,7 +60,7 @@
 			</view>
 		</view>
 		<!-- <view class="borderInfo"></view> -->
-		<view class="card-menu margin-top cu-list menu">
+		<!-- <view class="card-menu margin-top cu-list menu">
 			<view class="cu-item arrow" @click="toFriend">
 				<view class="content">
 					<text class="cuIcon-profile text-yellow"></text>
@@ -69,20 +69,20 @@
 				<view class="action" style="margin-top: -10rpx;">
 					<text class="text-yellow text-sm">邀请可得40元学习大礼包</text>
 				</view>
-			</view>
-			<!-- <view class="cu-item arrow">
+			</view> -->
+		<!-- <view class="cu-item arrow">
 				<view class="content">
 					<text class="cuIcon-present text-yellow"></text>
 					<text class="text-grey">我的优惠券</text>
 				</view>
 			</view> -->
-			<!-- <view class="cu-item arrow">
+		<!-- <view class="cu-item arrow">
 				<view class="content">
 					<text class="cuIcon-form text-yellow"></text>
 					<text class="text-grey">订单记录</text>
 				</view>
 			</view> -->
-		</view>
+		<!-- </view> -->
 		<!-- <view class="borderInfo"></view> -->
 		<view class="card-menu margin-top cu-list menu">
 			<!-- <view class="cu-item arrow">
@@ -98,58 +98,59 @@
 				</view>
 			</view> -->
 		</view>
-    </view>
+	</view>
 </template>
 
 <script>
-	
-    export default {
-		components:{
-		},
-        
-        methods: {
-            toFriend(){
+	export default {
+		components: {},
+
+		methods: {
+			toFriend() {
 				uni.navigateTo({
-				    url: '../inviteFriend/inviteFriend',
+					url: '../inviteFriend/inviteFriend',
 				});
 			},
-			goToError(){
+			goToError() {
 				uni.navigateTo({
-				    url: '../myError/myError',
+					url: '../myError/myError',
 				});
 			},
-			goToLike(){
+			goToLike() {
 				uni.navigateTo({
-				    url: '../myLike/myLike',
+					url: '../myLike/myLike',
 				});
 			},
-			goToOrder(){
+			goToOrder() {
 				uni.navigateTo({
-				    url: '../order/order',
+					url: '../order/order',
 				});
 			}
-        }
-    }
+		}
+	}
 </script>
 
 <style scoped lang="scss">
-	.my-content{
+	.my-content {
 		width: 100%;
 		background-color: #fff;
 	}
-	.borderInfo{
-		border-top:1rpx #ccc solid;
+
+	.borderInfo {
+		border-top: 1rpx #ccc solid;
 		margin-right: 40upx;
 		margin-left: 20upx;
 		margin-top: 20px;
 		margin-bottom: 20px;
 		height: 2upx;
 	}
-	.cu-btn{
-		padding:0px 15upx;
+
+	.cu-btn {
+		padding: 0px 15upx;
 		height: 52rpx;
 	}
-	.cu-btn[class*="line"]::after{
+
+	.cu-btn[class*="line"]::after {
 		border-radius: 200upx;
 	}
 </style>

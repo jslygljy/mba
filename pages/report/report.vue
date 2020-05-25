@@ -72,7 +72,8 @@
 			}
 		},
 		onLoad: function (option) { 
-		   this.list = JSON.parse(option.list);
+		   this.list = uni.getStorageSync("taskdetail_report");
+		   
 		   this.title = option.title;
 		   this.subTitle = option.subTitle;
 		   this.pages =option.pages;
@@ -105,7 +106,6 @@
 						qa_list:this.list
 				    },
 				    success: (res) => {
-						console.log(res.data.data)
 						this.itemList = res.data.data.item_list;
 						this.success_rate = res.data.data.success_rate;
 						this.success_scode = res.data.data.success_scode;
@@ -114,8 +114,9 @@
 				});	
 			},
 			goToDetail(){
+				uni.setStorageSync("report_alldetail", this.itemList)
 				uni.navigateTo({
-				    url: '../allDetail/allDetail?qa_id='+ JSON.stringify(this.itemList),
+				    url: '/pages/allDetail/allDetail',
 				});
 			},
 			goToErrDetail(qa_id){

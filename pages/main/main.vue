@@ -156,7 +156,54 @@
 			}
 		},
 		onLoad() {
+			var _self = this;
 
+			uni.request({
+				url: config.url + '/app/update',
+				method: 'POST',
+				data: {
+					version: config.version,
+				},
+				success: (res) => {
+					if (res.data.data.result.update) {
+						let wgtUrl = res.data.data.result.wgtUrl;
+						uni.showModal({
+							title: '新版本更新提示',
+							content: '检测到有新版本,是否更新?',
+							cancelText: '取消',
+							confirmText: '确定',
+							success: function(res) {
+								if (res.confirm) {
+									uni.showLoading({
+										title: "更新中。。。",
+										mask: true
+									})
+									uni.downloadFile({
+										url: wgtUrl,
+										success: (downloadResult) => {
+											if (downloadResult.statusCode === 200) {
+												uni.hideLoading();
+												plus.runtime.install(downloadResult.tempFilePath, {
+													force: false
+												}, function() {
+													plus.runtime.restart();
+												}, function(e) {
+													uni.showToast({
+														icon: "none",
+														title: 'App更新失败',
+														duration: 1500,
+														mask: true
+													});
+												});
+											}
+										}
+									})
+								}
+							}
+						})
+					}
+				}
+			});
 		},
 		onShow() {
 			if (this.index == 0) {
