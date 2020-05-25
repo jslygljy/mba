@@ -71,7 +71,6 @@
 		},
 		methods: {
 			getErrDetail(number) {
-				var that = this;
 				// let id = uni.getStorageSync('customer_id');
 				// 获取做题列表
 				uni.request({
@@ -81,14 +80,14 @@
 						if (number == 0) {
 							let c = [];
 							c[0] = res.data.data;
-							for (var i = 0; i < (that.qa_id.length - 1); i++) {
+							for (var i = 0; i < (this.qa_id.length - 1); i++) {
 								c.push({});
 							};
-							that.list = c;
+							this.list = c;
 						} else {
-							let c = JSON.parse(JSON.stringify(that.list));
+							let c = JSON.parse(JSON.stringify(this.list));
 							c[number] = res.data.data;
-							that.list = c;
+							this.list = c;
 						}
 					}
 				});
@@ -96,7 +95,6 @@
 			change(e) {
 				this.curryIndex = e.detail.current;
 				this.getErrDetail(this.curryIndex);
-
 			}
 		}
 	}
@@ -111,6 +109,7 @@
 	.swiper {
 		display: flex;
 		flex: 1 1 auto;
+		height: 100vh;
 	}
 
 	uni-swiper {
@@ -126,6 +125,7 @@
 		display: flex;
 		flex-direction: column;
 		width: 100%;
+		height: 100%;
 		padding: 0rpx 20rpx;
 		background-color: #fff;
 
