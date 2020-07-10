@@ -22,12 +22,10 @@
 			<uni-collapse @change="change" v-for="item in list" :key="item.title" v-if="list.length!==0">
 				<uni-collapse-item :title="item.title" :show-animation="true" :curryNum="item.have_sure" :allNum="item.arate"
 				 :haveSure="item.have_sure">
-				 
-					<uni-list class="list-info" :key="subindex" v-for="(subitem, subindex) in item.item_list">						
-						<uni-list-item 
-							:title="subitem.title" :curryNum="subitem.have_sure" :allNum="subitem.arate" :haveSure="subitem.have_sure"
-							@click="goToDetail(subitem,item.title)"
-						>
+
+					<uni-list class="list-info" :key="subindex" v-for="(subitem, subindex) in item.item_list">
+						<uni-list-item :title="subitem.title" :curryNum="subitem.have_sure" :allNum="subitem.num" :haveSure="subitem.have_sure"
+						 @click="goToDetail(subitem,item.title)">
 						</uni-list-item>
 					</uni-list>
 				</uni-collapse-item>
@@ -85,7 +83,7 @@
 					{
 						name: '助力',
 						value: 6
-					},{
+					}, {
 						name: '真题',
 						value: 7
 					},
@@ -97,6 +95,10 @@
 			}
 		},
 		onShow() {
+			uni.showLoading({
+				title: '加载中',
+				mask: true
+			});
 			this.getList();
 		},
 		methods: {
@@ -110,21 +112,31 @@
 				})
 			},
 			change(e) {
-				console.log(e)
+				// console.log(e)
 			},
 			objectChange(e) {
+				uni.showLoading({
+					title: '加载中',
+					mask: true
+				});
 				this.curryindex = e.tab.value;
 				this.getList();
-
 			},
 
-			goToDetail(sub,title) {
-				if(this.curryindex==3){
-					uni.navigateTo({
-						url: '../englishDetail/englishDetail?id=' + sub.topicid + '&title=' + title + '&subTitle=' + sub.title +
-							'&pages=0&showdetail=false'
-					});
-				}else{
+			goToDetail(sub, title) {
+				if (this.curryindex == 3) {
+					if (sub.title == "写作" || sub.title == "翻译") {
+						uni.navigateTo({
+							url: '../englishDetail/englishDetailOther?id=' + sub.topicid + '&title=' + title + '&subTitle=' + sub.title +
+								'&pages=0&showdetail=false'
+						});
+					} else {
+						uni.navigateTo({
+							url: '../englishDetail/englishDetail?id=' + sub.topicid + '&title=' + title + '&subTitle=' + sub.title +
+								'&pages=0&showdetail=false'
+						});
+					}
+				} else {
 					uni.navigateTo({
 						url: '../taskDetail/taskDetail?id=' + sub.topicid + '&title=' + title + '&subTitle=' + sub.title +
 							'&pages=0&showdetail=false'
@@ -138,9 +150,9 @@
 				// 	success: (res) => {
 				// 		console.log(res)
 				// 		// if (res.data.data[0].qtype == 4) {
-							
+
 				// 		// } else {
-							
+
 				// 		// }
 				// 	}
 				// });
@@ -160,16 +172,17 @@
 				let id = uni.getStorageSync('customer_id');
 				// 获取做题列表
 				uni.request({
-					url: config.url + '/app/qa/special/list?courseid=' + this.curryindex, //仅为示例，并非真实接口地址。
+					url: config.url + '/app/qa/special/list?courseid=' + this.curryindex + '&customer_id=' + id,
 					data: {},
 					success: (res) => {
 						this.list = res.data.data;
+						uni.hideLoading();
 					}
 				});
 			},
 			goToRead() {
 				uni.navigateTo({
-					url: '../topic/topic?source='+this.curryindex
+					url: '../topic/topic?source=' + this.curryindex
 				});
 			},
 			goToHistory() {
@@ -197,6 +210,7 @@
 		width: 100%;
 		background-color: #fff;
 		overflow-y: scroll;
+
 		.list {
 			display: flex;
 			margin-bottom: 20rpx;
@@ -226,7 +240,8 @@
 		.collapse-info {
 			margin-top: 40rpx;
 		}
-		.uni-collapse{
+
+		.uni-collapse {
 			margin-top: -26rpx;
 		}
 	}

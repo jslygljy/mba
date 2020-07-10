@@ -12,7 +12,7 @@
 					</view>
 				</view>
 				<view class="content">
-					<text>({{item.type==1? '单选题':'多选题'}}){{item.title}}</text>
+					<text v-html="item.title">({{item.type==1? '单选题':'多选题'}})</text>
 				</view>
 				<view class="ans-list">
 					<view class="ans-item" v-for="(subitem, subindex) in item.item_list" :key="subindex">
@@ -21,7 +21,7 @@
 							<view v-if="subitem.option!==item.answer && subitem.is_true ==1" class='border-info border-green'>{{subitem.option}}</view>
 							<view v-if="subitem.option!==item.answer && subitem.is_true ==0" class='border-info'>{{subitem.option}}</view>
 						</view>
-						<view class="item-right">{{subitem.content}}</view>
+						<view class="item-right" v-html="subitem.content"></view>
 					</view>
 				</view>
 				<text class="title">
@@ -39,8 +39,7 @@
 				<text class="title">
 					解析
 				</text>
-				<text class="info">
-					{{item.reason}}
+				<text class="info" v-html="item.reason">
 				</text>
 			</swiper-item>
 		</swiper>
@@ -141,12 +140,13 @@
 
 		.content {
 			font-size: 32rpx;
-			margin-bottom: 60rpx;
+			margin-bottom: 30rpx;
+			line-height: 40upx;
 		}
 
 		.ans-item {
 			display: flex;
-			margin-bottom: 80rpx;
+			margin-bottom: 60rpx;
 
 			.item-left {
 				.border-info {
@@ -221,5 +221,7 @@
 		font-size: 28rpx;
 		padding: 10rpx;
 		display: block;
+		line-height: 40upx;
+		margin-bottom: 40upx;
 	}
 </style>

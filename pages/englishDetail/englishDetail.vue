@@ -2,21 +2,15 @@
 	<view class="entaskDetail">
 		<!-- <uni-countdown :showDay="false" :day="0" :hour="0" :minute="0" :second="0">
 		</uni-countdown> -->
-		<view class="flex flex-direction">
+		<view class="flex flex-direction" style="width: 100%;">
 			<view class="advertisement" :style="{height:clientHeight?clientHeight+'px':'auto'}">
-				<!-- <web-view src="/hybrid/html/local.html" style="height: 200rpx;top:100rpx" @message="getMessage"></web-view> -->
-				<!-- <u-parse :content="titleContent" :clickHandler="clickHandler" />
-				<view class="uni-common-mt" style="background:#FFF; padding:20rpx;">
-					<rich-text :nodes="nodes"></rich-text>
-					<view v-html="titleContent" @click="clicki"></view>
-				</view> -->
-				<view v-for="(item,index) in titleContent" :key="index" :class="[item.indexOf('<')>=0?'block':'disInline','margin-left-sm',clickIndex==index?'text-blue':'']"
+				<!-- <view v-for="(item,index) in titleContent" :key="index" :class="[item.indexOf('<')>=0?'block':'disInline','margin-left-sm',clickIndex==index?'text-blue':'']"
 				 @click="titleIndex(item,index)" v-html="item">
-					<!-- <u-parse :content="" /> -->
-				</view>
-				<!-- <text @click="getIndex">
-					{{titleContent}}
-				</text> -->
+				</view> -->
+				<label v-for="(item,index) in titleContent" :key="index" :class="[(curryIndex*2+1)==index?'sel_item':'','',clickIndex==index?'':'']"
+				 @click="titleIndex(item,index)" v-html="item">
+				</label>
+				<!-- <view v-html="title_content"></view> -->
 			</view>
 			<swiper class="swiper" :indicator-dots="indicatorDots" @change="objectChange" :autoplay="false" :interval="2000"
 			 :duration="500" :current="curryIndex" :style="{height:clientHeight?clientHeight+'px':'auto'}">
@@ -24,7 +18,7 @@
 					<scroll-view :scroll-y="true" bindscrolltolower="scrollbot">
 						<view class="ans-list">
 							<view class="ans-item" v-for="(subitem, subindex) in item" :key="subindex" @click="setChoose(index,subindex,subitem,item.type)">
-								<view class="item-left flex-sub">
+								<view class="item-left flex-sub" v-if="subitem.option">
 									<!-- <view v-if="" :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view> -->
 									<view :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view>
 								</view>
@@ -86,6 +80,7 @@
 		data() {
 			return {
 				ttitle: '',
+				title_content: "",
 				indicatorDots: false,
 				curryIndex: 0,
 				type: '',
@@ -97,11 +92,12 @@
 				showdetail: false,
 				isTopic: false,
 				clientHeight: 0,
-				clientHeight2:0,
+				clientHeight2: 0,
 				fileList: [],
 				titleContent: [],
 				clickIndex: -1,
 				chooseList: [],
+				classlist: ['sel_item', 'sel_item'],
 				nodes: [{
 					name: 'div',
 					attrs: {
@@ -126,7 +122,7 @@
 			var that = this
 			wx.getSystemInfo({
 				success: (res) => {
-					this.clientHeight = res.windowHeight/2;
+					this.clientHeight = res.windowHeight / 2;
 				}
 			});
 		},
@@ -182,15 +178,62 @@
 					}
 				})
 			},
+			objectChange_new(e) {
+				this.curryIndex = e.detail.current;
+
+				// const query = uni.createSelectorQuery()
+				// query.select(`.lab_${this.curryIndex+1}`).boundingClientRect();
+				// query.selectViewport().scrollOffset()
+				// query.exec(function(res) {
+				// 	console.log(res)
+				// 	uni.pageScrollTo({
+				// 		scrollTop: res[0].top,
+				// 		duration: 0
+				// 	});
+				// })
+
+				// uni.createSelectorQuery().select(`.lab_${this.curryIndex+1}`).boundingClientRect((res)=>{
+				//     uni.pageScrollTo({
+				//         duration:0,
+				//         scrollTop: 800
+				//     })
+				// }).exec()
+
+				// console.log(this.$refs[`lab_1`])
+
+				// let view = uni.createSelectorQuery().select(`.lab_${this.curryIndex+1}`);
+				// console.log(view)
+				// view.fields({
+				// 		size: true
+				// 	},
+				// 	data => {
+				// 		this.categoryHeight = data.height + 'px';
+				// 	}).exec();
+
+
+				// for (let i = 1; i < 50; i++) {
+				// 	let lab = document.getElementById(`lab_${i}`)
+				// 	if (lab) {
+				// 		if (i == this.curryIndex + 1) {
+				// 			lab.style["color"] = "blue";
+				// 			lab.style["font-family"] = "fantasy";
+				// 		} else {
+				// 			lab.style["color"] = "black";
+				// 			lab.style["font-family"] = "Helvetica Neue, Helvetica, sans-serif";
+				// 		}
+				// 	}
+				// }
+			},
 			objectChange(e) {
 				this.curryIndex = e.detail.current;
-				this.titleContent.forEach((data3, index3) => {
-					if (data3 === this.chooseList[e.detail.current]) {
-						this.clickIndex = index3;
-					}
-				});
+				// this.titleContent[this.curryIndex+1]=""
+				// this.titleContent.forEach((data3, index3) => {
+				// 	if (data3 === this.chooseList[e.detail.current]) {
+				// 		this.clickIndex = index3;
+				// 	}
+				// });
 				const query = uni.createSelectorQuery()
-				query.select('.text-blue').boundingClientRect()
+				query.select('.sel_item').boundingClientRect()
 				query.selectViewport().scrollOffset()
 				query.exec(function(res) {
 					uni.pageScrollTo({
@@ -224,28 +267,114 @@
 					url,
 					data: {},
 					success: (res) => {
-						let c = res.data.data[0].title.replace(/<(?!\/?br\/?.+?>|\/?img.+?>)[^<>]*>/gi, '');
-						c.split(' ').forEach((data) => {
-							if (data.indexOf('<br/>') > 0) {
-								let newLabel = data.split('<br/>').join('#<view class="block"></view>#');
-								let b = newLabel.split('#');
-								this.titleContent = this.titleContent.concat(b);
-							} else {
-								this.titleContent.push(data);
-							}
-						})
 						this.list = res.data.data[0].item_list;
-						this.titleContent.some((data2, index2) => {
-							if (data2.indexOf('${') > 0) {
-								this.clickIndex = index2;
-								return true;
+						// let c = res.data.data[0].title.replace(/<(?!\/?br\/?.+?>|\/?img.+?>)[^<>]*>/gi, '');
+						// c.split(' ').forEach((data) => {
+						// 	if (data.indexOf('<br/>') > 0) {
+						// 		let newLabel = data.split('<br/>').join('#<view class="block"></view>#');
+						// 		let b = newLabel.split('#');
+						// 		this.titleContent = this.titleContent.concat(b);
+						// 	} else {
+						// 		this.titleContent.push(data);
+						// 	}
+						// })
+
+						let c = res.data.data[0].title;
+						for (let i = 1; i <= 21; i++) {
+							let s_str = c.split('${' + i + '}')
+							if (s_str.length > 1) {
+								if (i == 1) {
+									this.titleContent.push('(' + res.data.data[0].epoint + ')' + s_str[0])
+								} else {
+									this.titleContent.push(s_str[0])
+								}
+								this.titleContent.push('__' + i + '__')
+								c = s_str[1];
+							} else {
+								this.titleContent.push(s_str[0])
+								break;
 							}
-						});
-						this.titleContent.forEach((data, index) => {
-							if (data.indexOf('${') > 0) {
-								this.chooseList.push(data);
+						}
+
+						// this.titleContent.some((data2, index2) => {
+						// 	if (data2.indexOf('${') > 0) {
+						// 		this.clickIndex = index2;
+						// 		return true;
+						// 	}
+						// });
+						// this.titleContent.forEach((data, index) => {
+						// 	if (data.indexOf('${') > 0) {
+						// 		this.chooseList.push(data);
+						// 	}
+						// })
+					}
+				});
+			},
+			getDetail_new() {
+				this.titleContent = [];
+				let id = uni.getStorageSync('customer_id');
+				let url = ''
+				if (this.isTopic) {
+					url = config.url + '/app/qa/list?topicid=' + this.topicid + '&pageindex=' + this.pages;
+				} else {
+					url = config.url + '/app/qa/list?special_work=' + this.title + '&epoint=' + this.subTitle + '&pageindex=' + this.pages;
+				}
+				// 获取做题列表
+				uni.request({
+					url,
+					data: {},
+					success: (res) => {
+						this.list = res.data.data[0].item_list;
+
+						for (let i = 1; i < 50; i++) {
+							let clabel = `<label id='lab_${i}' :class={{classlist[${i}]}}>____${i}____</label>`
+							if (i == 1) {
+								clabel =
+									`<label id='lab_${i}' :class={{classlist[${i}]}} style='color: blue;font-family: fantasy;'>____${i}____</label>`
 							}
-						})
+							res.data.data[0].title = res.data.data[0].title.replace('${' + i + '}', clabel);
+						}
+						this.title_content = res.data.data[0].title;
+					}
+				});
+			},
+			getDetail_old() {
+				this.titleContent = [];
+				let id = uni.getStorageSync('customer_id');
+				let url = ''
+				if (this.isTopic) {
+					url = config.url + '/app/qa/list?topicid=' + this.topicid + '&pageindex=' + this.pages;
+				} else {
+					url = config.url + '/app/qa/list?special_work=' + this.title + '&epoint=' + this.subTitle + '&pageindex=' + this.pages;
+				}
+				// 获取做题列表
+				uni.request({
+					// url: config.url+'/app/qa/list?special_work='+this.title+'&epoint='+this.subTitle+'&pageindex='+this.pages,
+					url,
+					data: {},
+					success: (res) => {
+						// let c = res.data.data[0].title.replace(/<(?!\/?br\/?.+?>|\/?img.+?>)[^<>]*>/gi, '');
+						// c.split(' ').forEach((data) => {
+						// 	if (data.indexOf('<br/>') > 0) {
+						// 		let newLabel = data.split('<br/>').join('#<view class="block"></view>#');
+						// 		let b = newLabel.split('#');
+						// 		this.titleContent = this.titleContent.concat(b);
+						// 	} else {
+						// 		this.titleContent.push(data);
+						// 	}
+						// })
+
+						// this.titleContent.some((data2, index2) => {
+						// 	if (data2.indexOf('${') > 0) {
+						// 		this.clickIndex = index2;
+						// 		return true;
+						// 	}
+						// });
+						// this.titleContent.forEach((data, index) => {
+						// 	if (data.indexOf('${') > 0) {
+						// 		this.chooseList.push(data);
+						// 	}
+						// })
 					}
 				});
 			},
@@ -254,12 +383,13 @@
 				this.list[index].map((data2) => {
 					data2.isChoose = false;
 				})
-
+					
 				if (!this.ansList[index]) {
 					this.ansList.push({
 						qa_id: subitem.qa_id,
 						is_true: subitem.is_true,
-						answer: subitem.option
+						answer: subitem.option,
+						items_id:subitem.innerid
 					});
 				} else {
 					this.ansList[index].qa_id = subitem.qa_id;
@@ -278,6 +408,7 @@
 
 			},
 			bindBtn(type) {
+				uni.setStorageSync("taskdetail_report", this.ansList)
 				uni.navigateTo({
 					url: '../report/report?id=' + this.topicid + '&title=' + this.title + '&subTitle=' + this.subTitle + '&pages=' +
 						this.pages + '&showdetail=false' + '&list=' + JSON.stringify(this.ansList)
@@ -316,8 +447,9 @@
 		width: 100%;
 		overflow-y: scroll;
 		border-bottom: 4upx #555555 solid;
-		background-color: #E9E9E9;
-		padding: 20rpx;
+		background-color: #fdfdfd;
+		padding: 44rpx;
+		line-height: 44upx;
 	}
 
 	.entaskDetail {
@@ -405,5 +537,14 @@
 		font-size: 28rpx;
 		padding: 10rpx;
 		display: block;
+	}
+
+	.sel_item {
+		color: blue;
+		font-family: fantasy;
+	}
+
+	.no_sel_item {
+		color: #0077AA;
 	}
 </style>

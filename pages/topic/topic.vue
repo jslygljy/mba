@@ -69,11 +69,22 @@
 			},
 			goToStaillDetail(id) {
 				// let id =uni.getStorageSync('customer_id');
-				// 获取做题列表
-				uni.navigateTo({
-					url: '../taskDetail/taskDetail?topicid=' + id + '&pages=' + (Number(this.pages)) +
-						'&showdetail=false&isTopic=true'
-				});
+				if (this.source == 3) {
+					// uni.navigateTo({
+					// 	url: '../englishDetail/englishDetail?topicid=' + id + '&pages=' + (Number(this.pages)) +
+					// 		'&showdetail=false&isTopic=true'
+					// });
+					uni.navigateTo({
+						url: '../topic/english_template?topicid=' + id + '&pages=' + (Number(this.pages)) +
+							'&showdetail=false&isTopic=true'
+					});
+				} else {
+					// 获取做题列表
+					uni.navigateTo({
+						url: '../taskDetail/taskDetail?topicid=' + id + '&pages=' + (Number(this.pages)) +
+							'&showdetail=false&isTopic=true'
+					});
+				}
 			}
 		}
 
