@@ -80,7 +80,6 @@
 										_self.qa_index += 1;
 										_self.getDetail(_self.qa_index);
 									}
-									
 								}
 							})
 						}
