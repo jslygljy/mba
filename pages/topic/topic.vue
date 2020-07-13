@@ -1,7 +1,5 @@
 <template>
 	<view class="topic-content">
-
-		<view class="paper-classify-item-name"><i class="right-point"></i><text>联考真题题库</text><i class="left-point"></i></view>
 		<uni-list class="list-info">
 			<view class="flex solids-bottom lists" @click="goToStaillDetail(item.innerid)" v-for="item in list" :key="item.innerid">
 				<view class="flex-four">
@@ -69,11 +67,22 @@
 			},
 			goToStaillDetail(id) {
 				// let id =uni.getStorageSync('customer_id');
-				// 获取做题列表
-				uni.navigateTo({
-					url: '../taskDetail/taskDetail?topicid=' + id + '&pages=' + (Number(this.pages)) +
-						'&showdetail=false&isTopic=true'
-				});
+				if (this.source == 3) {
+					// uni.navigateTo({
+					// 	url: '../englishDetail/englishDetail?topicid=' + id + '&pages=' + (Number(this.pages)) +
+					// 		'&showdetail=false&isTopic=true'
+					// });
+					uni.navigateTo({
+						url: '../topic/english_template?topicid=' + id + '&pages=' + (Number(this.pages)) +
+							'&showdetail=false&isTopic=true'
+					});
+				} else {
+					// 获取做题列表
+					uni.navigateTo({
+						url: '../taskDetail/taskDetail?topicid=' + id + '&pages=' + (Number(this.pages)) +
+							'&showdetail=false&isTopic=true'
+					});
+				}
 			}
 		}
 

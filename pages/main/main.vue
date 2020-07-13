@@ -35,8 +35,8 @@
 			<h3 class="list-title">推荐课程</h3>
 			<view class="list-item" v-for="(item,index) in tuijianlist" :key="item.innerid">
 				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin,item)">
-					<image :src="item.speaker_heading  || getrandomimg()" mode=""></image>
-					<label v-if="!item.speaker_heading" style="position: absolute;font-size: 14px;color: white;margin-left: 20px;margin-top: 30px;">{{item.home_page_summary}}</label>
+					<image :src="item.content || item.speaker_heading" mode=""></image>
+					<label v-if="!item.content" style="position: absolute;font-size: 14px;color: white;margin-left: 20px;margin-top: 30px;">{{item.home_page_summary}}</label>
 					<view class="item-right">
 						<view style="flex:3">
 							<h4 class="h4">{{item.title}}</h4>
@@ -60,8 +60,8 @@
 			<h3 class="list-title">{{subName}}</h3>
 			<view class="list-item" v-for="(item,index) in mianfeilist" :key="item.innerid">
 				<view class="list-item-content" @click="goToDetail(item.innerid,item.is_sgin,item)">
-					<image :src="item.speaker_heading || getrandomimg()" mode="" class="people"></image>
-					<label v-if="!item.speaker_heading" style="position: absolute;font-size: 14px;color: white;margin-left: 20px;margin-top: 30px;">{{item.home_page_summary}}</label>
+					<image :src="item.content || item.speaker_heading" mode="" class="people"></image>
+					<label v-if="!item.content" style="position: absolute;font-size: 14px;color: white;margin-left: 20px;margin-top: 30px;">{{item.home_page_summary}}</label>
 					<view class="item-right">
 						<view style="flex:3">
 							<h4 class="h4">{{item.title}}</h4>
@@ -209,6 +209,10 @@
 			if (this.index == 0) {
 				this.getList();
 			}
+			uni.showToast({
+				title: '范德萨范德萨范德萨发送到发送到',
+				duration:2223000
+			})
 		},
 		methods: {
 			goToDetail(id, is_sgin, item) {
@@ -413,5 +417,8 @@
 	.title {
 		color: #8f8f94;
 		margin-top: 50upx;
+	}
+	uni-toast .uni-toast__content{
+		padding:20px
 	}
 </style>

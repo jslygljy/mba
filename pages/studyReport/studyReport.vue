@@ -2,7 +2,7 @@
 	<view class="studyReportContent">
 		<text class="report-time">学习报告时间更新至2019-12-07 11:07:29</text>
 		<view class="days" @click="showModal" data-target="Modal">
-			【MBA大师】陪我度过<text>1</text>天
+			【MBA钥匙】陪我度过<text>1</text>天
 			<i class="cuIcon-question text-grey"></i>
 		</view>
 		<neil-modal :show="isShow" @close="closeModal" title="报告指南">

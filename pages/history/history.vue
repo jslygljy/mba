@@ -16,7 +16,7 @@
 					</view>
 				</view>
 				<view class="flex-sub">
-					<text class="right-time">{{filterDate(item.createdtime)}}</text>
+					<!-- <text class="right-time">{{filterDate(item.createdtime)}}</text> -->
 				</view>
 			</view>
 		</uni-list>

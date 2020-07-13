@@ -13,6 +13,18 @@
 			}
 		},
 		{
+			"path": "pages/topic/english_template",
+			"style": {
+			    "navigationBarTitleText": "做题"
+			}
+		},
+		{
+			"path": "pages/englishDetail/englishDetailOther",
+			"style": {
+			    "navigationBarTitleText": "做题"
+			}
+		},
+		{
 			"path": "pages/allDetail/allDetail",
 			"style": {
 				"navigationBarTitleText": "全部解析"

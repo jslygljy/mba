@@ -2,12 +2,15 @@
     "name" : "研毅教育",
     "appid" : "__UNI__4EBD7CA",
     "description" : "研毅教育",
-    "versionName" : "1.0.9",
-    "versionCode" : 109,
+    "versionName" : "1.0.15",
+    "versionCode" : 1015,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
         "usingComponents" : true,
+        "compatible" : {
+            "ignoreVersion" : true //true表示忽略版本检查提示框，HBuilderX1.9.0及以上版本支持  
+        },
         /* 模块配置 */
         "modules" : {
             "Payment" : {},

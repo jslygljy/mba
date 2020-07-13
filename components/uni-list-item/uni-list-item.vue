@@ -14,7 +14,7 @@
 			</view>
 			<view class="flex margin-top-sm progress">
 				<view class="cu-progress sm round">
-					<view class="bg-blue" :style="[{ width:(curryNum/allNum)}]"></view>
+					<view class="bg-blue" :style="{width:(curryNum/allNum)*100+'%'}"></view>   
 				</view>
 				<text class="margin-left text-sm text-grey">{{curryNum}}/{{allNum}}</text>
 				<text class="margin-left text-sm text-grey" style="    vertical-align: top;margin-top: -5rpx;min-width: 100px;">正确率:{{(haveSure/allNum * 100).toFixed(2)}}%</text>

@@ -1,31 +1,35 @@
 <template>
 	<view class="entaskDetail">
-		<!-- <uni-countdown :showDay="false" :day="0" :hour="0" :minute="0" :second="0">
-		</uni-countdown> -->
 		<view class="flex flex-direction" style="width: 100%;">
 			<view class="advertisement" :style="{height:clientHeight?clientHeight+'px':'auto'}">
-				<!-- <view v-for="(item,index) in titleContent" :key="index" :class="[item.indexOf('<')>=0?'block':'disInline','margin-left-sm',clickIndex==index?'text-blue':'']"
-				 @click="titleIndex(item,index)" v-html="item">
-				</view> -->
 				<label v-for="(item,index) in titleContent" :key="index" :class="[(curryIndex*2+1)==index?'sel_item':'','',clickIndex==index?'':'']"
 				 @click="titleIndex(item,index)" v-html="item">
 				</label>
-				<!-- <view v-html="title_content"></view> -->
 			</view>
 			<swiper class="swiper" :indicator-dots="indicatorDots" @change="objectChange" :autoplay="false" :interval="2000"
 			 :duration="500" :current="curryIndex" :style="{height:clientHeight?clientHeight+'px':'auto'}">
 				<swiper-item v-for="(item, index) in list" :key="index">
 					<scroll-view :scroll-y="true" bindscrolltolower="scrollbot">
 						<view class="ans-list">
-							<view class="ans-item" v-for="(subitem, subindex) in item" :key="subindex" @click="setChoose(index,subindex,subitem,item.type)">
+							<view v-if="epoint!='写作' && epoint!='翻译'" class="ans-item" v-for="(subitem, subindex) in item" :key="subindex"
+							 @click="setChoose(index,subindex,subitem,item.type)">
+
 								<view class="item-left flex-sub" v-if="subitem.option">
-									<!-- <view v-if="" :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view> -->
 									<view :class="['border-info',subitem.isChoose?'border-info2':'']">{{subitem.option}}</view>
 								</view>
 								<view class="item-right">
 									<u-parse :content="subitem.content" />
 								</view>
+
+
 							</view>
+							<view class="ans-item" v-if="epoint=='写作' || epoint=='翻译'" style="height: 200px;" >
+								<view style="bottom: 0px;position: absolute;height: 250px;padding: 10px;background-color: #f5f5f5;width: 100%;">
+									<textarea placeholder="编辑答案........" class="textarea" maxlength="10000" v-model="content"></textarea>
+									<view class="save" @click="save">保 存</view>
+								</view>
+							</view>
+
 						</view>
 						<view class="" v-if="showdetail">
 							<text class="title">
@@ -81,6 +85,7 @@
 			return {
 				ttitle: '',
 				title_content: "",
+				content:"",
 				indicatorDots: false,
 				curryIndex: 0,
 				type: '',
@@ -97,6 +102,8 @@
 				titleContent: [],
 				clickIndex: -1,
 				chooseList: [],
+				qa_index: 0,
+				epoint: "",
 				classlist: ['sel_item', 'sel_item'],
 				nodes: [{
 					name: 'div',
@@ -127,18 +134,16 @@
 			});
 		},
 		onReady() {
-			// #ifdef APP-PLUS
-			var currentWebview = this.$mp.page.$getAppWebview() //获取当前页面的webview对象
-			setTimeout(function() {
-				wv = currentWebview.children()[0]
-				wv.setStyle({
-					top: 150,
-					height: 300
-				})
-			}, 1000); //如果是页面初始化调用时，需要延时一下
-			// #endif
+			// var currentWebview = this.$mp.page.$getAppWebview()
+			// setTimeout(function() {
+			// 	wv = currentWebview.children()[0]
+			// 	wv.setStyle({
+			// 		top: 150,
+			// 		height: 300
+			// 	})
+			// }, 1000);
 		},
-		onLoad: function(option) { //option为object类型，会序列化上个页面传递的参数
+		onLoad: function(option) {
 			this.topicid = option.topicid;
 			this.title = option.title;
 			this.subTitle = option.subTitle;
@@ -147,27 +152,6 @@
 			this.showdetail = option.showdetail === "false" ? false : true;
 		},
 		methods: {
-			// bindTouch(e) {
-			// 	src_posi_Y = e.pageY; //鼠标指针的位置
-			// 	is_mouse_down = true;
-			// },
-			// bindMove(e) {
-			// 	dest_posi_Y = e.pageY;
-			// 	move_Y = src_posi_Y - dest_posi_Y;
-			// 	src_posi_Y = dest_posi_Y;
-			// 	const query = uni.createSelectorQuery();
-			// 	query.select('.advertisement').boundingClientRect();
-			// 	query.exec(obj => {
-			// 		const rect = obj[0]
-			// 		if (rect) {
-			// 			destHeight = rect.height - move_Y;
-			// 			if (is_mouse_down) {
-			// 				this.height = destHeight+20 + 'px'
-			// 			}
-			// 		}
-			// 	});
-
-			// },
 			titleIndex(data, index) {
 				if (data.indexOf('${') > 0) {
 					this.clickIndex = index;
@@ -180,58 +164,8 @@
 			},
 			objectChange_new(e) {
 				this.curryIndex = e.detail.current;
-
-				// const query = uni.createSelectorQuery()
-				// query.select(`.lab_${this.curryIndex+1}`).boundingClientRect();
-				// query.selectViewport().scrollOffset()
-				// query.exec(function(res) {
-				// 	console.log(res)
-				// 	uni.pageScrollTo({
-				// 		scrollTop: res[0].top,
-				// 		duration: 0
-				// 	});
-				// })
-
-				// uni.createSelectorQuery().select(`.lab_${this.curryIndex+1}`).boundingClientRect((res)=>{
-				//     uni.pageScrollTo({
-				//         duration:0,
-				//         scrollTop: 800
-				//     })
-				// }).exec()
-
-				// console.log(this.$refs[`lab_1`])
-
-				// let view = uni.createSelectorQuery().select(`.lab_${this.curryIndex+1}`);
-				// console.log(view)
-				// view.fields({
-				// 		size: true
-				// 	},
-				// 	data => {
-				// 		this.categoryHeight = data.height + 'px';
-				// 	}).exec();
-
-
-				// for (let i = 1; i < 50; i++) {
-				// 	let lab = document.getElementById(`lab_${i}`)
-				// 	if (lab) {
-				// 		if (i == this.curryIndex + 1) {
-				// 			lab.style["color"] = "blue";
-				// 			lab.style["font-family"] = "fantasy";
-				// 		} else {
-				// 			lab.style["color"] = "black";
-				// 			lab.style["font-family"] = "Helvetica Neue, Helvetica, sans-serif";
-				// 		}
-				// 	}
-				// }
 			},
 			objectChange(e) {
-				this.curryIndex = e.detail.current;
-				// this.titleContent[this.curryIndex+1]=""
-				// this.titleContent.forEach((data3, index3) => {
-				// 	if (data3 === this.chooseList[e.detail.current]) {
-				// 		this.clickIndex = index3;
-				// 	}
-				// });
 				const query = uni.createSelectorQuery()
 				query.select('.sel_item').boundingClientRect()
 				query.selectViewport().scrollOffset()
@@ -263,28 +197,20 @@
 				}
 				// 获取做题列表
 				uni.request({
-					// url: config.url+'/app/qa/list?special_work='+this.title+'&epoint='+this.subTitle+'&pageindex='+this.pages,
 					url,
 					data: {},
 					success: (res) => {
-						this.list = res.data.data[0].item_list;
-						// let c = res.data.data[0].title.replace(/<(?!\/?br\/?.+?>|\/?img.+?>)[^<>]*>/gi, '');
-						// c.split(' ').forEach((data) => {
-						// 	if (data.indexOf('<br/>') > 0) {
-						// 		let newLabel = data.split('<br/>').join('#<view class="block"></view>#');
-						// 		let b = newLabel.split('#');
-						// 		this.titleContent = this.titleContent.concat(b);
-						// 	} else {
-						// 		this.titleContent.push(data);
-						// 	}
-						// })
+						this.list = res.data.data[this.qa_index].item_list;
+						this.epoint = res.data.data[this.qa_index].epoint;
 
-						let c = res.data.data[0].title;
+						let c = res.data.data[this.qa_index].title;
+						c = c.replace(/<img/g, '<img style="width:100%;"');
+
 						for (let i = 1; i <= 21; i++) {
 							let s_str = c.split('${' + i + '}')
 							if (s_str.length > 1) {
 								if (i == 1) {
-									this.titleContent.push('(' + res.data.data[0].epoint + ')' + s_str[0])
+									this.titleContent.push('(' + this.epoint + ')' + s_str[0])
 								} else {
 									this.titleContent.push(s_str[0])
 								}
@@ -295,86 +221,6 @@
 								break;
 							}
 						}
-
-						// this.titleContent.some((data2, index2) => {
-						// 	if (data2.indexOf('${') > 0) {
-						// 		this.clickIndex = index2;
-						// 		return true;
-						// 	}
-						// });
-						// this.titleContent.forEach((data, index) => {
-						// 	if (data.indexOf('${') > 0) {
-						// 		this.chooseList.push(data);
-						// 	}
-						// })
-					}
-				});
-			},
-			getDetail_new() {
-				this.titleContent = [];
-				let id = uni.getStorageSync('customer_id');
-				let url = ''
-				if (this.isTopic) {
-					url = config.url + '/app/qa/list?topicid=' + this.topicid + '&pageindex=' + this.pages;
-				} else {
-					url = config.url + '/app/qa/list?special_work=' + this.title + '&epoint=' + this.subTitle + '&pageindex=' + this.pages;
-				}
-				// 获取做题列表
-				uni.request({
-					url,
-					data: {},
-					success: (res) => {
-						this.list = res.data.data[0].item_list;
-
-						for (let i = 1; i < 50; i++) {
-							let clabel = `<label id='lab_${i}' :class={{classlist[${i}]}}>____${i}____</label>`
-							if (i == 1) {
-								clabel =
-									`<label id='lab_${i}' :class={{classlist[${i}]}} style='color: blue;font-family: fantasy;'>____${i}____</label>`
-							}
-							res.data.data[0].title = res.data.data[0].title.replace('${' + i + '}', clabel);
-						}
-						this.title_content = res.data.data[0].title;
-					}
-				});
-			},
-			getDetail_old() {
-				this.titleContent = [];
-				let id = uni.getStorageSync('customer_id');
-				let url = ''
-				if (this.isTopic) {
-					url = config.url + '/app/qa/list?topicid=' + this.topicid + '&pageindex=' + this.pages;
-				} else {
-					url = config.url + '/app/qa/list?special_work=' + this.title + '&epoint=' + this.subTitle + '&pageindex=' + this.pages;
-				}
-				// 获取做题列表
-				uni.request({
-					// url: config.url+'/app/qa/list?special_work='+this.title+'&epoint='+this.subTitle+'&pageindex='+this.pages,
-					url,
-					data: {},
-					success: (res) => {
-						// let c = res.data.data[0].title.replace(/<(?!\/?br\/?.+?>|\/?img.+?>)[^<>]*>/gi, '');
-						// c.split(' ').forEach((data) => {
-						// 	if (data.indexOf('<br/>') > 0) {
-						// 		let newLabel = data.split('<br/>').join('#<view class="block"></view>#');
-						// 		let b = newLabel.split('#');
-						// 		this.titleContent = this.titleContent.concat(b);
-						// 	} else {
-						// 		this.titleContent.push(data);
-						// 	}
-						// })
-
-						// this.titleContent.some((data2, index2) => {
-						// 	if (data2.indexOf('${') > 0) {
-						// 		this.clickIndex = index2;
-						// 		return true;
-						// 	}
-						// });
-						// this.titleContent.forEach((data, index) => {
-						// 	if (data.indexOf('${') > 0) {
-						// 		this.chooseList.push(data);
-						// 	}
-						// })
 					}
 				});
 			},
@@ -383,13 +229,12 @@
 				this.list[index].map((data2) => {
 					data2.isChoose = false;
 				})
-					
+
 				if (!this.ansList[index]) {
 					this.ansList.push({
 						qa_id: subitem.qa_id,
 						is_true: subitem.is_true,
-						answer: subitem.option,
-						items_id:subitem.innerid
+						answer: subitem.option
 					});
 				} else {
 					this.ansList[index].qa_id = subitem.qa_id;
@@ -416,6 +261,36 @@
 			},
 			closeModal() {
 				this.isShow = false
+			},
+			save() {
+				let id = uni.getStorageSync('customer_id');
+				let _self = this;
+				// 获取做题列表
+				uni.request({
+					url: config.url + '/app/qa/english/customer/edit',
+					method: "POST",
+					data: {
+						customer_id: id,
+						qa_id: this.qa_id,
+						content: this.content
+					},
+					success: (res) => {
+						if (res.data.data == 1) {
+							uni.showModal({
+								title: '保存成功，是否进入【下一题】？',
+								confirmText: '下一题',
+								success: function(res) {
+									if (res.confirm) {
+										_self.content = '';
+										_self.qa_index += 1;
+										_self.getDetail(_self.qa_index);
+									}
+								}
+							})
+						}
+			
+					}
+				});
 			}
 		}
 	}
@@ -437,6 +312,10 @@
 		overflow-x: hidden;
 		overflow-y: scroll;
 	}
+
+	// p img {
+	// 	width: 100%;
+	// }
 
 	.swiper {
 		margin-top: 20rpx;
@@ -546,5 +425,26 @@
 
 	.no_sel_item {
 		color: #0077AA;
+	}
+	.save {
+		height: 40px;
+		border: 1px solid green;
+		background-color: green;
+		color: white;
+		margin-top: 5px;
+		text-align: center;
+		line-height: 40px;
+		border-radius: 5px;
+		font-size: 16px;
+	}
+	
+	.textarea {
+		width: 100%;
+		background-color: white;
+		border: 1rpx solid #f1f1f1;
+		border-radius: 2px;
+		min-height: 100rpx;
+		font-size: 14px;
+		margin-top: 10px;
 	}
 </style>

@@ -153,6 +153,7 @@
 							uni.showToast({
 								title: '恭喜您，已经学完了本节课程',
 								duration: 2000,
+								icon:"none",
 								complete: function() {
 									setTimeout(function() {
 										uni.navigateBack()
