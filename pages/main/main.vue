@@ -209,10 +209,6 @@
 			if (this.index == 0) {
 				this.getList();
 			}
-			uni.showToast({
-				title: '范德萨范德萨范德萨发送到发送到',
-				duration:2223000
-			})
 		},
 		methods: {
 			goToDetail(id, is_sgin, item) {
